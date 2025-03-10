@@ -29,15 +29,7 @@ class UltroidWebServer:
         
         # SSL Configuration
         self.ssl_context = None
-        self.cert_file = os.path.expanduser("~/myssl/localhost.crt")
-        self.key_file = os.path.expanduser("~/myssl/localhost.key")
-        
-        if os.path.exists(self.cert_file) and os.path.exists(self.key_file):
-            self.ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-            self.ssl_context.load_cert_chain(self.cert_file, self.key_file)
-            logger.info("SSL certificates loaded successfully")
-        else:
-            logger.warning("SSL certificates not found, running without SSL")
+
 
     def setup_routes(self):
         self.app.router.add_get("/api/user", self.get_ultroid_owner_info)
@@ -93,7 +85,8 @@ class UltroidWebServer:
             "username": self.bot.me.username,
             "telegram_url": f"https://t.me/{self.bot.me.username}" if self.bot.me.username else None,
             "stats": stats,
-            "skills": ["Telegram Bot Management", "Automation", "Python"]
+            "skills": ["Telegram Bot Management", "Automation", "Python"],
+            "user_id": self.bot.me.id
         }
         
         # If user has a username, try to get additional info from public profile
