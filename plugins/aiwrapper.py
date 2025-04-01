@@ -36,7 +36,7 @@ import asyncio
 ENDPOINTS = {
     "gpt": "https://api.openai.com/v1/chat/completions",
     "antr": "https://api.anthropic.com/v1/messages",
-    "gemini": "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent",
+    "gemini": "https://generativelanguage.googleapis.com/v1/models/",
     "deepseek": "https://api.deepseek.com/chat/completions"
 }
 
@@ -163,6 +163,7 @@ async def get_ai_response(provider, prompt, api_key, stream=False):
                                 continue
 
         elif provider == "gemini":
+            endpoint = f"{ENDPOINTS[provider]}{model}:generateContent"
             params = {"key": api_key}
             data = {
                 "contents": [{
@@ -170,7 +171,7 @@ async def get_ai_response(provider, prompt, api_key, stream=False):
                 }]
             }
             response = await async_searcher(
-                ENDPOINTS[provider],
+                endpoint,
                 params=params,
                 headers=headers,
                 post=True,
