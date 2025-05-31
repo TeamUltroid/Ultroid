@@ -21,10 +21,10 @@
     Get response from DeepSeek AI.
 
 Set custom models using:
-    • OPENAI_MODEL
-    • ANTHROPIC_MODEL
-    • GEMINI_MODEL
-    • DEEPSEEK_MODEL
+    • OPENAI_MODEL: default: gpt-4o-mini
+    • ANTHROPIC_MODEL: claude-3-opus-20240229
+    • GEMINI_MODEL: gemini-1.5-flash
+    • DEEPSEEK_MODEL: deepseek-chat
 """
 
 import json
@@ -36,14 +36,14 @@ import asyncio
 ENDPOINTS = {
     "gpt": "https://api.openai.com/v1/chat/completions",
     "antr": "https://api.anthropic.com/v1/messages",
-    "gemini": "https://generativelanguage.googleapis.com/v1/models/",
+    "gemini": "https://generativelanguage.googleapis.com/v1beta/chat/completions",
     "deepseek": "https://api.deepseek.com/chat/completions"
 }
 
 DEFAULT_MODELS = {
-    "gpt": "gpt-3.5-turbo",
+    "gpt": "gpt-4o-mini",
     "antr": "claude-3-opus-20240229",
-    "gemini": "gemini-pro",
+    "gemini": "gemini-1.5-flash",
     "deepseek": "deepseek-chat"
 }
 
@@ -163,36 +163,84 @@ async def get_ai_response(provider, prompt, api_key, stream=False):
                                 continue
 
         elif provider == "gemini":
-            endpoint = f"{ENDPOINTS[provider]}{model}:generateContent"
-            params = {"key": api_key}
+            headers["Authorization"] = f"Bearer {api_key}"
             data = {
-                "contents": [{
-                    "parts": [{"text": prompt}]
-                }]
+                "model": model,
+                "messages": [
+                    {"role": "system", "content": "You are a helpful assistant."},
+                    {"role": "user", "content": prompt}
+                ],
+                "stream": stream
             }
-            response = await async_searcher(
-                endpoint,
-                params=params,
-                headers=headers,
-                post=True,
-                json=data,
-                re_json=True
-            )
-            text = response["candidates"][0]["content"]["parts"][0]["text"]
+            
             if not stream:
-                yield text
+                try:
+                    response = await async_searcher(
+                        ENDPOINTS[provider],
+                        headers=headers,
+                        post=True,
+                        json=data,
+                        re_json=True
+                    )
+                    if "error" in response:
+                        error = response["error"]
+                        if error.get("code") == 429:
+                            retry_delay = None
+                            for detail in error.get("details", []):
+                                if detail.get("@type") == "type.googleapis.com/google.rpc.RetryInfo":
+                                    retry_delay = detail.get("retryDelay", "60s").rstrip("s")
+                            error_msg = f"⚠️ Rate limit exceeded. Please try again in {retry_delay} seconds."
+                            if "free_tier" in str(error):
+                                error_msg += "\nConsider upgrading to a paid tier for higher quotas."
+                            yield error_msg
+                            return
+                        yield f"Error: {error.get('message', 'Unknown error occurred')}"
+                        return
+                    yield response["choices"][0]["message"]["content"]
+                except Exception as e:
+                    LOGS.exception(e)
+                    yield f"Error: {str(e)}"
                 return
-                
-            # Simulate streaming by yielding chunks
-            words = text.split()
-            buffer = []
-            for word in words:
-                buffer.append(word)
-                if len(' '.join(buffer)) > 20:  # Adjust chunk size as needed
-                    yield ' '.join(buffer) + ' '
-                    buffer = []
-            if buffer:
-                yield ' '.join(buffer)
+
+            async with aiohttp.ClientSession() as session:
+                try:
+                    async with session.post(
+                        ENDPOINTS[provider],
+                        headers=headers,
+                        json=data
+                    ) as resp:
+                        if resp.status == 429:
+                            error_data = await resp.json()
+                            retry_delay = "60"
+                            for detail in error_data.get("error", {}).get("details", []):
+                                if detail.get("@type") == "type.googleapis.com/google.rpc.RetryInfo":
+                                    retry_delay = detail.get("retryDelay", "60s").rstrip("s")
+                            yield f"⚠️ Rate limit exceeded. Please try again in {retry_delay} seconds."
+                            return
+
+                        if resp.status != 200:
+                            error_data = await resp.json()
+                            yield f"Error: {error_data.get('error', {}).get('message', 'Unknown error occurred')}"
+                            return
+
+                        async for line in resp.content:
+                            if line:
+                                text = line.decode('utf-8').strip()
+                                if text.startswith('data: '):
+                                    data = text[6:]  # Remove 'data: ' prefix
+                                    if data == '[DONE]':
+                                        break
+                                    try:
+                                        json_data = json.loads(data)
+                                        if 'choices' in json_data and json_data['choices']:
+                                            content = json_data['choices'][0].get('delta', {}).get('content', '')
+                                            if content:
+                                                yield content
+                                    except json.JSONDecodeError:
+                                        continue
+                except Exception as e:
+                    LOGS.exception(e)
+                    yield f"Error: {str(e)}"
 
         elif provider == "deepseek":
             headers["Authorization"] = f"Bearer {api_key}"
