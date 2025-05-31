@@ -321,19 +321,34 @@ def _stringify(text=None, *args, **kwargs):
 
 
 async def aexec(code, event):
-    exec(
-        (
-            "async def __aexec(e, client): "
-            + "\n print = p = _stringify"
-            + "\n message = event = e"
-            + "\n u.r = reply = await event.get_reply_message()"
-            + "\n chat = event.chat_id"
-            + "\n u.lr = locals()"
-        )
-        + "".join(f"\n {l}" for l in code.split("\n"))
+    # Create a dedicated namespace for execution
+    exec_globals = {
+        'print': _stringify,
+        'p': _stringify,
+        'message': event,
+        'event': event,
+        'client': event.client,
+        'reply': await event.get_reply_message(),
+        'chat': event.chat_id,
+        'u': u,
+        '__builtins__': __builtins__
+    }
+    
+    # Format the async function definition
+    wrapped_code = (
+        'async def __aexec(e, client):\n' +
+        '\n'.join(f'    {line}' for line in code.split('\n'))
     )
-
-    return await locals()["__aexec"](event, event.client)
+    
+    try:
+        # Execute the wrapped code in our custom namespace
+        exec(wrapped_code, exec_globals)
+        # Get the defined async function
+        func = exec_globals['__aexec']
+        # Execute it with proper parameters
+        return await func(event, event.client)
+    except Exception as e:
+        raise Exception(f"Failed to execute code: {str(e)}")
 
 
 DUMMY_CPP = """#include <iostream>
