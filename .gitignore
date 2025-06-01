@@ -6,6 +6,7 @@ test*
 *.mp3
 *.webm
 *.webp
+*.rdb
 *.mp4
 *.tgs
 *.txt

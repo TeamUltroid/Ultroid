@@ -9,7 +9,7 @@ if [ -d "resources" ]
 then
     echo "Current directory Identified.."
 else
-    apt install git -y
+    apt install git redis -y
     git clone https://github.com/TeamUltroid/Ultroid
     cd Ultroid
 fi

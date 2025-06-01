@@ -6,7 +6,7 @@
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
 import os
-import sys
+import sys, asyncio
 import telethonpatch
 from datetime import datetime
 from .version import __version__
@@ -37,10 +37,11 @@ if run_as_module:
         exit()
 
     start_time = time.time()
+    _loop = asyncio.get_event_loop()
     _ult_cache = {}
     _ignore_eval = []
 
-    udB = UltroidDB()
+    udB = _loop.run_until_complete(UltroidDB())
     update_envs()
 
     LOGS.info(f"Connecting to {udB.name}...")
