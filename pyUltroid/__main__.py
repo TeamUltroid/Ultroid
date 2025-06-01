@@ -19,7 +19,6 @@ def main():
         WasItRestart,
         autopilot,
         customize,
-        fetch_ann,
         plug,
         ready,
         startup_stuff,

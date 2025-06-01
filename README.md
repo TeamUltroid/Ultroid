@@ -113,12 +113,42 @@ Different ways to get your `SESSION`:
 
 ---
 
+# Core Contributor Team
+
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/xditya"><img src="https://avatars.githubusercontent.com/xditya" width="75px;" alt=""/><br/><sub><b>@xditya</b></sub></a></td>
+    <td align="center"><a href="https://github.com/1danish-00"><img src="https://avatars.githubusercontent.com/1danish-00" width="75px;" alt=""/><br/><sub><b>@1danish_00</b></sub></a></td>
+    <td align="center"><a href="https://github.com/buddhhu"><img src="https://avatars.githubusercontent.com/buddhhu" width="75px;" alt=""/><br/><sub><b>@buddhhu</b></sub></a></td>
+    <td align="center"><a href="https://github.com/TechiError"><img src="https://avatars.githubusercontent.com/TechiError" width="75px;" alt=""/><br/><sub><b>@TechiError</b></sub></a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/New-dev0"><img src="https://avatars.githubusercontent.com/New-dev0" width="75px;" alt=""/><br/><sub><b>@New-dev0</b></sub></a></td>
+    <td align="center"><a href="https://github.com/ArnabXD"><img src="https://avatars.githubusercontent.com/ArnabXD" width="75px;" alt=""/><br/><sub><b>@Arnab431</b></sub></a></td>
+    <td align="center"><a href="https://github.com/sppidy"><img src="https://avatars.githubusercontent.com/sppidy" width="75px;" alt=""/><br/><sub><b>@sppidy</b></sub></a></td>
+    <td align="center"><a href="https://github.com/Atul-Kumar-Jena"><img src="https://avatars.githubusercontent.com/Atul-kumar-Jena" width="75px;" alt=""/><br/><sub><b>@hellboi_atul</b></sub></a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/iAkashPattnaik"><img src="https://avatars.githubusercontent.com/iAkashPattnaik" width="75px;" alt=""/><br/><sub><b>@iAkashPattnaik</b></sub></a></td>
+  </tr>
+</table>
+
+## Contributors
+
+<a href="https://github.com/TeamUltroid/Ultroid/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=TeamUltroid/Ultroid" />
+</a>
+
+We are highly grateful for all the contributions made by our amazing community! ❤️
+
+---
+
 # License
 [![License](https://www.gnu.org/graphics/agplv3-155x51.png)](LICENSE)   
 Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html) v3 or later.
 
----
 
+---
 # Credits
 * [![TeamUltroid-Devs](https://img.shields.io/static/v1?label=Teamultroid&message=devs&color=critical)](https://t.me/UltroidDevs)
 * [Lonami](https://github.com/LonamiWebs/) for [Telethon.](https://github.com/LonamiWebs/Telethon)
