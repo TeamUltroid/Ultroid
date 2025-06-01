@@ -133,22 +133,37 @@ class UltroidWebServer:
 
     def run(self, host: str = "0.0.0.0", port: Optional[int] = None):
         """Run the web server with SSL if certificates are available"""
-        # Add cleanup on shutdown
-        self.app.on_shutdown.append(lambda app: self.cleanup())
-
-        if self.ssl_context:
-            logger.info(f"Starting HTTPS server on {host}:{port or self.port}")
-            web.run_app(
-                self.app,
-                host=host,
-                port=port or self.port,
-                ssl_context=self.ssl_context
-            )
-        else:
-            logger.info(f"Starting HTTP server on {host}:{port or self.port}")
-            web.run_app(self.app, host=host, port=port or self.port)
+        import asyncio
+        
+        async def _run_app():
+            # Add cleanup on shutdown
+            self.app.on_shutdown.append(lambda app: self.cleanup())
+            
+            runner = web.AppRunner(self.app)
+            await runner.setup()
+            
+            if self.ssl_context:
+                site = web.TCPSite(runner, host, port or self.port, ssl_context=self.ssl_context)
+                logger.info(f"Starting HTTPS server on {host}:{port or self.port}")
+            else:
+                site = web.TCPSite(runner, host, port or self.port)
+                logger.info(f"Starting HTTP server on {host}:{port or self.port}")
+                
+            await site.start()
+            
+            # Keep the server running
+            while True:
+                await asyncio.sleep(3600)  # Sleep for an hour
+                
+        # Create new event loop for this thread
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        
+        try:
+            loop.run_until_complete(_run_app())
+        except KeyboardInterrupt:
+            pass
+        finally:
+            loop.close()
 
 ultroid_server = UltroidWebServer()
-
-if __name__ == "__main__":
-    ultroid_server.run()

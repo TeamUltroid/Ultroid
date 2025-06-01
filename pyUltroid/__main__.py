@@ -25,6 +25,7 @@ def main():
         startup_stuff,
     )
     from .startup.loader import load_other_plugins
+    from threading import Thread
 
     try:
         from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -91,7 +92,7 @@ def main():
     ultroid_bot.run_in_loop(WasItRestart(udB))
 
     if Var.START_WEB:
-        ultroid_server.run()
+        Thread(target=ultroid_server.run).start()
 
     try:
         cleanup_cache()
