@@ -6,6 +6,10 @@ python-dotenv
 telegraph
 enhancer
 requests
+localdb.json
+gitpython
 aiohttp
+aiohttp-cors
 catbox-uploader
 cloudscraper
+pynacl
