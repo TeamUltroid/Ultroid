@@ -6,8 +6,11 @@
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
 from . import *
-from threading import Thread
+from logging import getLogger
 from pyUltroid.web.server import ultroid_server
+
+logger = getLogger(__name__)
+
 
 def main():
     import os
@@ -104,7 +107,46 @@ def main():
     LOGS.info(suc_msg)
 
 
+def run_indefinitely(max_wait: int = 3600 * 3): # 3 hours
+    """Run the assistant indefinitely with connection error handling and timeout.
+    
+    Args:
+        max_wait: Maximum time in seconds to keep retrying on connection errors.
+                 Defaults to 3 hours.
+    """
+    start_time = 0
+    retry_count = 0
+    backoff = 10  # Initial backoff time in seconds
+    
+    while True:
+        # Check if max wait time exceeded
+        if start_time and (time.time() - start_time) > max_wait:
+            logger.error(f"Max wait time of {max_wait} seconds reached, exiting")
+            exit(1)
+
+        try:
+            # Attempt to run the assistant
+            asst.run()
+        except ConnectionError as er:
+            # Track first connection error
+            if not start_time:
+                start_time = time.time()
+                
+            retry_count += 1
+            wait_time = min(backoff * retry_count, 300)  # Cap at 5 minutes
+            
+            logger.error(
+                f"ConnectionError: {er}, attempt {retry_count}, "
+                f"waiting {wait_time} seconds"
+            )
+            time.sleep(wait_time)
+            continue
+
+        except Exception as er:
+            logger.exception(f"Fatal error occurred: {er}")
+            exit(1)
+
 if __name__ == "__main__":
     main()
 
-    asst.run()
+    run_indefinitely()
