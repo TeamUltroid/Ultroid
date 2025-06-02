@@ -56,3 +56,4 @@ class Var:
 
     START_WEB = config("START_WEB", default=False, cast=bool)
     RENDER_WEB = config("RENDER_WEB", default=True, cast=bool)
+    MINIAPP_URL = config("MINIAPP_URL", default="http://localhost:8000")

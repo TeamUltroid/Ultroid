@@ -161,28 +161,32 @@ class UltroidWebServer:
         webapp_path = Path("resources/webapp")
         if success and webapp_path.exists():
             logger.info(f"Setting up webapp at {webapp_path.absolute()}")
-            
+            if Var.MINIAPP_URL:
+                with open(webapp_path / "config.json", "w") as f:
+                    config_data = {
+                        "apiUrl": Var.MINIAPP_URL,
+                    }
+                    json.dump(config_data, f, indent=4)
+
             # Add specific handler for root path to serve index.html
             index_file = webapp_path / "index.html"
             if index_file.exists():
+
                 async def root_handler(request):
                     logger.debug("Serving index.html for root path /")
                     return web.FileResponse(index_file)
-                
+
                 # Add root handler first to ensure it has priority
                 self.app.router.add_get("/", root_handler)
                 logger.info(f"Added specific route for / to serve {index_file}")
-            
-            # Simple approach - serve all static files directly
+
             try:
-                # Serve all static files from the webapp directory
                 self.app.router.add_static("/", path=webapp_path)
                 logger.info(f"Serving static files from {webapp_path}")
             except Exception as e:
                 logger.error(f"Failed to add static route: {e}", exc_info=True)
                 return
 
-            # Simple fallback handler for SPA routes
             async def handle_index(request):
                 index_file = webapp_path / "index.html"
                 if index_file.exists():
