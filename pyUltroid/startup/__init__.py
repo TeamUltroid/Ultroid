@@ -14,7 +14,6 @@ from ._extra import _ask_input
 from ..configs import Var
 
 
-
 def where_hosted():
     if os.getenv("DYNO"):
         return "heroku"
@@ -62,13 +61,14 @@ _ask_input()
 
 _LOG_FORMAT = "%(asctime)s | %(name)s [%(levelname)s] : %(message)s"
 basicConfig(
-        format=_LOG_FORMAT,
-        level=INFO,
-        datefmt="%m/%d/%Y, %H:%M:%S",
-        handlers=[FileHandler(file), StreamHandler()],
-    )
+    format=_LOG_FORMAT,
+    level=INFO,
+    datefmt="%m/%d/%Y, %H:%M:%S",
+    handlers=[FileHandler(file), StreamHandler()],
+)
 try:
     import coloredlogs
+
     coloredlogs.install(level=None, logger=LOGS, fmt=_LOG_FORMAT)
 except ImportError:
     pass

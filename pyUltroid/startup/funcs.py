@@ -90,6 +90,7 @@ async def autoupdate_local_database():
 def update_envs():
     """Update Var. attributes to udB"""
     from .. import udB
+
     _envs = [*list(os.environ)]
     if ".env" in os.listdir("."):
         [_envs.append(_) for _ in list(RepositoryEnv(config._find_file(".")).data)]
@@ -430,7 +431,6 @@ async def plug(plugin_channels):
                         os.remove(plugin)
         except Exception as er:
             LOGS.exception(er)
-
 
 
 async def ready():

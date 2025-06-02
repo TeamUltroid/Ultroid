@@ -46,3 +46,5 @@ bin-release/
 
 # fly.io configs
 fly.toml
+
+resources/webapp

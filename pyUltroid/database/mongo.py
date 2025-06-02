@@ -44,4 +44,3 @@ class MongoDB(BaseDatabase):
         self.dB.drop_database("UltroidDB")
         self._cache.clear()
         return True
-

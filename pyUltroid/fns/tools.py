@@ -118,7 +118,7 @@ async def metadata(file):
         raise DependencyMissingError(
             f"'{_}' is not installed!\nInstall it to use this command."
         )
-    
+
     data = {}
     _info = json.loads(out)["media"]
     if not _info:
@@ -391,61 +391,48 @@ class LogoHelper:
 async def get_paste(data: str, extension: str = "txt"):
     try:
         url = "https://spaceb.in/api/"
-        res = await async_searcher(url, json={"content": data, "extension": extension}, post=True, re_json=True)
+        res = await async_searcher(
+            url, json={"content": data, "extension": extension}, post=True, re_json=True
+        )
         return True, {
             "link": f"https://spaceb.in/{res['payload']['id']}",
-            "raw": f"https://spaceb.in/{res['payload']['id']}/raw"
+            "raw": f"https://spaceb.in/{res['payload']['id']}/raw",
         }
     except Exception:
         try:
             url = "https://dpaste.org/api/"
             data = {
-                'format': 'json',
-                'content': data.encode('utf-8'),
-                'lexer': extension,
-                'expires': '604800',  # expire in week
+                "format": "json",
+                "content": data.encode("utf-8"),
+                "lexer": extension,
+                "expires": "604800",  # expire in week
             }
             res = await async_searcher(url, data=data, post=True, re_json=True)
-            return True, {
-                "link": res["url"],
-                "raw": f'{res["url"]}/raw'
-            }
+            return True, {"link": res["url"], "raw": f'{res["url"]}/raw'}
         except Exception as e:
             LOGS.info(e)
-            return None, {
-                "link": None,
-                "raw": None,
-                "error": str(e)
-            }
+            return None, {"link": None, "raw": None, "error": str(e)}
+
 
 # https://stackoverflow.com/a/74563494
 
 
 async def get_google_images(query):
     """Get image results from Google Custom Search API.
-    
+
     Args:
         query (str): Search query string
-        
+
     Returns:
         list: List of dicts containing image info (title, link, source, thumbnail, original)
     """
     LOGS.info(f"Searching Google Images for: {query}")
-    
+
     # Google Custom Search API credentials
     google_keys = [
-        {
-            "key": "AIzaSyAj75v6vHWLJdJaYcj44tLz7bdsrh2g7Y0",
-            "cx": "712a54749d99a449e"
-        },
-        {
-            "key": "AIzaSyDFQQwPLCzcJ9FDao-B7zDusBxk8GoZ0HY", 
-            "cx": "001bbd139705f44a6"
-        },
-        {
-            "key": "AIzaSyD0sRNZUa8-0kq9LAREDAFKLNO1HPmikRU",
-            "cx": "4717c609c54e24250"
-        }
+        {"key": "AIzaSyAj75v6vHWLJdJaYcj44tLz7bdsrh2g7Y0", "cx": "712a54749d99a449e"},
+        {"key": "AIzaSyDFQQwPLCzcJ9FDao-B7zDusBxk8GoZ0HY", "cx": "001bbd139705f44a6"},
+        {"key": "AIzaSyD0sRNZUa8-0kq9LAREDAFKLNO1HPmikRU", "cx": "4717c609c54e24250"},
     ]
     key_index = random.randint(0, len(google_keys) - 1)
     GOOGLE_API_KEY = google_keys[key_index]["key"]
@@ -460,35 +447,39 @@ async def get_google_images(query):
             "&searchType=image"
             "&num=10"  # Number of results
         )
-        
+
         # Make API request
         response = await async_searcher(url, re_json=True)
         print("response")
         if not response or "items" not in response:
             LOGS.error("No results from Google Custom Search API")
             return []
-            
+
         # Process results
         google_images = []
         for item in response["items"]:
             try:
-                google_images.append({
-                    "title": item.get("title", ""),
-                    "link": item.get("contextLink", ""),  # Page containing image
-                    "source": item.get("displayLink", ""),
-                    "thumbnail": item.get("image", {}).get("thumbnailLink", item["link"]),
-                    "original": item["link"]  # Original image URL
-                })
+                google_images.append(
+                    {
+                        "title": item.get("title", ""),
+                        "link": item.get("contextLink", ""),  # Page containing image
+                        "source": item.get("displayLink", ""),
+                        "thumbnail": item.get("image", {}).get(
+                            "thumbnailLink", item["link"]
+                        ),
+                        "original": item["link"],  # Original image URL
+                    }
+                )
             except Exception as e:
                 LOGS.warning(f"Failed to process image result: {str(e)}")
                 continue
-                
+
         # Randomize results order
         random.shuffle(google_images)
-        
+
         LOGS.info(f"Found {len(google_images)} images for query: {query}")
         return google_images
-        
+
     except Exception as e:
         LOGS.exception(f"Error in get_google_images: {str(e)}")
         return []
@@ -506,6 +497,7 @@ async def get_chatbot_reply(message):
         return (await async_searcher(req_link, re_json=True)).get("response")
     except Exception:
         LOGS.info(f"**ERROR:**`{format_exc()}`")
+
 
 def check_filename(filroid):
     if os.path.exists(filroid):
@@ -724,7 +716,6 @@ def translate(text, lang_tgt="en", lang_src="auto", timeout=60, detect=False):
     return (text, None) if detect else text
 
 
-
 def cmd_regex_replace(cmd):
     return (
         cmd.replace("$", "")
@@ -744,8 +735,7 @@ def cmd_regex_replace(cmd):
 # ------------------------#
 
 
-class LottieException(Exception):
-    ...
+class LottieException(Exception): ...
 
 
 class TgConverter:
@@ -762,7 +752,7 @@ class TgConverter:
                 )
             else:
                 er, out = await bash(f"lottie_convert.py '{file}' '{out_path}'")
-            
+
             if er:
                 LOGS.error(f"Error in animated_sticker conversion: {er}")
                 if throw:
@@ -806,7 +796,7 @@ class TgConverter:
         try:
             image = Image.open(photo)
             original_size = (image.width, image.height)
-            
+
             if (image.width and image.height) < 512:
                 size1 = image.width
                 size2 = image.height
@@ -825,7 +815,7 @@ class TgConverter:
             else:
                 maxsize = (512, 512)
                 image.thumbnail(maxsize)
-            
+
             LOGS.info(f"Resized image from {original_size} to {image.size}")
             return image
         except Exception as e:
@@ -839,7 +829,9 @@ class TgConverter:
                 input_, name=output[:-5], remove=remove
             )
         if output.endswith(".gif"):
-            out, er = await bash(f"ffmpeg -i '{input_}' -an -sn -c:v copy '{output}.mp4' -y")
+            out, er = await bash(
+                f"ffmpeg -i '{input_}' -an -sn -c:v copy '{output}.mp4' -y"
+            )
             LOGS.info(f"FFmpeg output: {out}, Error: {er}")
         else:
             out, er = await bash(f"ffmpeg -i '{input_}' '{output}' -y")
@@ -856,7 +848,7 @@ class TgConverter:
             _ = await metadata(file)
             name += ".webm"
             h, w = _["height"], _["width"]
-            
+
             if h == w and h != 512:
                 h, w = 512, 512
             if h != 512 or w != 512:
@@ -864,19 +856,19 @@ class TgConverter:
                     h, w = 512, -1
                 if w > h:
                     h, w = -1, 512
-                    
+
             await bash(
                 f'ffmpeg -i "{file}" -preset fast -an -to 00:00:03 -crf 30 -bufsize 256k -b:v {_["bitrate"]} -vf "scale={w}:{h},fps=30" -c:v libvpx-vp9 "{name}" -y'
             )
-            
+
             if remove and os.path.exists(file):
                 os.remove(file)
                 LOGS.info(f"Removed original file: {file}")
-                
+
             if os.path.exists(name):
                 LOGS.info(f"Successfully created webm: {name}")
                 return name
-                
+
             LOGS.error(f"Webm creation failed - output file not created: {name}")
             return None
         except Exception as e:
@@ -891,37 +883,39 @@ class TgConverter:
             if not input_:
                 LOGS.error("Input file is None")
                 return None
-                
+
             if not os.path.exists(input_):
                 LOGS.error(f"Input file does not exist: {input_}")
                 return None
-                
+
             try:
                 import cv2
             except ImportError:
-                raise DependencyMissingError("This function needs 'cv2' to be installed.")
-                
+                raise DependencyMissingError(
+                    "This function needs 'cv2' to be installed."
+                )
+
             img = cv2.VideoCapture(input_)
             success, frame = img.read()
-            
+
             if not success:
                 LOGS.error(f"Failed to read frame from {input_}")
                 return None
-                
+
             cv2.imwrite(name, frame)
             img.release()
-            
+
             if not os.path.exists(name):
                 LOGS.error(f"Failed to save image: {name}")
                 return None
-                
+
             if remove and os.path.exists(input_):
                 os.remove(input_)
                 LOGS.info(f"Removed original file: {input_}")
-                
+
             LOGS.info(f"Successfully converted to image: {name}")
             return name
-            
+
         except Exception as e:
             LOGS.exception(f"Error in to_image conversion: {str(e)}")
             return None
@@ -936,11 +930,11 @@ class TgConverter:
     ):
         """Convert between different file formats."""
         LOGS.info(f"Converting {input_file} to {convert_to or allowed_formats}")
-        
+
         if not input_file:
             LOGS.error("Input file is None")
             return None
-            
+
         if not os.path.exists(input_file):
             LOGS.error(f"Input file does not exist: {input_file}")
             return None
@@ -977,8 +971,10 @@ class TgConverter:
                         input_file, convert_to="gif", remove_old=remove_old
                     )
                     if gif_file:
-                        return await TgConverter.create_webm(gif_file, outname, remove=True)
-                        
+                        return await TgConverter.create_webm(
+                            gif_file, outname, remove=True
+                        )
+
             # Json -> Tgs
             elif ext == "json":
                 if recycle_type("tgs"):
@@ -986,7 +982,7 @@ class TgConverter:
                     return await TgConverter.animated_sticker(
                         input_file, name, remove=remove_old
                     )
-                    
+
             # Video to Something
             elif ext in ["webm", "mp4", "gif"]:
                 for exte in ["webm", "mp4", "gif"]:
@@ -997,14 +993,16 @@ class TgConverter:
                         )
                         if result:
                             return result
-                            
+
                 for exte in ["png", "jpg", "jpeg", "webp"]:
                     if recycle_type(exte):
                         name = outname + "." + exte
-                        result = TgConverter.to_image(input_file, name, remove=remove_old)
+                        result = TgConverter.to_image(
+                            input_file, name, remove=remove_old
+                        )
                         if result:
                             return result
-                            
+
             # Image to Something
             elif ext in ["jpg", "jpeg", "png", "webp"]:
                 for extn in ["png", "webp", "ico"]:
@@ -1020,7 +1018,7 @@ class TgConverter:
                         except Exception as e:
                             LOGS.error(f"Failed to convert image to {extn}: {str(e)}")
                             continue
-                            
+
                 for extn in ["webm", "gif", "mp4"]:
                     if recycle_type(extn):
                         name = outname + "." + extn
@@ -1038,10 +1036,12 @@ class TgConverter:
                             return await TgConverter.ffmpeg_convert(
                                 input_file, name, remove=remove_old
                             )
-                            
-            LOGS.error(f"No valid conversion found for {input_file} to {convert_to or allowed_formats}")
+
+            LOGS.error(
+                f"No valid conversion found for {input_file} to {convert_to or allowed_formats}"
+            )
             return None
-            
+
         except Exception as e:
             LOGS.exception(f"Error in convert: {str(e)}")
             return None

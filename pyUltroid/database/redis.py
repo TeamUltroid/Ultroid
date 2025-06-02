@@ -36,7 +36,6 @@ class RedisDB(BaseDatabase):
     def usage(self):
         return sum(self.db.memory_usage(x) for x in self.keys())
 
-
     def _setup_client(self, host, port, password, platform, **kwargs):
         if host and ":" in host:
             spli_ = host.split(":")

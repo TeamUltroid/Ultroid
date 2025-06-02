@@ -55,3 +55,4 @@ class Var:
     MONGO_URI = config("MONGO_URI", default=None)
 
     START_WEB = config("START_WEB", default=False, cast=bool)
+    RENDER_WEB = config("RENDER_WEB", default=True, cast=bool)

@@ -62,6 +62,7 @@ except ImportError:
 
 uploader = CatboxUploader()
 
+
 async def randomchannel(
     tochat, channel, range1, range2, caption=None, client=ultroid_bot
 ):
@@ -195,7 +196,7 @@ async def unsplashsearch(query, limit=None, shuf=True):
     all_ = res.find_all("img", srcset=re.compile("images.unsplash.com/photo"))
     if shuf:
         shuffle(all_)
-    return list(map(lambda e: e['src'], all_[:limit]))
+    return list(map(lambda e: e["src"], all_[:limit]))
 
 
 # ---------------- Random User Gen ----------------
