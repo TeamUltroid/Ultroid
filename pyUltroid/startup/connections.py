@@ -12,12 +12,14 @@ import sys
 
 from telethon.errors.rpcerrorlist import AuthKeyDuplicatedError
 from telethon.sessions.string import _STRUCT_PREFORMAT, CURRENT_VERSION, StringSession
+from logging import getLogger
 
 from ..configs import Var
-from . import *
 from .BaseClient import UltroidClient
 
 _PYRO_FORM = {351: ">B?256sI?", 356: ">B?256sQ?", 362: ">BI?256sQ?"}
+
+logger = getLogger(__name__)
 
 # https://github.com/pyrogram/pyrogram/blob/master/docs/source/faq/what-are-the-ip-addresses-of-telegram-data-centers.rst
 
@@ -30,7 +32,7 @@ DC_IPV4 = {
 }
 
 
-def validate_session(session, logger=LOGS, _exit=True):
+def validate_session(session, logger=logger, _exit=True):
     from strings import get_string
 
     if session:
@@ -78,7 +80,7 @@ def vc_connection(udB, ultroid_bot):
 
     VC_SESSION = Var.VC_SESSION or udB.get_key("VC_SESSION")
     if VC_SESSION and VC_SESSION != Var.SESSION:
-        LOGS.info("Starting up VcClient.")
+        logger.info("Starting up VcClient.")
         try:
             return UltroidClient(
                 validate_session(VC_SESSION, _exit=False),
@@ -86,9 +88,9 @@ def vc_connection(udB, ultroid_bot):
                 exit_on_error=False,
             )
         except (AuthKeyDuplicatedError, EOFError):
-            LOGS.info(get_string("py_c3"))
+            logger.info(get_string("py_c3"))
             udB.del_key("VC_SESSION")
         except Exception as er:
-            LOGS.info("While creating Client for VC.")
-            LOGS.exception(er)
+            logger.info("While creating Client for VC.")
+            logger.exception(er)
     return ultroid_bot
