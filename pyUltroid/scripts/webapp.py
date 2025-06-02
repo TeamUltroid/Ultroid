@@ -3,6 +3,7 @@ import zipfile
 import os
 import logging
 from pathlib import Path
+from pyUltroid.state_config import temp_config_store
 import shutil
 
 
@@ -10,6 +11,7 @@ async def fetch_recent_release():
     """
     Fetch the most recent release from GitHub, download the ultroid-dist.zip,
     and extract it to the webapp directory.
+    Skip download if the same version is already installed.
     """
     try:
         # Configuration
@@ -26,7 +28,7 @@ async def fetch_recent_release():
         # GitHub API endpoint to get the latest release
         api_url = f"https://api.github.com/repos/{repo}/releases/latest"
 
-        logging.info("Fetching latest webapp release...")
+        logging.info("Fetching latest webapp release info...")
 
         async with aiohttp.ClientSession() as session:
             # Get latest release info
@@ -38,6 +40,16 @@ async def fetch_recent_release():
                     return False
 
                 data = await response.json()
+                
+                # Get the release version/tag
+                latest_version = data.get("tag_name")
+                
+                # Check if we already have this version
+                current_version = temp_config_store.get("webapp_version")
+                
+                if current_version == latest_version and webapp_path.exists():
+                    logging.info(f"Webapp already at latest version {latest_version}. Skipping download.")
+                    return True
 
                 # Find the ultroid-dist.zip asset
                 asset_url = None
@@ -53,7 +65,7 @@ async def fetch_recent_release():
                     return False
 
                 # Download the zip file
-                logging.info(f"Downloading {zip_filename}...")
+                logging.info(f"Downloading {zip_filename} (version {latest_version})...")
                 async with session.get(asset_url) as zip_response:
                     if zip_response.status != 200:
                         logging.error(
@@ -79,8 +91,11 @@ async def fetch_recent_release():
 
         # Clean up the temporary zip file
         temp_zip.unlink()
+        
+        # Save the new version in config
+        temp_config_store.set("webapp_version", latest_version)
 
-        logging.info("Webapp successfully updated!")
+        logging.info(f"Webapp successfully updated to version {latest_version}!")
         return True
 
     except Exception as e:
