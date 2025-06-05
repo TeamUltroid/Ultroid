@@ -331,7 +331,8 @@ async def aexec(code, event):
         'reply': await event.get_reply_message(),
         'chat': event.chat_id,
         'u': u,
-        '__builtins__': __builtins__
+        '__builtins__': __builtins__,
+        '__name__': __name__
     }
     
     # Format the async function definition
