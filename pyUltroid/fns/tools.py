@@ -1081,10 +1081,12 @@ def safe_load(file, *args, **kwargs):
 
 
 def get_chat_and_msgid(link):
-    m = re.findall(r"t\.me\/(c\/)?(\d+)\/(\d+)", link)
+    m = re.findall(r"t\.me\/(c\/)?([^\/]+)\/(\d+)", link)
     if m:
-        _, chat, msg_id = m[0]
-        return int("-100" + chat) if _ else chat, int(msg_id)
+        is_channel, chat, msg_id = m[0]
+        if is_channel:
+            chat = int("-100" + chat)
+        return chat, int(msg_id)
 
     m = re.findall(r"user_id=(\d+)&message_id=(\d+)", link)
     if m:
