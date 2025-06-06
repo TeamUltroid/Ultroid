@@ -12,7 +12,8 @@ aiohttp
 aiohttp-cors
 catbox-uploader
 cloudscraper
-pynacltelegraph
+pynacl
+telegraph
 enhancer
 requests
 aiohttp
