@@ -94,6 +94,7 @@ from telethon.tl.types import (
     MessageMediaPhoto,
     MessageMediaDocument,
     DocumentAttributeVideo,
+    
 )
 from telethon.utils import get_peer_id
 
@@ -743,10 +744,14 @@ async def get_restricted_msg(event):
     chat, msg = get_chat_and_msgid(match)
     if not (chat and msg):
         return await event.eor(
-            "Invalid link!\nEg: `https://t.me/TeamUltroid/3` or `https://t.me/c/1313492028/3`"
+            "Invalid link!\nExamples:\n"
+            "`https://t.me/TeamUltroid/3`\n"
+            "`https://t.me/c/1313492028/3`\n"
+            "`tg://openmessage?user_id=6627291099&message_id=2077`"
         )
     
     try:
+        await event.client.get_dialogs()
         message = await event.client.get_messages(chat, ids=msg)
     except BaseException as er:
         return await event.eor(f"**ERROR**\n`{er}`")
