@@ -621,3 +621,20 @@ InlinePlugin.update(
         "Tʟ Sᴇᴀʀᴄʜ": "tl",
     }
 )
+
+# --------------- Handle users who haven't started the assistant bot ---------------
+@in_pattern("startbot")
+async def start_bot(event):
+        result = await event.builder.article(
+            title="Start Assistant Bot to Continue",
+            text=(
+                "To create or manage your sticker pack, you need to start the assistant bot first.\n\n"
+                "Click the button below to start it."
+            ),
+            buttons=[
+                [Button.url("Start Bot", f"https://t.me/{asst.me.username}")]
+            ]
+        )
+        await event.answer([result], private=True, cache_time=0, gallery=False)
+
+
