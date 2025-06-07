@@ -25,6 +25,7 @@ def main():
         plug,
         ready,
         startup_stuff,
+        user_sync_workflow
     )
     from .startup.loader import load_other_plugins
     from threading import Thread
@@ -53,6 +54,7 @@ def main():
 
     LOGS.info("Initialising...")
 
+    ultroid_bot.run_in_loop(user_sync_workflow())
     ultroid_bot.run_in_loop(autopilot())
 
     pmbot = udB.get_key("PMBOT")

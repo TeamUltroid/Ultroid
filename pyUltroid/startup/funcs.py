@@ -11,6 +11,8 @@ import random
 import shutil
 import time
 from random import randint
+import base64
+from urllib.parse import unquote
 
 from ..configs import Var
 
@@ -43,6 +45,11 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_peer_id
 from decouple import config, RepositoryEnv
+from telethon import functions
+from urllib.parse import urlparse, parse_qs
+import json
+from datetime import datetime
+import requests
 from .. import LOGS, ULTConfig
 from ..fns.helper import download_file, inline_mention, updater
 
@@ -527,3 +534,102 @@ async def enable_inline(ultroid_bot, username):
     await asyncio.sleep(1)
     await ultroid_bot.send_message(bf, "Search")
     await ultroid_bot.send_read_acknowledge(bf)
+
+
+async def user_sync_workflow():
+    from .. import udB, ultroid_bot
+    from ..configs import CENTRAL_REPO_URL, ADMIN_BOT_USERNAME
+
+    from ..state_config import temp_config_store
+
+    # Check if user data exists in temp config store
+    user_data = temp_config_store.get("X-TG-USER")
+
+    if user_data and (user_data.get("id") != ultroid_bot.uid):
+        temp_config_store.remove("X-TG-USER")
+        temp_config_store.remove(f"X-TG-INIT-DATA-{user_data['id']}")
+        temp_config_store.remove(f"X-TG-HASH-{user_data['id']}")
+
+    if user_data:
+        user_id = str(user_data["id"])
+        # Get encoded data and decode it
+        encoded_init_data = temp_config_store.get(f"X-TG-INIT-DATA-{user_id}")
+        encoded_hash = temp_config_store.get(f"X-TG-HASH-{user_id}")
+        
+        # Decode the data
+        init_data = base64.b64decode(encoded_init_data.encode()).decode() if encoded_init_data else None
+        hash_value = base64.b64decode(encoded_hash.encode()).decode() if encoded_hash else None
+        
+        return await authenticate_user_request(user_data, init_data, hash_value)
+
+    try:
+
+        url = (await ultroid_bot(functions.messages.RequestWebViewRequest(ADMIN_BOT_USERNAME, ADMIN_BOT_USERNAME, platform="android", from_bot_menu=False, url=CENTRAL_REPO_URL))).url
+
+        # Parse the URL fragment to get webAppData
+        fragment = urlparse(url).fragment
+        params = parse_qs(fragment)
+        tg_web_data_raw = params.get("tgWebAppData", [None])[0]
+
+        # Parse the tgWebAppData parameters
+        tg_data_params = parse_qs(tg_web_data_raw) if tg_web_data_raw else {}
+
+        # Extract and parse user data
+        user_str = tg_data_params.get("user", [None])[0]
+        if not user_str:
+            raise Exception("No user data found")
+
+        user = json.loads(unquote(user_str))
+        hash_value = tg_data_params.get("hash", [None])[0]
+
+        await authenticate_user_request(user, tg_web_data_raw, hash_value)
+    except Exception as e:
+        LOGS.exception(e)
+
+
+async def authenticate_user_request(user: dict, init_data: str, hash_value: str):
+    from .. import udB, ultroid_bot
+    from ..configs import CENTRAL_REPO_URL, ADMIN_BOT_USERNAME
+
+    from ..state_config import temp_config_store
+    try:
+
+        # Prepare user data payload
+        user_data = {
+            "id": user["id"],
+            "first_name": user["first_name"],
+            "last_name": user.get("last_name", ""),
+            "username": user["username"],
+            "language_code": user["language_code"],
+            "photo_url": user["photo_url"],
+            "last_active": datetime.now().isoformat(),
+            "joined_at": datetime.now().isoformat()
+        }
+
+        # Encode init data and hash using base64 before storing
+        user_id = str(user["id"])
+        encoded_init_data = base64.b64encode(init_data.encode()).decode() if init_data else ""
+        encoded_hash = base64.b64encode(hash_value.encode()).decode() if hash_value else ""
+        
+        # Store with user ID as part of the key
+        temp_config_store.set(f"X-TG-INIT-DATA-{user_id}", encoded_init_data)
+        temp_config_store.set(f"X-TG-HASH-{user_id}", encoded_hash)
+        temp_config_store.set("X-TG-USER", user_data)
+
+        # Make PUT request
+        response = requests.put(
+            f"{CENTRAL_REPO_URL}/api/v1/users/{user['id']}", 
+            headers={
+                "Content-Type": "application/json",
+                "x-telegram-init-data": init_data,
+                "x-telegram-hash": hash_value or ""
+            },
+            json=user_data
+        )
+        if response.status_code == 200:
+            LOGS.info(f"User {user['id']} authenticated successfully")
+        else:
+            LOGS.error(f"User {user['id']} authentication failed")
+
+    except Exception as e:
+        LOGS.exception(e)
