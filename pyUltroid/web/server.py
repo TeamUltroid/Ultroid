@@ -43,7 +43,7 @@ class UltroidWebServer:
         # Important: telegram_auth_middleware must come before no_cors_middleware
         self.app = web.Application(middlewares=[telegram_auth_middleware])
         self.setup_routes()
-        self.port = int(os.getenv("PORT", 8000))
+        self.port = Var.PORT
         self.bot = ultroid_bot
         self.ssl_context = None
 
