@@ -322,17 +322,17 @@ async def autopilot():
                 LOGS.info("Error while promoting assistant in Log Channel..")
                 LOGS.exception(er)
     if isinstance(chat.photo, ChatPhotoEmpty):
-        photo, _ = await download_file(
-            "https://graph.org/file/27c6812becf6f376cbb10.jpg", "channelphoto.jpg"
-        )
-        ll = await ultroid_bot.upload_file(photo)
         try:
+            photo, _ = await download_file(
+                "https://graph.org/file/27c6812becf6f376cbb10.jpg", "channelphoto.jpg"
+            )
+            ll = await ultroid_bot.upload_file(photo)
             await ultroid_bot(
                 EditPhotoRequest(int(channel), InputChatUploadedPhoto(ll))
             )
+            os.remove(photo)
         except BaseException as er:
             LOGS.exception(er)
-        os.remove(photo)
 
 
 # customize assistant
