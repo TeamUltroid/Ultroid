@@ -58,5 +58,5 @@ class Var:
     RENDER_WEB = config("RENDER_WEB", default=True, cast=bool)
     MINIAPP_URL = config("MINIAPP_URL", default="http://localhost:8000")
 
-CENTRAL_REPO_URL = "https://central.ultroid.org"
+CENTRAL_REPO_URL = "http://localhost:8888" #  "https://central.ultroid.org"
 ADMIN_BOT_USERNAME = "UltroidBot"

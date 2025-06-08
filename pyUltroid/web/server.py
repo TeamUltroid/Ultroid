@@ -18,8 +18,10 @@ import ssl
 from pathlib import Path
 from .tg_scraper import scraper
 from .middleware import telegram_auth_middleware
+import aiohttp_cors
 from .routers.admin import setup_admin_routes
 from .routers.plugins import setup_plugin_routes
+from .routers.miniapp import setup_miniapp_routes
 from .cache import owner_cache
 from ..configs import Var
 
@@ -28,38 +30,6 @@ logger = logging.getLogger(__name__)
 
 # Track server start time
 start_time = time.time()
-
-@web.middleware
-async def no_cors_middleware(request: web.Request, handler):
-    """Middleware to disable CORS for all endpoints"""
-    # Get the origin from the request
-    origin = request.headers.get('Origin', '*')
-    
-    if request.method == "OPTIONS":
-        # Handle preflight requests with proper headers
-        response = web.Response(status=200)
-        response.headers.update({
-            'Access-Control-Allow-Origin': origin,
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Telegram-Init-Data',
-            'Access-Control-Allow-Credentials': 'true',
-            'Access-Control-Max-Age': '86400',  # 24 hours
-        })
-        return response
-    
-    # Process the actual request
-    response = await handler(request)
-    
-    # Add CORS headers to all responses
-    response.headers.update({
-        'Access-Control-Allow-Origin': origin,
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Telegram-Init-Data',
-        'Access-Control-Allow-Credentials': 'true',
-        'Access-Control-Max-Age': '86400',  # 24 hours
-    })
-    
-    return response
 
 class UltroidWebServer:
     def __init__(self):
@@ -71,7 +41,7 @@ class UltroidWebServer:
             logger.info("BOT_TOKEN is properly configured.")
 
         # Important: telegram_auth_middleware must come before no_cors_middleware
-        self.app = web.Application(middlewares=[telegram_auth_middleware, no_cors_middleware])
+        self.app = web.Application(middlewares=[telegram_auth_middleware])
         self.setup_routes()
         self.port = int(os.getenv("PORT", 8000))
         self.bot = ultroid_bot
@@ -79,18 +49,38 @@ class UltroidWebServer:
 
     def setup_routes(self):
         """Setup basic API routes"""
+        # Add routes
         self.app.router.add_get("/api/user", self.get_ultroid_owner_info)
         self.app.router.add_get("/health", self.health_check)
         self.app.router.add_post("/api/settings/miniapp", self.save_miniapp_settings)
         self.app.router.add_get("/api/settings/miniapp", self.get_miniapp_settings)
-        
-        # Setup admin routes
+
+        # Setup admin, plugin, and miniapp routes
         setup_admin_routes(self.app)
         logger.info("Admin routes configured at /api/admin/")
-        
-        # Setup plugin routes
+
         setup_plugin_routes(self.app)
         logger.info("Plugin routes configured at /api/v1/plugins/")
+
+        setup_miniapp_routes(self.app)
+        logger.info("MiniApp routes configured at /api/miniapp/")
+
+        # Configure CORS and apply to all routes
+        cors = aiohttp_cors.setup(
+            self.app,
+            defaults={
+                "*": aiohttp_cors.ResourceOptions(
+                    allow_credentials=True,
+                    expose_headers="*",
+                    allow_headers="*",
+                    allow_methods="*",
+                )
+            },
+        )
+
+        # Add CORS to all registered routes
+        for route in list(self.app.router.routes()):
+            cors.add(route)
 
     async def health_check(self, request: web.Request) -> web.Response:
         """Health check endpoint that doesn't require auth"""
@@ -250,49 +240,24 @@ class UltroidWebServer:
         await scraper.close()
         owner_cache.clear()
 
-    def run(self, host: str = "0.0.0.0", port: Optional[int] = None):
-        """Run the web server with SSL if certificates are available"""
-        import asyncio
+    async def start(self, host: str = "0.0.0.0", port: Optional[int] = None):
+        """Asynchronously starts the web server."""
+        if Var.RENDER_WEB:
+            logger.info("Setting up web app build...")
+            await self._setup_web_app_build()
 
-        async def _run_app():
-            # Add cleanup on shutdown
-            self.app.on_shutdown.append(lambda app: self.cleanup())
+        self.app.on_shutdown.append(self.cleanup)
 
-            runner = web.AppRunner(self.app)
-            await runner.setup()
-
-            if self.ssl_context:
-                site = web.TCPSite(
-                    runner, host, port or self.port, ssl_context=self.ssl_context
-                )
-                logger.info(f"Starting HTTPS server on {host}:{port or self.port}")
-            else:
-                site = web.TCPSite(runner, host, port or self.port)
-                logger.info(f"Starting HTTP server on {host}:{port or self.port}")
-
-            await site.start()
-
-            # Keep the server running
-            while True:
-                await asyncio.sleep(3600)  # Sleep for an hour
-
-        # Create new event loop for this thread
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-
-        try:
-            # Always set up web app build BEFORE starting the application
-            if Var.RENDER_WEB:
-                logger.info("Setting up web app build...")
-                # Run this synchronously BEFORE starting the app
-                loop.run_until_complete(self._setup_web_app_build())
-
-            # Now run the app after all routes are set up
-            loop.run_until_complete(_run_app())
-        except KeyboardInterrupt:
-            pass
-        finally:
-            loop.close()
+        runner = web.AppRunner(self.app)
+        await runner.setup()
+        
+        _port = port or self.port
+        site = web.TCPSite(runner, host, _port, ssl_context=self.ssl_context)
+        await site.start()
+        
+        logger.info(
+            f"Starting {'HTTPS' if self.ssl_context else 'HTTP'} server on {host}:{_port}"
+        )
 
 
 ultroid_server = UltroidWebServer()

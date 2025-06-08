@@ -12,7 +12,6 @@ import os
 from aiohttp import web
 import logging
 from .. import ultroid_bot
-import aiohttp_cors
 
 logger = logging.getLogger(__name__)
 
@@ -102,19 +101,6 @@ def setup_routes(app: web.Application, handlers: list[Callable]) -> None:
         app: aiohttp Application instance
         handlers: List of handler functions with route decorators
     """
-    # Setup CORS
-    cors = aiohttp_cors.setup(
-        app,
-        defaults={
-            "*": aiohttp_cors.ResourceOptions(
-                allow_credentials=True,
-                expose_headers="*",
-                allow_headers="*",
-                allow_methods=["GET", "POST", "OPTIONS", "PUT", "DELETE"],
-            )
-        },
-    )
-
     for handler in handlers:
         if hasattr(handler, "_route"):
             route_info = handler._route
@@ -122,13 +108,10 @@ def setup_routes(app: web.Application, handlers: list[Callable]) -> None:
             path = route_info["path"]
 
             # Add route to app
-            route = app.router.add_route(method, path, handler)
-
-            # Add CORS for this route
-            cors.add(route)
+            app.router.add_route(method, path, handler)
 
             logger.debug(
-                f"Added route with CORS: {method} {path} "
+                f"Added route: {method} {path} "
                 f"(auth: {route_info['authenticated']}, "
                 f"owner: {route_info['owner_only']})"
             )

@@ -28,7 +28,6 @@ def main():
         user_sync_workflow
     )
     from .startup.loader import load_other_plugins
-    from threading import Thread
 
     try:
         from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -96,7 +95,8 @@ def main():
     ultroid_bot.run_in_loop(WasItRestart(udB))
 
     if Var.START_WEB:
-        Thread(target=ultroid_server.run).start()
+        logger.info("Starting web server as a background task...")
+        asst.loop.create_task(ultroid_server.start())
 
     try:
         cleanup_cache()
