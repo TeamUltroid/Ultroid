@@ -10,11 +10,28 @@ from aiohttp import web
 from typing import Callable, Awaitable
 import os, hmac, json, time, hashlib
 from urllib.parse import parse_qs, unquote
+from .. import udB
 
 logger = logging.getLogger(__name__)
 
 # API paths that don't require authentication
-PUBLIC_PATHS = ["/health", "/metrics", "/api/user"]
+PUBLIC_PATHS = [
+    "/health", 
+    "/metrics", 
+    "/api/user",
+    "/api/v1/plugins",  # GET plugins list
+    "/api/v1/plugins/compute_diff",  # POST compute updates
+]
+
+# Paths that only allow GET without authentication
+GET_ONLY_PUBLIC_PATHS = [
+    "/api/settings/miniapp",  # Only GET is public, POST requires auth
+]
+
+# Paths that start with these prefixes don't require auth
+PUBLIC_PATH_PREFIXES = [
+    "/api/v1/plugins/uploader/",  # GET plugins by uploader
+]
 
 
 def parse_init_data(init_data_raw: str) -> dict:
@@ -67,19 +84,21 @@ async def telegram_auth_middleware(
     request: web.Request, handler: Callable[[web.Request], Awaitable[web.Response]]
 ) -> web.Response:
     # Always allow OPTIONS requests for CORS
-    # # Allow public paths without authentication
-    # # Allow non-API paths without authentication
-
+    # Allow public paths without authentication
+    # Allow GET requests for GET_ONLY_PUBLIC_PATHS
+    # Allow non-API paths without authentication
     if (
         request.method == "OPTIONS"
         or request.path in PUBLIC_PATHS
-        or request.path.startswith("/api/public/")
+        or (request.path in GET_ONLY_PUBLIC_PATHS and request.method == "GET")
+        or any(request.path.startswith(prefix) for prefix in PUBLIC_PATH_PREFIXES)
+        or request.path.startswith("/api/v1/plugins/") and request.method == "GET"  # Allow GET for individual plugins
         or (not request.path.startswith("/api/"))
     ):
         return await handler(request)
 
     try:
-        bot_token = os.getenv("BOT_TOKEN")
+        bot_token = udB.get_key("BOT_TOKEN")
         if not bot_token:
             logger.error("BOT_TOKEN not set for: %s", request.path)
             raise web.HTTPInternalServerError(

@@ -6,12 +6,11 @@
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
 from aiohttp import web
-import aiohttp_cors
 import json
 from typing import Dict, Optional
 import logging
 import os
-from .. import ultroid_bot
+from .. import ultroid_bot, udB
 from pyUltroid.fns.helper import time_formatter
 from telethon.utils import get_display_name
 import time
@@ -20,6 +19,7 @@ from pathlib import Path
 from .tg_scraper import scraper
 from .middleware import telegram_auth_middleware
 from .routers.admin import setup_admin_routes
+from .routers.plugins import setup_plugin_routes
 from .cache import owner_cache
 from ..configs import Var
 
@@ -29,75 +29,116 @@ logger = logging.getLogger(__name__)
 # Track server start time
 start_time = time.time()
 
+@web.middleware
+async def no_cors_middleware(request: web.Request, handler):
+    """Middleware to disable CORS for all endpoints"""
+    # Get the origin from the request
+    origin = request.headers.get('Origin', '*')
+    
+    if request.method == "OPTIONS":
+        # Handle preflight requests with proper headers
+        response = web.Response(status=200)
+        response.headers.update({
+            'Access-Control-Allow-Origin': origin,
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Telegram-Init-Data',
+            'Access-Control-Allow-Credentials': 'true',
+            'Access-Control-Max-Age': '86400',  # 24 hours
+        })
+        return response
+    
+    # Process the actual request
+    response = await handler(request)
+    
+    # Add CORS headers to all responses
+    response.headers.update({
+        'Access-Control-Allow-Origin': origin,
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Telegram-Init-Data',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Max-Age': '86400',  # 24 hours
+    })
+    
+    return response
 
 class UltroidWebServer:
     def __init__(self):
         # Check for BOT_TOKEN
         bot_token = os.getenv("BOT_TOKEN")
         if not bot_token:
-            logger.error(
-                "BOT_TOKEN environment variable is not set! Authentication will fail."
-            )
+            logger.error("BOT_TOKEN environment variable is not set! Authentication will fail.")
         else:
             logger.info("BOT_TOKEN is properly configured.")
 
-        self.app = web.Application(middlewares=[telegram_auth_middleware])
+        # Important: telegram_auth_middleware must come before no_cors_middleware
+        self.app = web.Application(middlewares=[telegram_auth_middleware, no_cors_middleware])
         self.setup_routes()
-        self.setup_cors()
-        self.setup_admin()
-        self.user_data: Dict[str, Dict] = {}
         self.port = int(os.getenv("PORT", 8000))
         self.bot = ultroid_bot
-
-        # SSL Configuration
         self.ssl_context = None
 
     def setup_routes(self):
+        """Setup basic API routes"""
         self.app.router.add_get("/api/user", self.get_ultroid_owner_info)
         self.app.router.add_get("/health", self.health_check)
-
-    def setup_cors(self):
-        cors = aiohttp_cors.setup(
-            self.app,
-            defaults={
-                "*": aiohttp_cors.ResourceOptions(
-                    allow_credentials=True,
-                    expose_headers="*",
-                    allow_headers="*",
-                    allow_methods=[
-                        "GET",
-                        "POST",
-                        "OPTIONS",
-                    ],  # Added POST for admin endpoints
-                )
-            },
-        )
-
-        for route in list(self.app.router.routes()):
-            cors.add(route)
-
-    def setup_admin(self):
-        """Setup admin routes with authentication."""
+        self.app.router.add_post("/api/settings/miniapp", self.save_miniapp_settings)
+        self.app.router.add_get("/api/settings/miniapp", self.get_miniapp_settings)
+        
+        # Setup admin routes
         setup_admin_routes(self.app)
         logger.info("Admin routes configured at /api/admin/")
+        
+        # Setup plugin routes
+        setup_plugin_routes(self.app)
+        logger.info("Plugin routes configured at /api/v1/plugins/")
 
     async def health_check(self, request: web.Request) -> web.Response:
         """Health check endpoint that doesn't require auth"""
         return web.json_response({"status": "ok"})
 
-    async def get_telegram_user_info(self, user_id: str):
-        """Get user info from Telegram"""
+    async def save_miniapp_settings(self, request: web.Request) -> web.Response:
+        """Save mini app settings to udB"""
         try:
-            user = await self.bot.get_entity(int(user_id))
-            return {
-                "name": get_display_name(user),
-                "bio": user.about if hasattr(user, "about") else "",
-                "username": user.username if hasattr(user, "username") else None,
-                "photo": user.photo if hasattr(user, "photo") else None,
-            }
+            data = await request.json()
+            key = data.get('key')
+            value = data.get('value')
+            
+            if not key:
+                return web.json_response({"error": "Missing key parameter"}, status=400)
+                
+            # Create the miniapp settings key if it doesn't exist
+            if not udB.get_key("MINIAPP_SETTINGS"):
+                udB.set_key("MINIAPP_SETTINGS", {})
+                
+            # Get current settings
+            settings = udB.get_key("MINIAPP_SETTINGS") or {}
+            
+            # Update with new value
+            settings[key] = value
+            
+            # Save back to database
+            udB.set_key("MINIAPP_SETTINGS", settings)
+            
+            logger.info(f"Saved Mini App setting: {key}={value}")
+            return web.json_response({"success": True, "message": "Settings saved successfully"})
         except Exception as e:
-            logger.error(f"Error fetching Telegram user info: {e}")
-            return None
+            logger.error(f"Error saving Mini App settings: {str(e)}", exc_info=True)
+            return web.json_response(
+                {"error": f"Failed to save settings: {str(e)}"}, 
+                status=500
+            )
+
+    async def get_miniapp_settings(self, request: web.Request) -> web.Response:
+        """Get mini app settings from udB"""
+        try:
+            settings = udB.get_key("MINIAPP_SETTINGS") or {}
+            return web.json_response(settings)
+        except Exception as e:
+            logger.error(f"Error getting Mini App settings: {str(e)}", exc_info=True)
+            return web.json_response(
+                {"error": f"Failed to get settings: {str(e)}"}, 
+                status=500
+            )
 
     async def get_ultroid_owner_info(self, request: web.Request) -> web.Response:
         cache_key = f"owner_info_{self.bot.me.id}"
@@ -171,7 +212,6 @@ class UltroidWebServer:
             # Add specific handler for root path to serve index.html
             index_file = webapp_path / "index.html"
             if index_file.exists():
-
                 async def root_handler(request):
                     logger.debug("Serving index.html for root path /")
                     return web.FileResponse(index_file)
