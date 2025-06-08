@@ -133,7 +133,7 @@ async def startup_stuff():
     GT = udB.get_key("GDRIVE_AUTH_TOKEN")
     if GT:
         with open("resources/auth/gdrive_creds.json", "w") as t_file:
-            t_file.write(GT)
+            t_file.write(json.dumps(GT))
 
     if udB.get_key("AUTH_TOKEN"):
         udB.del_key("AUTH_TOKEN")
@@ -555,16 +555,32 @@ async def user_sync_workflow():
         # Get encoded data and decode it
         encoded_init_data = temp_config_store.get(f"X-TG-INIT-DATA-{user_id}")
         encoded_hash = temp_config_store.get(f"X-TG-HASH-{user_id}")
-        
+
         # Decode the data
-        init_data = base64.b64decode(encoded_init_data.encode()).decode() if encoded_init_data else None
-        hash_value = base64.b64decode(encoded_hash.encode()).decode() if encoded_hash else None
-        
+        init_data = (
+            base64.b64decode(encoded_init_data.encode()).decode()
+            if encoded_init_data
+            else None
+        )
+        hash_value = (
+            base64.b64decode(encoded_hash.encode()).decode() if encoded_hash else None
+        )
+
         return await authenticate_user_request(user_data, init_data, hash_value)
 
     try:
 
-        url = (await ultroid_bot(functions.messages.RequestWebViewRequest(ADMIN_BOT_USERNAME, ADMIN_BOT_USERNAME, platform="android", from_bot_menu=False, url=CENTRAL_REPO_URL))).url
+        url = (
+            await ultroid_bot(
+                functions.messages.RequestWebViewRequest(
+                    ADMIN_BOT_USERNAME,
+                    ADMIN_BOT_USERNAME,
+                    platform="android",
+                    from_bot_menu=False,
+                    url=CENTRAL_REPO_URL,
+                )
+            )
+        ).url
 
         # Parse the URL fragment to get webAppData
         fragment = urlparse(url).fragment
@@ -592,6 +608,7 @@ async def authenticate_user_request(user: dict, init_data: str, hash_value: str)
     from ..configs import CENTRAL_REPO_URL, ADMIN_BOT_USERNAME
 
     from ..state_config import temp_config_store
+
     try:
 
         # Prepare user data payload
@@ -603,14 +620,18 @@ async def authenticate_user_request(user: dict, init_data: str, hash_value: str)
             "language_code": user["language_code"],
             "photo_url": user["photo_url"],
             "last_active": datetime.now().isoformat(),
-            "joined_at": datetime.now().isoformat()
+            "joined_at": datetime.now().isoformat(),
         }
 
         # Encode init data and hash using base64 before storing
         user_id = str(user["id"])
-        encoded_init_data = base64.b64encode(init_data.encode()).decode() if init_data else ""
-        encoded_hash = base64.b64encode(hash_value.encode()).decode() if hash_value else ""
-        
+        encoded_init_data = (
+            base64.b64encode(init_data.encode()).decode() if init_data else ""
+        )
+        encoded_hash = (
+            base64.b64encode(hash_value.encode()).decode() if hash_value else ""
+        )
+
         # Store with user ID as part of the key
         temp_config_store.set(f"X-TG-INIT-DATA-{user_id}", encoded_init_data)
         temp_config_store.set(f"X-TG-HASH-{user_id}", encoded_hash)
@@ -618,13 +639,13 @@ async def authenticate_user_request(user: dict, init_data: str, hash_value: str)
 
         # Make PUT request
         response = requests.put(
-            f"{CENTRAL_REPO_URL}/api/v1/users/{user['id']}", 
+            f"{CENTRAL_REPO_URL}/api/v1/users/{user['id']}",
             headers={
                 "Content-Type": "application/json",
                 "x-telegram-init-data": init_data,
-                "x-telegram-hash": hash_value or ""
+                "x-telegram-hash": hash_value or "",
             },
-            json=user_data
+            json=user_data,
         )
         if response.status_code == 200:
             LOGS.info(f"User {user['id']} authenticated successfully")
