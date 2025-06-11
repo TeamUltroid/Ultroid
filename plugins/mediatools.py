@@ -7,9 +7,6 @@
 """
 ✘ Commands Available -
 
-• `{i}mediainfo <reply to media>/<file path>/<url>`
-   To get info about it.
-
 • `{i}rotate <degree/angle> <reply to media>`
    Rotate any video/photo/media..
    Note : for video it should be angle of 90's

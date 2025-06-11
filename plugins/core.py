@@ -17,6 +17,9 @@ from pyUltroid.startup.loader import load_addons
 
 from . import LOGS, async_searcher, eod, get_string, safeinstall, ultroid_cmd, un_plug
 
+# TODO: Plugin install from api
+
+
 
 @ultroid_cmd(pattern="install", fullsudo=True)
 async def install(event):
