@@ -39,8 +39,6 @@ from urllib.parse import quote, unquote
 from telethon import Button
 from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
-if run_as_module:
-    from ..dB.filestore_db import get_stored_msg, store_msg
 
 try:
     import numpy as np
@@ -667,36 +665,6 @@ async def Carbon(
             f.write(con)
     return file
 
-
-async def get_file_link(msg):
-    from .. import udB
-
-    msg_id = await msg.forward_to(udB.get_key("LOG_CHANNEL"))
-    await msg_id.reply(
-        "**Message has been stored to generate a shareable link. Do not delete it.**"
-    )
-    msg_id = msg_id.id
-    msg_hash = secrets.token_hex(nbytes=8)
-    store_msg(msg_hash, msg_id)
-    return msg_hash
-
-
-async def get_stored_file(event, hash):
-    from .. import udB, asst
-
-    msg_id = get_stored_msg(hash)
-    if not msg_id:
-        return
-    try:
-        msg = await asst.get_messages(udB.get_key("LOG_CHANNEL"), ids=msg_id)
-    except Exception as er:
-        LOGS.warning(f"FileStore, Error: {er}")
-        return
-    if not msg_id:
-        return await asst.send_message(
-            event.chat_id, "__Message was deleted by owner!__", reply_to=event.id
-        )
-    await asst.send_message(event.chat_id, msg.text, file=msg.media, reply_to=event.id)
 
 
 def translate(text, lang_tgt="en", lang_src="auto", timeout=60, detect=False):

@@ -9,12 +9,11 @@ from . import get_help
 
 __doc__ = get_help("help_fileshare")
 
-import os
+import os, secrets
 
-from pyUltroid.dB.filestore_db import del_stored, get_stored_msg, list_all_stored_msgs
 from pyUltroid.fns.tools import get_file_link
 
-from . import HNDLR, asst, get_string, in_pattern, udB, ultroid_bot, ultroid_cmd
+from . import HNDLR, asst, get_string, in_pattern, udB, ultroid_bot, ultroid_cmd, LOGS
 
 
 @ultroid_cmd(pattern="store$")
@@ -93,3 +92,61 @@ async def file_short(event):
         text = f"{title}\n\nRead `{HNDLR}help fileshare` to know how to store."
         return await event.answer([await event.builder.article(title=title, text=text)])
     await event.answer(res, switch_pm="• File Store •", switch_pm_param="start")
+
+
+def get_stored():
+    return udB.get_key("FILE_STORE") or {}
+
+
+def store_msg(hash, msg_id):
+    all = get_stored()
+    all.update({hash: msg_id})
+    return udB.set_key("FILE_STORE", all)
+
+
+def list_all_stored_msgs():
+    all = get_stored()
+    return list(all.keys())
+
+
+def get_stored_msg(hash):
+    all = get_stored()
+    if all.get(hash):
+        return all[hash]
+
+
+def del_stored(hash):
+    all = get_stored()
+    all.pop(hash)
+    return udB.set_key("FILE_STORE", all)
+
+
+async def get_file_link(msg):
+    from .. import udB
+
+    msg_id = await msg.forward_to(udB.get_key("LOG_CHANNEL"))
+    await msg_id.reply(
+        "**Message has been stored to generate a shareable link. Do not delete it.**"
+    )
+    msg_id = msg_id.id
+    msg_hash = secrets.token_hex(nbytes=8)
+    store_msg(msg_hash, msg_id)
+    return msg_hash
+
+
+async def get_stored_file(event, hash):
+    from .. import udB, asst
+
+    msg_id = get_stored_msg(hash)
+    if not msg_id:
+        return
+    try:
+        msg = await asst.get_messages(udB.get_key("LOG_CHANNEL"), ids=msg_id)
+    except Exception as er:
+        LOGS.warning(f"FileStore, Error: {er}")
+        return
+    if not msg_id:
+        return await asst.send_message(
+            event.chat_id, "__Message was deleted by owner!__", reply_to=event.id
+        )
+    await asst.send_message(event.chat_id, msg.text, file=msg.media, reply_to=event.id)
