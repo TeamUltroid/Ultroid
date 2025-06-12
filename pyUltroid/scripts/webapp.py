@@ -40,15 +40,17 @@ async def fetch_recent_release():
                     return False
 
                 data = await response.json()
-                
+
                 # Get the release version/tag
                 latest_version = data.get("tag_name")
-                
+
                 # Check if we already have this version
                 current_version = temp_config_store.get("webapp_version")
-                
+
                 if current_version == latest_version and webapp_path.exists():
-                    logging.info(f"Webapp already at latest version {latest_version}. Skipping download.")
+                    logging.info(
+                        f"Webapp already at latest version {latest_version}. Skipping download."
+                    )
                     return True
 
                 # Find the ultroid-dist.zip asset
@@ -65,7 +67,9 @@ async def fetch_recent_release():
                     return False
 
                 # Download the zip file
-                logging.info(f"Downloading {zip_filename} (version {latest_version})...")
+                logging.info(
+                    f"Downloading {zip_filename} (version {latest_version})..."
+                )
                 async with session.get(asset_url) as zip_response:
                     if zip_response.status != 200:
                         logging.error(
@@ -91,7 +95,7 @@ async def fetch_recent_release():
 
         # Clean up the temporary zip file
         temp_zip.unlink()
-        
+
         # Save the new version in config
         temp_config_store.set("webapp_version", latest_version)
 

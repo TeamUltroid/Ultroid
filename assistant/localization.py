@@ -7,13 +7,12 @@
 
 import re
 
+from strings import get_languages, get_string
 from . import (
     Button,
     ULTConfig,
     callback,
     get_back_button,
-    get_languages,
-    get_string,
     udB,
 )
 

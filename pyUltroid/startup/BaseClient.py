@@ -113,6 +113,7 @@ class UltroidClient(TelegramClient):
         message = kwargs.get("message", f"Uploading {filename}...")
         by_bot = self._bot
         size = os.path.getsize(file)
+
         # Don't show progress bar when file size is less than 5MB.
         if size < 5 * 2**20:
             show_progress = False

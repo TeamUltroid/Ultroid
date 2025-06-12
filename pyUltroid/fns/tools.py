@@ -666,7 +666,6 @@ async def Carbon(
     return file
 
 
-
 def translate(text, lang_tgt="en", lang_src="auto", timeout=60, detect=False):
     pattern = r'(?s)class="(?:t0|result-container)">(.*?)<'
     escaped_text = quote(text.encode("utf8"))
@@ -1048,7 +1047,6 @@ def safe_load(file, *args, **kwargs):
     return out
 
 
-
 def get_chat_and_msgid(link):
     m = re.findall(r"t\.me\/(c\/)?([^\/]+)\/(\d+)", link)
     if m:
@@ -1063,4 +1061,3 @@ def get_chat_and_msgid(link):
 
 
 # --------- END --------- #
-

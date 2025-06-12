@@ -115,35 +115,13 @@ def update_envs():
 async def startup_stuff():
     from .. import udB
 
+    # Create essential directories first - fast operation
     x = ["resources/auth", "resources/downloads"]
     for x in x:
         if not os.path.isdir(x):
             os.mkdir(x)
 
-    CT = udB.get_key("CUSTOM_THUMBNAIL")
-    if CT:
-        path = "resources/extras/thumbnail.jpg"
-        ULTConfig.thumb = path
-        try:
-            await download_file(CT, path)
-        except Exception as er:
-            LOGS.exception(er)
-    elif CT is False:
-        ULTConfig.thumb = None
-    GT = udB.get_key("GDRIVE_AUTH_TOKEN")
-    if GT:
-        with open("resources/auth/gdrive_creds.json", "w") as t_file:
-            t_file.write(json.dumps(GT))
-
-    if udB.get_key("AUTH_TOKEN"):
-        udB.del_key("AUTH_TOKEN")
-
-    MM = udB.get_key("MEGA_MAIL")
-    MP = udB.get_key("MEGA_PASS")
-    if MM and MP:
-        with open(".megarc", "w") as mega:
-            mega.write(f"[Login]\nUsername = {MM}\nPassword = {MP}")
-
+    # Handle critical configuration first
     TZ = udB.get_key("TIMEZONE")
     if TZ and timezone:
         try:
@@ -158,6 +136,40 @@ async def startup_stuff():
             )
             os.environ["TZ"] = "UTC"
             time.tzset()
+
+    # Start background task for less critical operations
+    asyncio.create_task(_delayed_startup_operations())
+
+
+async def _delayed_startup_operations():
+    # These operations are moved to a separate function to run in background
+    from .. import udB, ULTConfig
+    from ..fns.helper import download_file
+
+    CT = udB.get_key("CUSTOM_THUMBNAIL")
+    if CT:
+        path = "resources/extras/thumbnail.jpg"
+        ULTConfig.thumb = path
+        try:
+            await download_file(CT, path)
+        except Exception as er:
+            LOGS.exception(er)
+    elif CT is False:
+        ULTConfig.thumb = None
+
+    GT = udB.get_key("GDRIVE_AUTH_TOKEN")
+    if GT:
+        with open("resources/auth/gdrive_creds.json", "w") as t_file:
+            t_file.write(json.dumps(GT))
+
+    if udB.get_key("AUTH_TOKEN"):
+        udB.del_key("AUTH_TOKEN")
+
+    MM = udB.get_key("MEGA_MAIL")
+    MP = udB.get_key("MEGA_PASS")
+    if MM and MP:
+        with open(".megarc", "w") as mega:
+            mega.write(f"[Login]\nUsername = {MM}\nPassword = {MP}")
 
 
 async def autobot():
@@ -229,8 +241,10 @@ async def autobot():
 
 
 async def autopilot():
+    # Split into critical and non-critical operations
     from .. import asst, udB, ultroid_bot
 
+    # Critical: Ensure LOG_CHANNEL exists
     channel = udB.get_key("LOG_CHANNEL")
     new_channel = None
     if channel:
@@ -240,8 +254,9 @@ async def autopilot():
             LOGS.exception(err)
             udB.del_key("LOG_CHANNEL")
             channel = None
-    if not channel:
 
+    if not channel:
+        # Create log channel if needed - this is critical for operation
         async def _save(exc):
             udB._cache["LOG_CHANNEL"] = ultroid_bot.me.id
             await asst.send_message(
@@ -252,6 +267,7 @@ async def autopilot():
             msg_ = "'LOG_CHANNEL' not found! Add it in order to use 'BOTMODE'"
             LOGS.error(msg_)
             return await _save(msg_)
+
         LOGS.info("Creating a Log Channel for You!")
         try:
             r = await ultroid_bot(
@@ -271,12 +287,25 @@ async def autopilot():
             LOGS.info(
                 "Something Went Wrong , Create A Group and set its id on config var LOG_CHANNEL."
             )
-
             return await _save(str(er))
+
         new_channel = True
         chat = r.chats[0]
         channel = get_peer_id(chat)
         udB.set_key("LOG_CHANNEL", channel)
+
+    # Start non-critical operations in background
+    asyncio.create_task(_delayed_autopilot(channel, new_channel))
+
+    return channel
+
+
+async def _delayed_autopilot(channel, new_channel):
+    # Non-critical autopilot operations
+    from .. import asst, udB, ultroid_bot
+    from ..fns.helper import download_file
+
+    # Handle assistant bot permissions in log channel
     assistant = True
     try:
         await ultroid_bot.get_permissions(int(channel), asst.me.username)
@@ -290,6 +319,7 @@ async def autopilot():
     except BaseException as er:
         assistant = False
         LOGS.exception(er)
+
     if assistant and new_channel:
         try:
             achat = await asst.get_entity(int(channel))
@@ -297,6 +327,7 @@ async def autopilot():
             achat = None
             LOGS.info("Error while getting Log channel from Assistant")
             LOGS.exception(er)
+
         if achat and not achat.admin_rights:
             rights = ChatAdminRights(
                 add_admins=True,
@@ -321,18 +352,25 @@ async def autopilot():
             except BaseException as er:
                 LOGS.info("Error while promoting assistant in Log Channel..")
                 LOGS.exception(er)
-    if isinstance(chat.photo, ChatPhotoEmpty):
-        try:
-            photo, _ = await download_file(
-                "https://graph.org/file/27c6812becf6f376cbb10.jpg", "channelphoto.jpg"
-            )
-            ll = await ultroid_bot.upload_file(photo)
-            await ultroid_bot(
-                EditPhotoRequest(int(channel), InputChatUploadedPhoto(ll))
-            )
-            os.remove(photo)
-        except BaseException as er:
-            LOGS.exception(er)
+
+    # Set channel photo - low priority
+    try:
+        chat = await ultroid_bot.get_entity(int(channel))
+        if isinstance(chat.photo, ChatPhotoEmpty):
+            try:
+                photo, _ = await download_file(
+                    "https://graph.org/file/27c6812becf6f376cbb10.jpg",
+                    "channelphoto.jpg",
+                )
+                ll = await ultroid_bot.upload_file(photo)
+                await ultroid_bot(
+                    EditPhotoRequest(int(channel), InputChatUploadedPhoto(ll))
+                )
+                os.remove(photo)
+            except BaseException as er:
+                LOGS.exception(er)
+    except Exception as e:
+        LOGS.exception(e)
 
 
 # customize assistant

@@ -17,6 +17,7 @@ from urllib.request import urlretrieve
 from PIL import Image
 import requests
 from .. import run_as_module
+
 if run_as_module:
     from ..configs import Var
 
@@ -351,49 +352,6 @@ async def downloader(filename, file, event, taime, msg):
 # @buddhhu
 
 
-async def async_searcher(
-    url: str,
-    post: bool = False,
-    head: bool = False,
-    headers: dict = None,
-    evaluate=None,
-    object: bool = False,
-    re_json: bool = False,
-    re_content: bool = False,
-    *args,
-    **kwargs,
-):
-    if aiohttp_client:
-        async with aiohttp_client(headers=headers) as client:
-            method = client.head if head else (client.post if post else client.get)
-            data = await method(url, *args, **kwargs)
-            if evaluate:
-                return await evaluate(data)
-            if re_json:
-                return await data.json()
-            if re_content:
-                return await data.read()
-            if head or object:
-                return data
-            return await data.text()
-    # elif requests:
-    #     method = requests.head if head else (requests.post if post else requests.get)
-    #     data = method(url, headers=headers, *args, **kwargs)
-    #     if re_json:
-    #         return data.json()
-    #     if re_content:
-    #         return data.content
-    #     if head or object:
-    #         return data
-    #     return data.text
-    else:
-        raise DependencyMissingError("install 'aiohttp' to use this.")
-
-
-# ~~~~~~~~~~~~~~~~~~~~DDL Downloader~~~~~~~~~~~~~~~~~~~~
-# @buddhhu @new-dev0
-
-
 async def download_file(link, name, validate=False):
     """for files, without progress callback with aiohttp"""
 
@@ -619,8 +577,6 @@ async def shutdown(ult):
         sys.exit()
 
 
-
-
 def resize_photo_sticker(photo):
     """Resize the given photo to 512x512 (for creating telegram sticker)."""
     image = Image.open(photo)
@@ -645,12 +601,10 @@ def resize_photo_sticker(photo):
     return image
 
 
-
 def fetch_sync(url, re_json=False, evaluate=None, method="GET", *args, **kwargs):
     methods = {"POST": requests.post, "HEAD": requests.head, "GET": requests.get}
     method = "POST" if kwargs.pop("post", False) else "GET"
     output = requests.request(method, url, *args, **kwargs)
-
 
     if callable(evaluate):
         return evaluate(output)

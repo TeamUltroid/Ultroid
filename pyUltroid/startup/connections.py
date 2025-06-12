@@ -23,14 +23,6 @@ logger = getLogger(__name__)
 
 # https://github.com/pyrogram/pyrogram/blob/master/docs/source/faq/what-are-the-ip-addresses-of-telegram-data-centers.rst
 
-DC_IPV4 = {
-    1: "149.154.175.53",
-    2: "149.154.167.51",
-    3: "149.154.175.100",
-    4: "149.154.167.91",
-    5: "91.108.56.130",
-}
-
 
 def validate_session(session, logger=logger, _exit=True):
     from strings import get_string
@@ -45,6 +37,14 @@ def validate_session(session, logger=logger, _exit=True):
 
         # Pyrogram Session
         elif len(session) in _PYRO_FORM.keys():
+            DC_IPV4 = {
+                1: "149.154.175.53",
+                2: "149.154.167.51",
+                3: "149.154.175.100",
+                4: "149.154.167.91",
+                5: "91.108.56.130",
+            }
+
             data_ = struct.unpack(
                 _PYRO_FORM[len(session)],
                 base64.urlsafe_b64decode(session + "=" * (-len(session) % 4)),

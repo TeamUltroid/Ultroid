@@ -16,8 +16,8 @@ logger = logging.getLogger(__name__)
 
 # API paths that don't require authentication
 PUBLIC_PATHS = [
-    "/health", 
-    "/metrics", 
+    "/health",
+    "/metrics",
     "/api/user",
     "/api/v1/plugins",  # GET plugins list
     "/api/v1/plugins/compute_diff",  # POST compute updates
@@ -92,7 +92,8 @@ async def telegram_auth_middleware(
         or request.path in PUBLIC_PATHS
         or (request.path in GET_ONLY_PUBLIC_PATHS and request.method == "GET")
         or any(request.path.startswith(prefix) for prefix in PUBLIC_PATH_PREFIXES)
-        or request.path.startswith("/api/v1/plugins/") and request.method == "GET"  # Allow GET for individual plugins
+        or request.path.startswith("/api/v1/plugins/")
+        and request.method == "GET"  # Allow GET for individual plugins
         or (not request.path.startswith("/api/"))
     ):
         return await handler(request)

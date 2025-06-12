@@ -31,12 +31,15 @@ logger = logging.getLogger(__name__)
 # Track server start time
 start_time = time.time()
 
+
 class UltroidWebServer:
     def __init__(self):
         # Check for BOT_TOKEN
         bot_token = os.getenv("BOT_TOKEN")
         if not bot_token:
-            logger.error("BOT_TOKEN environment variable is not set! Authentication will fail.")
+            logger.error(
+                "BOT_TOKEN environment variable is not set! Authentication will fail."
+            )
         else:
             logger.info("BOT_TOKEN is properly configured.")
 
@@ -90,32 +93,33 @@ class UltroidWebServer:
         """Save mini app settings to udB"""
         try:
             data = await request.json()
-            key = data.get('key')
-            value = data.get('value')
-            
+            key = data.get("key")
+            value = data.get("value")
+
             if not key:
                 return web.json_response({"error": "Missing key parameter"}, status=400)
-                
+
             # Create the miniapp settings key if it doesn't exist
             if not udB.get_key("MINIAPP_SETTINGS"):
                 udB.set_key("MINIAPP_SETTINGS", {})
-                
+
             # Get current settings
             settings = udB.get_key("MINIAPP_SETTINGS") or {}
-            
+
             # Update with new value
             settings[key] = value
-            
+
             # Save back to database
             udB.set_key("MINIAPP_SETTINGS", settings)
-            
+
             logger.info(f"Saved Mini App setting: {key}={value}")
-            return web.json_response({"success": True, "message": "Settings saved successfully"})
+            return web.json_response(
+                {"success": True, "message": "Settings saved successfully"}
+            )
         except Exception as e:
             logger.error(f"Error saving Mini App settings: {str(e)}", exc_info=True)
             return web.json_response(
-                {"error": f"Failed to save settings: {str(e)}"}, 
-                status=500
+                {"error": f"Failed to save settings: {str(e)}"}, status=500
             )
 
     async def get_miniapp_settings(self, request: web.Request) -> web.Response:
@@ -126,8 +130,7 @@ class UltroidWebServer:
         except Exception as e:
             logger.error(f"Error getting Mini App settings: {str(e)}", exc_info=True)
             return web.json_response(
-                {"error": f"Failed to get settings: {str(e)}"}, 
-                status=500
+                {"error": f"Failed to get settings: {str(e)}"}, status=500
             )
 
     async def get_ultroid_owner_info(self, request: web.Request) -> web.Response:
@@ -202,6 +205,7 @@ class UltroidWebServer:
             # Add specific handler for root path to serve index.html
             index_file = webapp_path / "index.html"
             if index_file.exists():
+
                 async def root_handler(request):
                     logger.debug("Serving index.html for root path /")
                     return web.FileResponse(index_file)
@@ -250,11 +254,11 @@ class UltroidWebServer:
 
         runner = web.AppRunner(self.app)
         await runner.setup()
-        
+
         _port = port or self.port
         site = web.TCPSite(runner, host, _port, ssl_context=self.ssl_context)
         await site.start()
-        
+
         logger.info(
             f"Starting {'HTTPS' if self.ssl_context else 'HTTP'} server on {host}:{_port}"
         )

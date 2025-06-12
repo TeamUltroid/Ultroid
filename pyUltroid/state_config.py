@@ -1,6 +1,7 @@
 import json, os
 from typing import Optional
 
+
 class TempConfigHandler:
     path = ".config/ultroid.json"
 
@@ -26,11 +27,12 @@ class TempConfigHandler:
                 return data.get(key)
         except (FileNotFoundError, json.JSONDecodeError):
             return None
-    
+
     def remove(self):
         try:
             os.remove(self.path)
         except FileNotFoundError:
             pass
+
 
 temp_config_store = TempConfigHandler()

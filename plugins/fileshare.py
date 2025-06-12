@@ -11,7 +11,6 @@ __doc__ = get_help("help_fileshare")
 
 import os, secrets
 
-from pyUltroid.fns.tools import get_file_link
 
 from . import HNDLR, asst, get_string, in_pattern, udB, ultroid_bot, ultroid_cmd, LOGS
 

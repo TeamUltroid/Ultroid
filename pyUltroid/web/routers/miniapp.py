@@ -92,11 +92,7 @@ async def handle_create_invoice(request: web.Request) -> web.Response:
         )
 
         # Export the invoice link
-        exported_invoice = await asst(
-            ExportInvoiceRequest(
-                invoice_media=invoice_media
-            )
-        )
+        exported_invoice = await asst(ExportInvoiceRequest(invoice_media=invoice_media))
 
         return web.json_response({"url": exported_invoice.url})
 
