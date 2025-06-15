@@ -29,6 +29,7 @@ configPaths = [
 
 
 def load_addons(plugin_name):
+    plugin_name = str(plugin_name)
     base_name = plugin_name.split("/")[-1].split("\\")[-1].replace(".py", "")
     if base_name.startswith("__"):
         return

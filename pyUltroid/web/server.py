@@ -67,8 +67,12 @@ class UltroidWebServer:
 
         setup_miniapp_routes(self.app)
         logger.info("MiniApp routes configured at /api/miniapp/")
-
-        # Configure CORS and apply to all routes
+        
+        # Add plugin installation routes
+        self.app.router.add_post("/api/plugins/install", self.install_plugin)
+        self.app.router.add_get("/api/plugins/installed", self.get_installed_plugins)
+        logger.info("Plugin installation routes configured at /api/plugins/")
+        
         cors = aiohttp_cors.setup(
             self.app,
             defaults={
@@ -77,11 +81,8 @@ class UltroidWebServer:
                     expose_headers="*",
                     allow_headers="*",
                     allow_methods="*",
-                )
-            },
-        )
-
-        # Add CORS to all registered routes
+                )            },
+        )        # Add CORS to all registered routes
         for route in list(self.app.router.routes()):
             cors.add(route)
 
@@ -90,47 +91,294 @@ class UltroidWebServer:
         return web.json_response({"status": "ok"})
 
     async def save_miniapp_settings(self, request: web.Request) -> web.Response:
-        """Save mini app settings to udB"""
+        """Save mini app and bot configuration settings to udB"""
         try:
             data = await request.json()
-            key = data.get("key")
-            value = data.get("value")
+            
+            # Handle both single key-value and multiple settings
+            settings_to_save = []
+            
+            if "key" in data and "value" in data:
+                # Single key-value pair
+                settings_to_save.append({"key": data["key"], "value": data["value"]})
+            elif "settings" in data:
+                # Multiple settings
+                settings_to_save = data["settings"]
+            else:
+                return web.json_response({"error": "Missing key/value or settings parameter"}, status=400)
 
-            if not key:
-                return web.json_response({"error": "Missing key parameter"}, status=400)
+            if not settings_to_save:
+                return web.json_response({"error": "No settings provided"}, status=400)
 
-            # Create the miniapp settings key if it doesn't exist
-            if not udB.get_key("MINIAPP_SETTINGS"):
-                udB.set_key("MINIAPP_SETTINGS", {})
+            # Bot configuration settings that should be stored directly in udB
+            bot_config_keys = [
+                "DUAL_MODE", "BOT_MODE", "HNDLR", "DUAL_HNDLR",
+                "SUDO", "SUDO_HNDLR", "ADDONS", "PLUGIN_CHANNEL", "EMOJI_IN_HELP",
+                "PMSETTING", "INLINE_PM", "PM_TEXT", "PMPIC", "PMWARNS", "AUTOAPPROVE",
+                "PMLOG", "PMLOGGROUP", "PMBOT", "STARTMSG", "STARTMEDIA", "BOT_INFO_START",
+                "ALIVE_TEXT", "ALIVE_PIC", "INLINE_PIC", "TAG_LOG", "FBAN_GROUP_ID",
+                "EXCLUDE_FED", "RMBG_API", "DEEP_AI", "OCR_API", "GDRIVE_FOLDER_ID",
+                "VC_SESSION", "PMBOT_FSUB"
+            ]
+            
+            # Get current miniapp settings once
+            miniapp_settings = udB.get_key("MINIAPP_SETTINGS") or {}
+            miniapp_settings_updated = False
+            
+            # Process all settings
+            for setting in settings_to_save:
+                key = setting.get("key")
+                value = setting.get("value")
+                
+                if not key:
+                    continue
+                    
+                if key in bot_config_keys:
+                    # Handle special data type conversions based on callbackstuffs.py
+                    if key == "PMWARNS":
+                        # PMWARNS should be stored as integer
+                        try:
+                            value = int(value)
+                        except (ValueError, TypeError):
+                            return web.json_response(
+                                {"error": f"PMWARNS must be a valid integer, got: {value}"}, status=400
+                            )
+                    elif key in ["DUAL_MODE", "BOT_MODE", "SUDO", "ADDONS", "PMSETTING", 
+                               "INLINE_PM", "AUTOAPPROVE", "PMLOG", "PMBOT"]:
+                        # Boolean settings that should be stored as string "True"/"False"
+                        if isinstance(value, bool):
+                            value = "True" if value else "False"
+                        elif value not in ["True", "False", True, False]:
+                            # Convert other truthy/falsy values
+                            value = "True" if value else "False"
+                    elif key == "PMBOT_FSUB" and isinstance(value, (list, tuple)):
+                        # PMBOT_FSUB should be stored as string representation of list
+                        value = str(value)
+                    elif key == "EXCLUDE_FED" and isinstance(value, str):
+                        # EXCLUDE_FED can be space-separated IDs, keep as string
+                        pass
+                    
+                    # Store bot configuration directly in udB
+                    udB.set_key(key, value)
+                    logger.info(f"Saved Bot config setting: {key}={value}")
+                else:
+                    # Store mini app settings in MINIAPP_SETTINGS
+                    miniapp_settings[key] = value
+                    miniapp_settings_updated = True
+                    logger.info(f"Saved Mini App setting: {key}={value}")
+            
+            # Save miniapp settings once if any were updated
+            if miniapp_settings_updated:
+                udB.set_key("MINIAPP_SETTINGS", miniapp_settings)
 
-            # Get current settings
-            settings = udB.get_key("MINIAPP_SETTINGS") or {}
-
-            # Update with new value
-            settings[key] = value
-
-            # Save back to database
-            udB.set_key("MINIAPP_SETTINGS", settings)
-
-            logger.info(f"Saved Mini App setting: {key}={value}")
+            saved_count = len(settings_to_save)
             return web.json_response(
-                {"success": True, "message": "Settings saved successfully"}
+                {"success": True, "message": f"{saved_count} setting(s) saved successfully"}
             )
         except Exception as e:
-            logger.error(f"Error saving Mini App settings: {str(e)}", exc_info=True)
+            logger.error(f"Error saving settings: {str(e)}", exc_info=True)
             return web.json_response(
                 {"error": f"Failed to save settings: {str(e)}"}, status=500
             )
-
+    
     async def get_miniapp_settings(self, request: web.Request) -> web.Response:
-        """Get mini app settings from udB"""
+        """Get mini app and bot configuration settings from udB"""
         try:
-            settings = udB.get_key("MINIAPP_SETTINGS") or {}
-            return web.json_response(settings)
+            # Get mini app settings
+            miniapp_settings = udB.get_key("MINIAPP_SETTINGS") or {}
+            
+            # Get bot configuration settings
+            bot_config_keys = [
+                "DUAL_MODE", "BOT_MODE", "HNDLR", "DUAL_HNDLR",
+                "SUDO", "SUDO_HNDLR", "ADDONS", "PLUGIN_CHANNEL", "EMOJI_IN_HELP",
+                "PMSETTING", "INLINE_PM", "PM_TEXT", "PMPIC", "PMWARNS", "AUTOAPPROVE",
+                "PMLOG", "PMLOGGROUP", "PMBOT", "STARTMSG", "STARTMEDIA", "BOT_INFO_START",
+                "ALIVE_TEXT", "ALIVE_PIC", "INLINE_PIC", "TAG_LOG", "FBAN_GROUP_ID",
+                "EXCLUDE_FED", "RMBG_API", "DEEP_AI", "OCR_API", "GDRIVE_FOLDER_ID",
+                "VC_SESSION", "PMBOT_FSUB"
+            ]
+            bot_settings = {}
+            
+            for key in bot_config_keys:
+                value = udB.get_key(key)
+                if value is not None:
+                    bot_settings[key] = value
+            
+            # Merge both settings (only include keys that have values)
+            all_settings = {**miniapp_settings, **bot_settings}
+            
+            return web.json_response(all_settings)
         except Exception as e:
-            logger.error(f"Error getting Mini App settings: {str(e)}", exc_info=True)
+            logger.error(f"Error getting settings: {str(e)}", exc_info=True)
             return web.json_response(
                 {"error": f"Failed to get settings: {str(e)}"}, status=500
+            )
+
+    async def install_plugin(self, request: web.Request) -> web.Response:
+        """Install a plugin by ID and store it in udB INSTALLED_PLUGINS"""
+        try:
+            # Check if user is authenticated
+            if not request.get('user'):
+                return web.json_response(
+                    {"error": "Authentication required"}, status=401
+                )
+
+            data = await request.json()
+            plugin_id = data.get("plugin_id")
+            
+            if not plugin_id:
+                return web.json_response(
+                    {"error": "Missing plugin_id parameter"}, status=400
+                )
+
+            # Import necessary modules for plugin installation
+            import aiohttp
+            import base64
+            from pathlib import Path
+            from ..configs import CENTRAL_REPO_URL
+            from ..state_config import temp_config_store
+
+            # Get authentication data
+            user_data = temp_config_store.get("X-TG-USER")
+            if not user_data:
+                return web.json_response(
+                    {"error": "No authentication data found"}, status=401
+                )
+
+            user_id = str(user_data["id"])
+            encoded_init_data = temp_config_store.get(f"X-TG-INIT-DATA-{user_id}")
+            encoded_hash = temp_config_store.get(f"X-TG-HASH-{user_id}")
+
+            if not encoded_init_data or not encoded_hash:
+                return web.json_response(
+                    {"error": "Missing authentication tokens"}, status=401
+                )
+
+            # Decode authentication data
+            init_data = base64.b64decode(encoded_init_data.encode()).decode()
+            hash_value = base64.b64decode(encoded_hash.encode()).decode()
+
+            async with aiohttp.ClientSession() as session:
+                # First, get plugin details
+                api_url = f"{CENTRAL_REPO_URL}/api/v1/plugins/{plugin_id}"
+                headers = {
+                    "Content-Type": "application/json",
+                    "X-Telegram-Init-Data": init_data,
+                    "X-Telegram-Hash": hash_value
+                }
+
+                async with session.get(api_url, headers=headers) as response:
+                    if response.status != 200:
+                        error_text = await response.text()
+                        return web.json_response(
+                            {"error": f"Failed to fetch plugin details: {error_text}"}, 
+                            status=response.status
+                        )
+                    
+                    plugin_data = await response.json()
+
+                # Download the plugin file
+                download_url = plugin_data.get("download_link")
+                if not download_url:
+                    return web.json_response(
+                        {"error": "Plugin download link not available"}, status=400
+                    )
+
+                async with session.get(download_url) as download_response:
+                    if download_response.status != 200:
+                        return web.json_response(
+                            {"error": "Failed to download plugin file"}, 
+                            status=download_response.status
+                        )
+                    
+                    plugin_content = await download_response.text()
+
+                # Create addons directory if it doesn't exist
+                addons_dir = Path("addons")
+                addons_dir.mkdir(exist_ok=True)
+
+                # Generate safe filename
+                plugin_title = plugin_data.get("title", "plugin")
+                file_path = plugin_data.get("file_path", "")
+                if file_path:
+                    safe_filename = Path(file_path).name
+                else:
+                    safe_filename = f"{plugin_title.lower().replace(' ', '_')}_{plugin_id}.py"
+
+                if not safe_filename.endswith('.py'):
+                    safe_filename += '.py'
+
+                target_path = addons_dir / safe_filename
+
+                # Write the plugin file
+                target_path.write_text(plugin_content, encoding='utf-8')
+
+                # Update installed plugins list in udB
+                installed_plugins = udB.get_key("INSTALLED_PLUGINS") or []
+                if str(plugin_id) not in installed_plugins:
+                    installed_plugins.append(str(plugin_id))
+                    udB.set_key("INSTALLED_PLUGINS", installed_plugins)
+
+                # Load the plugin dynamically
+                try:
+                    from ..loader import Loader
+                    from ..startup.utils import load_addons
+                    from ..startup.loader import _after_load
+                    
+                    # Load the specific plugin
+                    loader = Loader(path="addons", key="Addons")
+                    # Load only the newly installed plugin
+                    loader.load_single_plugin(
+                        target_path,
+                        func=load_addons,
+                        after_load=_after_load
+                    )
+                    
+                    logger.info(f"Successfully loaded plugin: {plugin_title}")
+                except Exception as load_error:
+                    logger.error(f"Error loading plugin {plugin_title}: {str(load_error)}")
+                
+                return web.json_response({
+                    "success": True,
+                    "message": f"Plugin '{plugin_title}' installed successfully",
+                    "plugin_id": plugin_id,
+                    "filename": safe_filename
+                })
+
+        except Exception as e:
+            logger.error(f"Error installing plugin: {str(e)}", exc_info=True)
+            return web.json_response(
+                {"error": f"Failed to install plugin: {str(e)}"}, status=500
+            )
+
+    async def get_installed_plugins(self, request: web.Request) -> web.Response:
+        """Get list of installed plugin IDs including official plugins from INCLUDE_ALL"""
+        try:
+            # Get manually installed plugins
+            installed_plugins = udB.get_key("INSTALLED_PLUGINS") or []
+            
+            # Get official plugins installed via INCLUDE_ALL
+            from ..state_config import temp_config_store
+            official_plugins_state = temp_config_store.get("OFFICIAL_PLUGINS_STATE")
+            
+            if official_plugins_state:
+                try:
+                    import json
+                    official_plugins = json.loads(official_plugins_state)
+                    # Add official plugin IDs to installed list
+                    for plugin_id in official_plugins.keys():
+                        if plugin_id not in installed_plugins:
+                            installed_plugins.append(plugin_id)
+                except Exception as e:
+                    logger.error(f"Error parsing official plugins state: {str(e)}")
+            
+            return web.json_response({
+                "installed_plugins": installed_plugins
+            })
+        except Exception as e:
+            logger.error(f"Error getting installed plugins: {str(e)}", exc_info=True)
+            return web.json_response(
+                {"error": f"Failed to get installed plugins: {str(e)}"}, status=500
             )
 
     async def get_ultroid_owner_info(self, request: web.Request) -> web.Response:

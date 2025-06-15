@@ -21,6 +21,7 @@ PUBLIC_PATHS = [
     "/api/user",
     "/api/v1/plugins",  # GET plugins list
     "/api/v1/plugins/compute_diff",  # POST compute updates
+    "/api/plugins/installed",  # GET installed plugins list
 ]
 
 # Paths that only allow GET without authentication

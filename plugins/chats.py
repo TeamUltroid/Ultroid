@@ -356,6 +356,7 @@ async def _(event):
         required_string = f"**>> Kicked** `{c} / {p}` **users**\n\n"
     else:
         required_string = f"**>> Total** `{p}` **users**\n\n"
+
     required_string += f"  `{HNDLR}rmusers deleted`  **••**  `{d}`\n"
     required_string += f"  `{HNDLR}rmusers empty`  **••**  `{y}`\n"
     required_string += f"  `{HNDLR}rmusers month`  **••**  `{m}`\n"

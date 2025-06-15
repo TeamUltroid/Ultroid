@@ -75,3 +75,34 @@ class Loader:
                 if func == import_module:
                     plugin = plugin.split(".")[-1]
                 after_load(self, modl, plugin_name=plugin)
+
+    def load_single_plugin(self, plugin_path, func=import_module, after_load=None):
+        """Load a single plugin file"""
+        try:
+            if not os.path.exists(plugin_path):
+                self._logger.error(f"Plugin file not found: {plugin_path}")
+                return False
+
+            plugin_name = os.path.basename(plugin_path).replace(".py", "")
+
+            if func == import_module:
+                # Convert file path to module path
+                plugin_module = str(plugin_path).replace(".py", "").replace("/", ".").replace("\\", ".")
+                modl = func(plugin_module)
+            else:
+                modl = func(plugin_path)
+
+            self._logger.info(f"Successfully loaded plugin: {plugin_name}")
+
+            if callable(after_load):
+                after_load(self, modl, plugin_name=plugin_name)
+
+            return True
+
+        except ModuleNotFoundError as er:
+            self._logger.error(f"{plugin_path}: '{er.name}' not installed!")
+            return False
+        except Exception as exc:
+            self._logger.error(f"pyUltroid - {self.key} - ERROR - {plugin_path}")
+            self._logger.exception(exc)
+            return False

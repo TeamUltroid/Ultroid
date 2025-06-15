@@ -29,6 +29,13 @@ def _after_load(loader, module, plugin_name=""):
         return
     from strings import get_help
 
+    # Normalize Addons plugin names by stripping last two hashes
+    normalized_name = plugin_name
+    if loader.key == "Addons" and plugin_name.count("_") >= 2:
+        normalized_name = "_".join(plugin_name.rsplit("_", 2)[:-2])
+    else:
+        normalized_name = plugin_name
+
     if doc_ := get_help(plugin_name) or module.__doc__:
         try:
             doc = doc_.format(i=HNDLR)
@@ -39,12 +46,12 @@ def _after_load(loader, module, plugin_name=""):
         if loader.key in HELP.keys():
             update_cmd = HELP[loader.key]
             try:
-                update_cmd.update({plugin_name: doc})
+                update_cmd.update({normalized_name: doc})
             except BaseException as er:
                 loader._logger.exception(er)
         else:
             try:
-                HELP.update({loader.key: {plugin_name: doc}})
+                HELP.update({loader.key: {normalized_name: doc}})
             except BaseException as em:
                 loader._logger.exception(em)
 

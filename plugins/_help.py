@@ -14,6 +14,7 @@ from telethon.tl.custom import Button
 
 from pyUltroid.dB._core import HELP, LIST
 from pyUltroid.fns.tools import cmd_regex_replace
+from pyUltroid.configs import Var
 
 from . import HNDLR, LOGS, OWNER_NAME, asst, get_string, inline_pic, udB, ultroid_cmd
 
