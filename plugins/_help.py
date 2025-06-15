@@ -17,40 +17,49 @@ from pyUltroid.fns.tools import cmd_regex_replace
 
 from . import HNDLR, LOGS, OWNER_NAME, asst, get_string, inline_pic, udB, ultroid_cmd
 
-_main_help_menu = [
-    [
-        Button.inline(get_string("help_4"), data="uh_Official_"),
-        Button.inline(get_string("help_5"), data="uh_Addons_"),
-    ],
-    [
-        Button.inline(get_string("help_6"), data="uh_VCBot_"),
-        Button.inline(get_string("help_7"), data="inlone"),
-    ],
-    [
-        Button.inline(get_string("help_8"), data="ownr"),
-        Button.url(
-            get_string("help_9"), url=f"https://t.me/{asst.me.username}?start=set"
-        ),
-    ],
-    [Button.inline(get_string("help_10"), data="close")],
-]
+def get_help_menu():
+    return [
+        [
+            Button.inline(get_string("help_4"), data="uh_Official_"),
+            Button.inline(get_string("help_5"), data="uh_Addons_"),
+        ],
+        [
+            Button.inline(get_string("help_6"), data="uh_VCBot_"),
+            Button.inline(get_string("help_7"), data="inlone"),
+        ],
+        [
+            Button.inline(get_string("help_8"), data="ownr"),
+            Button.url(
+                get_string("help_9"), url=f"https://t.me/{asst.me.username}?start=set"
+            ),
+        ],
+        [Button.inline(get_string("help_10"), data="close")],
+    ]
 
 
 @ultroid_cmd(pattern="help( (.*)|$)")
 async def _help(ult):
     plug = ult.pattern_match.group(1).strip()
     chat = await ult.get_chat()
+    _main_help_menu = get_help_menu()
     if plug:
         try:
+            # For Addons, allow lookup by base name (strip last two hashes)
+            plug_lookup = plug
+            if HELP.get("Addons") and plug not in HELP["Addons"]:
+                for addon_name in HELP["Addons"]:
+                    if addon_name.count("_") >= 2 and plug == addon_name.rsplit("_", 2)[0]:
+                        plug_lookup = addon_name
+                        break
             if plug in HELP["Official"]:
                 output = f"**Plugin** - `{plug}`\n"
                 for i in HELP["Official"][plug]:
                     output += i
                 output += "\n© @TeamUltroid"
                 await ult.eor(output)
-            elif HELP.get("Addons") and plug in HELP["Addons"]:
-                output = f"**Plugin** - `{plug}`\n"
-                for i in HELP["Addons"][plug]:
+            elif HELP.get("Addons") and plug_lookup in HELP["Addons"]:
+                output = f"**Plugin** - `{plug_lookup}`\n"
+                for i in HELP["Addons"][plug_lookup]:
                     output += i
                 output += "\n© @TeamUltroid"
                 await ult.eor(output)
@@ -63,7 +72,14 @@ async def _help(ult):
             else:
                 try:
                     x = get_string("help_11").format(plug)
-                    for d in LIST[plug]:
+                    # For Addons, allow lookup by base name in LIST as well
+                    plug_list_lookup = plug
+                    if plug not in LIST and HELP.get("Addons"):
+                        for addon_name in LIST:
+                            if addon_name.count("_") >= 2 and plug == addon_name.rsplit("_", 2)[0]:
+                                plug_list_lookup = addon_name
+                                break
+                    for d in LIST[plug_list_lookup]:
                         x += HNDLR + d
                         x += "\n"
                     x += "\n© @TeamUltroid"
@@ -85,8 +101,13 @@ async def _help(ult):
                         text = f"`{plug}` is not a valid plugin!"
                         best_match = None
                         for _ in compare_strings:
-                            if plug in _ and not _.startswith("_"):
-                                best_match = _
+                            cmp = _
+                            # For Addons, strip last two hashes for matching
+                            if HELP.get("Addons") and _ in HELP["Addons"]:
+                                if _.count("_") >= 2:
+                                    cmp = _.rsplit("_", 2)[0]
+                            if plug in cmp and not cmp.startswith("_"):
+                                best_match = cmp
                                 break
                         if best_match:
                             text += f"\nDid you mean `{best_match}`?"

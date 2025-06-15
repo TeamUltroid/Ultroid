@@ -60,5 +60,6 @@ class Var:
     MINIAPP_URL = config("MINIAPP_URL", default=f"http://localhost:{PORT}")
 
 
-CENTRAL_REPO_URL = "https://central.ultroid.org"
+CENTRAL_REPO_URL = "http://localhost:8055"
+# CENTRAL_REPO_URL = "https://central.ultroid.org"
 ADMIN_BOT_USERNAME = "UltroidBot"

@@ -32,7 +32,7 @@ from . import (
     start_time,
     udB,
 )
-from ._help import _main_help_menu
+from ._help import get_help_menu
 
 # ================================================#
 
@@ -57,6 +57,7 @@ SUP_BUTTONS = [
 
 # --------------------BUTTONS--------------------#
 
+DELIM = "$$$"
 
 @in_pattern(owner=True, func=lambda x: not x.text)
 async def inline_alive(o):
@@ -103,11 +104,11 @@ async def inline_handler(event):
             file=inline_pic(),
             link_preview=False,
             text=text,
-            buttons=_main_help_menu,
+            buttons=get_help_menu(),
         )
     else:
         result = await event.builder.article(
-            title="Ultroid Help Menu", text=text, buttons=_main_help_menu
+            title="Ultroid Help Menu", text=text, buttons=get_help_menu()
         )
     await event.answer([result], private=True, cache_time=300, gallery=True)
 
@@ -167,7 +168,11 @@ _strings = {"Official": helps, "Addons": zhelps, "VCBot": get_string("inline_6")
 
 @callback(re.compile("uh_(.*)"), owner=True)
 async def help_func(ult):
-    key, count = ult.data_match.group(1).decode("utf-8").split("_")
+    data = ult.data_match.group(1).decode("utf-8")
+    if DELIM in data:
+        key, count = data.split(DELIM)
+    else:
+        key, count = data.split("_")
     if key == "VCBot" and HELP.get("VCBot") is None:
         return await ult.answer(get_string("help_12"), alert=True)
     elif key == "Addons" and HELP.get("Addons") is None:
@@ -181,10 +186,14 @@ async def help_func(ult):
 
 @callback(re.compile("uplugin_(.*)"), owner=True)
 async def uptd_plugin(event):
-    key, file = event.data_match.group(1).decode("utf-8").split("_")
+    data = event.data_match.group(1).decode("utf-8")
+    if DELIM in data:
+        key, file = data.split(DELIM, 1)
+    else:
+        key, file = data.split("_", 1)
     index = None
     if "|" in file:
-        file, index = file.split("|")
+        file, index = file.split("|", 1)
     key_ = HELP.get(key, [])
     hel_p = f"Plugin Name - `{file}`\n"
     help_ = ""
@@ -202,23 +211,23 @@ async def uptd_plugin(event):
     help_ += "\n© @TeamUltroid"
     buttons = []
     if inline_pic():
-        data = f"sndplug_{key}_{file}"
+        data_btn = f"sndplug{DELIM}{key}{DELIM}{file}"
         if index is not None:
-            data += f"|{index}"
+            data_btn += f"|{index}"
         buttons.append(
             [
                 Button.inline(
                     "« Sᴇɴᴅ Pʟᴜɢɪɴ »",
-                    data=data,
+                    data=data_btn,
                 )
             ]
         )
-    data = f"uh_{key}_"
+    data_back = f"uh_{key}{DELIM}"
     if index is not None:
-        data += f"|{index}"
+        data_back += f"|{index}"
     buttons.append(
         [
-            Button.inline("« Bᴀᴄᴋ", data=data),
+            Button.inline("« Bᴀᴄᴋ", data=data_back),
         ]
     )
     try:
@@ -309,7 +318,7 @@ async def opner(event):
             len(HELP.get("Addons", [])),
             len(z),
         ),
-        buttons=_main_help_menu,
+        buttons=get_help_menu(),
         link_preview=False,
     )
 
@@ -327,10 +336,14 @@ def page_num(index, key):
     cols = udB.get_key("HELP_COLUMNS") or 2
     loaded = HELP.get(key, [])
     emoji = udB.get_key("EMOJI_IN_HELP") or "✘"
-    List = [
-        Button.inline(f"{emoji} {x} {emoji}", data=f"uplugin_{key}_{x}|{index}")
-        for x in sorted(loaded)
-    ]
+    List = []
+    for x in sorted(loaded):
+        if key == "Addons":
+            # Efficiently remove last two hashes using rsplit
+            display_name = x.rsplit("_", 2)[0] if x.count("_") >= 2 else x
+        else:
+            display_name = x
+        List.append(Button.inline(f"{emoji} {display_name} {emoji}", data=f"uplugin_{key}{DELIM}{x}|{index}"))
     all_ = split_list(List, cols)
     fl_ = split_list(all_, rows)
     try:
@@ -341,19 +354,11 @@ def page_num(index, key):
     if index == 0 and len(fl_) == 1:
         new_.append([Button.inline("« Bᴀᴄᴋ »", data="open")])
     else:
-        new_.append(
-            [
-                Button.inline(
-                    "« Pʀᴇᴠɪᴏᴜs",
-                    data=f"uh_{key}_{index-1}",
-                ),
-                Button.inline("« Bᴀᴄᴋ »", data="open"),
-                Button.inline(
-                    "Nᴇxᴛ »",
-                    data=f"uh_{key}_{index+1}",
-                ),
-            ]
-        )
+        new_.append([
+            Button.inline("« Pʀᴇᴠɪᴏᴜs", data=f"uh_{key}{DELIM}{index-1}"),
+            Button.inline("« Bᴀᴄᴋ »", data="open"),
+            Button.inline("Nᴇxᴛ »", data=f"uh_{key}{DELIM}{index+1}"),
+        ])
     return new_
 
 

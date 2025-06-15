@@ -30,11 +30,6 @@ def main():
     )
     from .startup.loader import load_other_plugins
 
-    try:
-        from apscheduler.schedulers.asyncio import AsyncIOScheduler
-    except ImportError:
-        AsyncIOScheduler = None
-
     # Option to Auto Update On Restarts..
     if (
         udB.get_key("UPDATE_ON_RESTART")
@@ -60,7 +55,7 @@ def main():
     # Load plugins first to ensure core functionality is available
     # Store background tasks for later handling
     background_tasks = load_other_plugins(
-        addons=udB.get_key("ADDONS") or Var.ADDONS,
+        addons=udB.get_key("ADDONS") or Var.ADDONS or udB.get_key("INCLUDE_ALL"),
         pmbot=udB.get_key("PMBOT"),
         manager=udB.get_key("MANAGER"),
         vcbot=udB.get_key("VCBOT") or Var.VCBOT,
