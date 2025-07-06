@@ -60,7 +60,7 @@ async def _(e):
         LOGS.exception(er)
         await z.edit(get_string("cha_1"))
         return
-    async for msg in e.client.iter_messages(int(c), reverse=True):
+    async for msg in e.client.iter_messages(int(c), reverse=True, limit=None):
         try:
             await asyncio.sleep(2)
             await e.client.send_message(int(d), msg)
