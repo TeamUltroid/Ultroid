@@ -78,6 +78,21 @@ def ultroid_cmd(
 
     def decor(dec):
         async def wrapp(ult):
+            command_name = pattern if pattern else ult.text.split()[0].lstrip(HNDLR)
+            user_id = ult.sender_id
+            chat_id = ult.chat_id
+            chat_name = get_display_name(ult.chat)
+
+            LOGS.info(f"Command '{command_name}' executed by user ID {user_id} in chat {chat_id} ({chat_name})")
+            log_channel = udB.get_key("LOG_CHANNEL")
+            if log_channel:
+                try:
+                    await asst.send_message(
+                        log_channel,
+                        f"Command '{command_name}' executed by user ID {user_id} in chat {chat_id} ({chat_name})"
+                    )
+                except Exception as e:
+                    LOGS.warning(f"Failed to send command log to log channel {log_channel}: {e}")
             if not ult.out:
                 if owner_only:
                     return
