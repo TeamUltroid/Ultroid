@@ -73,6 +73,7 @@ from . import (
     download_file,
     eor,
     get_string,
+    ultroid_bot,
 )
 from . import humanbytes as hb
 from . import inline_mention, is_url_ok, json_parser, mediainfo, ultroid_cmd
