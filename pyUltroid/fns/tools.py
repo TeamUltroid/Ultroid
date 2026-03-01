@@ -498,12 +498,12 @@ async def get_google_images(query):
 
 
 async def get_chatbot_reply(message):
-    chatbot_base = "https://api.safone.dev/chatbot?query={}"
+    chatbot_base = "https://api.ryzenths.dpdns.org/api/v1/openai-v2?input={}"
     req_link = chatbot_base.format(
         message,
     )
     try:
-        return (await async_searcher(req_link, re_json=True)).get("response")
+        return (await async_searcher(req_link, re_json=True)).get("data").get("choices")[0].get("message").get("content")
     except Exception:
         LOGS.info(f"**ERROR:**`{format_exc()}`")
 
