@@ -339,19 +339,19 @@ async def _(event):
         dc_id = user.photo.dc_id
     else:
         dc_id = "Need a Profile Picture to check this"
-    caption = """<b>Exᴛʀᴀᴄᴛᴇᴅ Dᴀᴛᴀ Fʀᴏᴍ Tᴇʟᴇɢʀᴀᴍ's Dᴀᴛᴀʙᴀsᴇ<b>
-<b>••Tᴇʟᴇɢʀᴀᴍ ID</b>: <code>{}</code>
-<b>••Pᴇʀᴍᴀɴᴇɴᴛ Lɪɴᴋ</b>: <a href='tg://user?id={}'>Click Here</a>
-<b>••Fɪʀsᴛ Nᴀᴍᴇ</b>: <code>{}</code>
-<b>••Sᴇᴄᴏɴᴅ Nᴀᴍᴇ</b>: <code>{}</code>
-<b>••Bɪᴏ</b>: <code>{}</code>
-<b>••Dᴄ ID</b>: <code>{}</code>
-<b>••Nᴏ. Oғ PғPs</b> : <code>{}</code>
-<b>••Is Rᴇsᴛʀɪᴄᴛᴇᴅ</b>: <code>{}</code>
-<b>••Vᴇʀɪғɪᴇᴅ</b>: <code>{}</code>
-<b>••Is Pʀᴇᴍɪᴜᴍ</b>: <code>{}</code>
-<b>••Is A Bᴏᴛ</b>: <code>{}</code>
-<b>••Gʀᴏᴜᴘs Iɴ Cᴏᴍᴍᴏɴ</b>: <code>{}</code>
+    caption = """<b>Extracted Data From Telegram's Database</b>
+<b>• Telegram ID</b>: <code>{}</code>
+<b>• Permanent Link</b>: <a href='tg://user?id={}'>Click Here</a>
+<b>• First Name</b>: <code>{}</code>
+<b>• Last Name</b>: <code>{}</code>
+<b>• Bio</b>: <code>{}</code>
+<b>• DC ID</b>: <code>{}</code>
+<b>• Number of Profile Pictures</b>: <code>{}</code>
+<b>• Is Restricted</b>: <code>{}</code>
+<b>• Verified</b>: <code>{}</code>
+<b>• Is Premium</b>: <code>{}</code>
+<b>• Is A Bot</b>: <code>{}</code>
+<b>• Groups In Common</b>: <code>{}</code>
 """.format(
         user_id,
         user_id,

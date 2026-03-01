@@ -338,7 +338,7 @@ async def customize():
         chat_id = udB.get_key("LOG_CHANNEL")
         if asst.me.photo:
             return
-        LOGS.info("Customising Ur Assistant Bot in @BOTFATHER")
+        LOGS.info("Customising Your Assistant Bot in @BOTFATHER")
         UL = f"@{asst.me.username}"
         if not ultroid_bot.me.username:
             sir = ultroid_bot.me.first_name

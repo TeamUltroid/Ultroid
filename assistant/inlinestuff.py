@@ -73,14 +73,14 @@ async def _(e):
             version = data["version"]
             size = humanbytes(data["size"])
             release_date = datetime.utcfromtimestamp(data["date"]).strftime("%Y-%m-%d")
-            text = f"[\xad]({ofox})**OʀᴀɴɢᴇFᴏx Rᴇᴄᴏᴠᴇʀʏ Fᴏʀ**\n\n"
-            text += f"`  Fᴜʟʟ Nᴀᴍᴇ: {fullname}`\n"
-            text += f"`  Cᴏᴅᴇɴᴀᴍᴇ: {codename}`\n"
-            text += f"`  Mᴀɪɴᴛᴀɪɴᴇʀ: {maintainer}`\n"
-            text += f"`  Bᴜɪʟᴅ Tʏᴘᴇ: {release}`\n"
-            text += f"`  Vᴇʀsɪᴏɴ: {version}`\n"
-            text += f"`  Sɪᴢᴇ: {size}`\n"
-            text += f"`  Bᴜɪʟᴅ Dᴀᴛᴇ: {release_date}`"
+            text = f"[­]({ofox})**OrangeFox Recovery For**\n\n"
+            text += f"`  Full Name: {fullname}`\n"
+            text += f"`  Codename: {codename}`\n"
+            text += f"`  Maintainer: {maintainer}`\n"
+            text += f"`  Build Type: {release}`\n"
+            text += f"`  Version: {version}`\n"
+            text += f"`  Size: {size}`\n"
+            text += f"`  Build Date: {release_date}`"
             fox.append(
                 await e.builder.article(
                     title=f"{fullname}",
@@ -199,18 +199,18 @@ async def gsearch(q_event):
                     title=title,
                     description=desc,
                     thumb=wb(gugirl, 0, "image/jpeg", []),
-                    text=f"**Gᴏᴏɢʟᴇ Sᴇᴀʀᴄʜ**\n\n**••Tɪᴛʟᴇ••**\n`{title}`\n\n**••Dᴇsᴄʀɪᴘᴛɪᴏɴ••**\n`{desc}`",
+                    text=f"**Google Search**\n\n**• Title •**\n`{title}`\n\n**• Description •**\n`{desc}`",
                     link_preview=False,
                     buttons=[
-                        [Button.url("Lɪɴᴋ", url=f"{link}")],
+                        [Button.url("Link", url=f"{link}")],
                         [
                             Button.switch_inline(
-                                "Sᴇᴀʀᴄʜ Aɢᴀɪɴ",
+                                "Search Again",
                                 query="go ",
                                 same_peer=True,
                             ),
                             Button.switch_inline(
-                                "Sʜᴀʀᴇ",
+                                "Share",
                                 query=f"go {match}",
                                 same_peer=False,
                             ),
@@ -302,9 +302,9 @@ async def _(e):
         name = z["title"]
         desc = unescape(z["summary"])[:300].replace("<br>", "\n") + "..."
         dev = z["developer"]["devId"]
-        text = f"**••Aᴘᴘ Nᴀᴍᴇ••** [{name}]({url})\n"
-        text += f"**••Dᴇᴠᴇʟᴏᴘᴇʀ••** `{dev}`\n"
-        text += f"**••Dᴇsᴄʀɪᴘᴛɪᴏɴ••**\n`{desc}`"
+        text = f"**• App Name •** [{name}]({url})\n"
+        text += f"**• Developer •** `{dev}`\n"
+        text += f"**• Description •**\n`{desc}`"
         foles.append(
             await e.builder.article(
                 title=name,
@@ -313,10 +313,10 @@ async def _(e):
                 text=text,
                 link_preview=True,
                 buttons=[
-                    [Button.url("Lɪɴᴋ", url=url)],
+                    [Button.url("Link", url=url)],
                     [
                         Button.switch_inline(
-                            "Mᴏʀᴇ Aᴘᴘs",
+                            "More Apps",
                             query="app ",
                             same_peer=True,
                         ),

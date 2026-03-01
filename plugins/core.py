@@ -43,7 +43,7 @@ async def unload(event):
     elif zym in os.listdir("plugins"):
         return await event.eor(get_string("core_11"), time=3)
     else:
-        await event.eor(f"**Nᴏ Pʟᴜɢɪɴ Nᴀᴍᴇᴅ** `{shortname}`", time=3)
+        await event.eor(f"**No Plugin Named** `{shortname}`", time=3)
 
 
 @ultroid_cmd(
@@ -59,14 +59,14 @@ async def uninstall(event):
     if zym in lsd:
         try:
             un_plug(shortname)
-            await event.eor(f"**Uɴɪɴsᴛᴀʟʟᴇᴅ** `{shortname}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**", time=3)
+            await event.eor(f"**Uninstalled** `{shortname}` **successfully.**", time=3)
             os.remove(f"addons/{shortname}.py")
         except Exception as ex:
             return await event.eor(str(ex))
     elif zym in os.listdir("plugins"):
         return await event.eor(get_string("core_15"), time=3)
     else:
-        return await event.eor(f"**Nᴏ Pʟᴜɢɪɴ Nᴀᴍᴇᴅ** `{shortname}`", time=3)
+        return await event.eor(f"**No Plugin Named** `{shortname}`", time=3)
 
 
 @ultroid_cmd(

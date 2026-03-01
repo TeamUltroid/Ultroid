@@ -410,7 +410,7 @@ if udB.get_key("PMSETTING"):
         if user.id in DEVLIST:
             return await eor(
                 apprvpm,
-                "Lol, He is my Developer\nHe is auto Approved",
+                "This is a developer account.\nAutomatically approved.",
             )
         if not keym.contains(user.id):
             keym.add(user.id)
@@ -461,7 +461,7 @@ if udB.get_key("PMSETTING"):
         if user.id in DEVLIST:
             return await eor(
                 e,
-                "`Lol, He is my Developer\nHe Can't Be DisApproved.`",
+                "`This is a developer account.\nCannot be disapproved.`",
             )
         if keym.contains(user.id):
             keym.remove(user.id)
