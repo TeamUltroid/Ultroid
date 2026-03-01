@@ -35,11 +35,11 @@ check_dependencies() {
         # check dependencies if installed
         echo -e "Root access not found. Checking if dependencies are installed." >&2
         if ! [ -x "$(command -v python3)" ] || ! [ -x "$(command -v python)" ]; then
-            echo -e "Python3 isn't installed. Please install python3.8 or higher to run this bot." >&2
+            echo -e "Python3 isn't installed. Please install python3.10 or higher to run this bot." >&2
             exit 1
         fi
-        if [ $(python3 -c "import sys; print(sys.version_info[1])") -lt 8 ] || [ $(python -c "import sys; print(sys.version_info[1])") -lt 8 ]; then
-            echo -e "Python 3.8 or higher is required to run this bot." >&2
+        if [ $(python3 -c "import sys; print(sys.version_info[1])") -lt 10 ] || [ $(python -c "import sys; print(sys.version_info[1])") -lt 10 ]; then
+            echo -e "Python 3.10 or higher is required to run this bot." >&2
             exit 1
         fi
         # check if any of ffmpeg, mediainfo, neofetch, git is not installed
@@ -63,11 +63,11 @@ check_dependencies() {
     else
         echo -e "Unknown OS. Checking if dependecies are installed" >&2
         if ! [ -x "$(command -v python3)" ] || ! [ -x "$(command -v python)" ]; then
-            echo -e "Python3 isn't installed. Please install python3.8 or higher to run this bot." >&2
+            echo -e "Python3 isn't installed. Please install python3.10 or higher to run this bot." >&2
             exit 1
         fi
-        if [ $(python3 -c "import sys; print(sys.version_info[1])") -lt 8 ] || [ $(python -c "import sys; print(sys.version_info[1])") -lt 8 ]; then
-            echo -e "Python 3.8 or higher is required to run this bot." >&2
+        if [ $(python3 -c "import sys; print(sys.version_info[1])") -lt 10 ] || [ $(python -c "import sys; print(sys.version_info[1])") -lt 10 ]; then
+            echo -e "Python 3.10 or higher is required to run this bot." >&2
             exit 1
         fi
         if ! command -v ffmpeg &>/dev/null || ! command -v mediainfo &>/dev/null || ! command -v neofetch &>/dev/null || ! command -v git &>/dev/null; then
@@ -80,18 +80,18 @@ check_dependencies() {
 check_python() {
     # check if python is installed
     if ! command -v python3 &>/dev/null; then
-        echo -e "Python3 isn't installed. Please install python3.8 or higher to run this bot."
+        echo -e "Python3 isn't installed. Please install python3.10 or higher to run this bot."
         exit 1
     elif ! command -v python &>/dev/null; then
-        echo -e "Python3 isn't installed. Please install python3.8 or higher to run this bot."
+        echo -e "Python3 isn't installed. Please install python3.10 or higher to run this bot."
         exit 1
     fi
-    if [ $(python3 -c "import sys; print(sys.version_info[1])") -lt 8 ]; then
-        echo -e "Python 3.8 or higher is required to run this bot."
+    if [ $(python3 -c "import sys; print(sys.version_info[1])") -lt 10 ]; then
+        echo -e "Python 3.10 or higher is required to run this bot."
         exit 1
     elif [ $(python -c "import sys; print(sys.version_info[1])") -lt 3 ]; then
-        if [ $(python -c "import sys; print(sys.version_info[1])") -lt 8 ]; then
-            echo -e "Python 3.8 or higher is required to run this bot."
+        if [ $(python -c "import sys; print(sys.version_info[1])") -lt 10 ]; then
+            echo -e "Python 3.10 or higher is required to run this bot."
             exit 1
         fi
     fi
