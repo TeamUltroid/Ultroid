@@ -7,10 +7,22 @@
 
 import ast
 import os
+import re
+import subprocess
 import sys
 
 from .. import run_as_module
 from . import *
+
+# Regex to validate SQL identifier names (column names, etc.)
+_VALID_SQL_IDENTIFIER = re.compile(r"^[a-zA-Z_][a-zA-Z0-9_]*$")
+
+
+def _sanitize_sql_key(key):
+    """Validate that a key is a safe SQL identifier to prevent SQL injection."""
+    if not _VALID_SQL_IDENTIFIER.match(key):
+        raise ValueError(f"Invalid SQL identifier: {key!r}")
+    return key
 
 if run_as_module:
     from ..configs import Var
@@ -22,28 +34,28 @@ if Var.REDIS_URI or Var.REDISHOST:
         from redis import Redis
     except ImportError:
         LOGS.info("Installing 'redis' for database.")
-        os.system(f"{sys.executable} -m pip install -q redis hiredis")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "redis", "hiredis"])
         from redis import Redis
 elif Var.MONGO_URI:
     try:
         from pymongo import MongoClient
     except ImportError:
         LOGS.info("Installing 'pymongo' for database.")
-        os.system(f"{sys.executable} -m pip install -q pymongo[srv]")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "pymongo[srv]"])
         from pymongo import MongoClient
 elif Var.DATABASE_URL:
     try:
         import psycopg2
     except ImportError:
-        LOGS.info("Installing 'pyscopg2' for database.")
-        os.system(f"{sys.executable} -m pip install -q psycopg2-binary")
+        LOGS.info("Installing 'psycopg2' for database.")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "psycopg2-binary"])
         import psycopg2
 else:
     try:
         from localdb import Database
     except ImportError:
         LOGS.info("Using local file as database.")
-        os.system(f"{sys.executable} -m pip install -q localdb.json")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "localdb.json"])
         from localdb import Database
 
 # --------------------------------------------------------------------------------------------- #
@@ -199,6 +211,7 @@ class SqlDB(_BaseDatabase):
         return [_[0] for _ in data]
 
     def get(self, variable):
+        variable = _sanitize_sql_key(variable)
         try:
             self._cursor.execute(f"SELECT {variable} FROM Ultroid")
         except psycopg2.errors.UndefinedColumn:
@@ -212,6 +225,7 @@ class SqlDB(_BaseDatabase):
                     return i[0]
 
     def set(self, key, value):
+        key = _sanitize_sql_key(key)
         try:
             self._cursor.execute(f"ALTER TABLE Ultroid DROP COLUMN IF EXISTS {key}")
         except (psycopg2.errors.UndefinedColumn, psycopg2.errors.SyntaxError):
@@ -224,6 +238,7 @@ class SqlDB(_BaseDatabase):
         return True
 
     def delete(self, key):
+        key = _sanitize_sql_key(key)
         try:
             self._cursor.execute(f"ALTER TABLE Ultroid DROP COLUMN {key}")
         except psycopg2.errors.UndefinedColumn:

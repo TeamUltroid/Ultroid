@@ -10,9 +10,47 @@ from . import get_help
 
 __doc__ = get_help("help_calculator")
 
+import ast
+import operator
 import re
 
 from . import Button, asst, callback, get_string, in_pattern, udB, ultroid_cmd
+
+# Safe math operations for calculator - no arbitrary code execution
+_SAFE_MATH_OPS = {
+    ast.Add: operator.add,
+    ast.Sub: operator.sub,
+    ast.Mult: operator.mul,
+    ast.Div: operator.truediv,
+    ast.Mod: operator.mod,
+    ast.Pow: operator.pow,
+    ast.USub: operator.neg,
+    ast.UAdd: operator.pos,
+}
+
+
+def _safe_eval_math(expr):
+    """Safely evaluate a mathematical expression without using eval()."""
+    try:
+        tree = ast.parse(expr, mode="eval")
+    except SyntaxError:
+        raise ValueError(f"Invalid expression: {expr}")
+
+    def _eval_node(node):
+        if isinstance(node, ast.Expression):
+            return _eval_node(node.body)
+        elif isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
+            return node.value
+        elif isinstance(node, ast.BinOp) and type(node.op) in _SAFE_MATH_OPS:
+            left = _eval_node(node.left)
+            right = _eval_node(node.right)
+            return _SAFE_MATH_OPS[type(node.op)](left, right)
+        elif isinstance(node, ast.UnaryOp) and type(node.op) in _SAFE_MATH_OPS:
+            return _SAFE_MATH_OPS[type(node.op)](_eval_node(node.operand))
+        else:
+            raise ValueError(f"Unsupported expression")
+
+    return _eval_node(tree)
 
 CALC = {}
 
@@ -105,7 +143,7 @@ async def _(e):
         if get:
             if get.endswith(("*", ".", "/", "-", "+")):
                 get = get[:-1]
-            out = eval(get)
+            out = _safe_eval_math(get)
             try:
                 num = float(out)
                 await e.answer(f"Answer : {num}", cache_time=0, alert=True)
