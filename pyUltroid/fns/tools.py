@@ -5,6 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
+import ast
 import json
 import math
 import os
@@ -94,7 +95,10 @@ def json_parser(data, indent=None, ascii=False):
             if indent:
                 parsed = json.dumps(data, indent=indent, ensure_ascii=ascii)
     except JSONDecodeError:
-        parsed = eval(data)
+        try:
+            parsed = ast.literal_eval(data)
+        except (ValueError, SyntaxError):
+            parsed = data
     return parsed
 
 
@@ -1049,11 +1053,8 @@ class TgConverter:
 
 def _get_value(stri):
     try:
-        value = eval(stri.strip())
-    except Exception as er:
-        from .. import LOGS
-
-        LOGS.debug(er)
+        value = ast.literal_eval(stri.strip())
+    except (ValueError, SyntaxError):
         value = stri.strip()
     return value
 

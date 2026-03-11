@@ -54,10 +54,11 @@ class UltroidClient(TelegramClient):
     def __repr__(self):
         return f"<Ultroid.Client :\n self: {self.full_name}\n bot: {self._bot}\n>"
 
-    @property
-    def __dict__(self):
+    def as_dict(self):
+        """Return the client's user info as a dict."""
         if self.me:
             return self.me.to_dict()
+        return {}
 
     async def start_client(self, **kwargs):
         """function to start client"""
@@ -132,8 +133,9 @@ class UltroidClient(TelegramClient):
         from pyUltroid.fns.FastTelethon import upload_file
         from pyUltroid.fns.helper import progress
 
+        max_retries = 3
         raw_file = None
-        while not raw_file:
+        for attempt in range(max_retries):
             with open(file, "rb") as f:
                 raw_file = await upload_file(
                     client=self,
@@ -147,6 +149,11 @@ class UltroidClient(TelegramClient):
                     if show_progress
                     else None,
                 )
+            if raw_file:
+                break
+            self.logger.warning(f"Upload attempt {attempt + 1}/{max_retries} failed for {filename}")
+        if not raw_file:
+            raise RuntimeError(f"Failed to upload {filename} after {max_retries} attempts")
         cache = {
             "by_bot": by_bot,
             "size": size,
@@ -196,8 +203,9 @@ class UltroidClient(TelegramClient):
                 )
         message = kwargs.get("message", f"Downloading {filename}...")
 
+        max_retries = 3
         raw_file = None
-        while not raw_file:
+        for attempt in range(max_retries):
             with open(filename, "wb") as f:
                 raw_file = await download_file(
                     client=self,
@@ -211,6 +219,11 @@ class UltroidClient(TelegramClient):
                     if show_progress
                     else None,
                 )
+            if raw_file:
+                break
+            self.logger.warning(f"Download attempt {attempt + 1}/{max_retries} failed for {filename}")
+        if not raw_file:
+            raise RuntimeError(f"Failed to download {filename} after {max_retries} attempts")
         return raw_file, time.time() - start_time
 
     def run_in_loop(self, function):

@@ -64,11 +64,14 @@ from .FastTelethon import download_file as downloadable
 from .FastTelethon import upload_file as uploadable
 
 
+_shared_executor = ThreadPoolExecutor(max_workers=multiprocessing.cpu_count() * 5)
+
+
 def run_async(function):
     @wraps(function)
     async def wrapper(*args, **kwargs):
         return await asyncio.get_event_loop().run_in_executor(
-            ThreadPoolExecutor(max_workers=multiprocessing.cpu_count() * 5),
+            _shared_executor,
             partial(function, *args, **kwargs),
         )
 
@@ -453,7 +456,8 @@ def mediainfo(media):
                 i = str(media.document.attributes[0])
                 if "supports_streaming=True" in i:
                     m = "video"
-                m = "video as doc"
+                else:
+                    m = "video as doc"
             else:
                 m = "video"
         elif "audio" in mim:
