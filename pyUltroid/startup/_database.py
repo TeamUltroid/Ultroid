@@ -274,11 +274,11 @@ class RedisDB(_BaseDatabase):
         if platform.lower() == "qovery" and not host:
             var, hash_, host, password = "", "", "", ""
             for vars_ in os.environ:
-                if vars_.startswith("QOVERY_REDIS_") and vars.endswith("_HOST"):
+                if vars_.startswith("QOVERY_REDIS_") and vars_.endswith("_HOST"):
                     var = vars_
             if var:
                 hash_ = var.split("_", maxsplit=2)[1].split("_")[0]
-            if hash:
+            if hash_:
                 kwargs["host"] = os.environ.get(f"QOVERY_REDIS_{hash_}_HOST")
                 kwargs["port"] = os.environ.get(f"QOVERY_REDIS_{hash_}_PORT")
                 kwargs["password"] = os.environ.get(f"QOVERY_REDIS_{hash_}_PASSWORD")

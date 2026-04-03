@@ -18,6 +18,7 @@ def main():
         WasItRestart,
         autopilot,
         customize,
+        keep_redis_alive,
         plug,
         ready,
         startup_stuff,
@@ -49,6 +50,7 @@ def main():
     LOGS.info("Initialising...")
 
     ultroid_bot.run_in_loop(autopilot())
+    ultroid_bot.loop.create_task(keep_redis_alive())
 
     pmbot = udB.get_key("PMBOT")
     manager = udB.get_key("MANAGER")
