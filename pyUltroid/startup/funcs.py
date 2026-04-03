@@ -10,6 +10,7 @@ import os
 import random
 import shutil
 import time
+from datetime import datetime, timezone as dt_timezone
 from random import randint
 
 from ..configs import Var
@@ -47,6 +48,8 @@ from .. import LOGS, ULTConfig
 from ..fns.helper import download_file, inline_mention, updater
 
 db_url = 0
+REDIS_KEEPALIVE_KEY = "KEEP_ACTIVE"
+REDIS_KEEPALIVE_INTERVAL_SECONDS = 7 * 24 * 60 * 60
 
 
 async def autoupdate_local_database():
@@ -150,6 +153,33 @@ async def startup_stuff():
             )
             os.environ["TZ"] = "UTC"
             time.tzset()
+
+
+async def keep_redis_alive():
+    from .. import udB
+
+    if udB.name != "Redis":
+        return
+
+    interval = udB.get_key("REDIS_KEEPALIVE_INTERVAL")
+    try:
+        interval = int(interval) if interval else REDIS_KEEPALIVE_INTERVAL_SECONDS
+    except (TypeError, ValueError):
+        interval = REDIS_KEEPALIVE_INTERVAL_SECONDS
+    interval = max(interval, 60)
+
+    while True:
+        try:
+            now = datetime.now(dt_timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+            udB.set_key(REDIS_KEEPALIVE_KEY, f"Updated value at {now}")
+            LOGS.debug(
+                "Redis keepalive updated key '%s' (next run in %s seconds).",
+                REDIS_KEEPALIVE_KEY,
+                interval,
+            )
+        except Exception as exc:
+            LOGS.warning("Redis keepalive update failed: %s", exc)
+        await asyncio.sleep(interval)
 
 
 async def autobot():
