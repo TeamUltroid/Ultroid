@@ -1,12 +1,12 @@
 # Important Requirements here.
-telethon
-gitpython
+telethon>=1.42.0,<2.0
+gitpython>=3.1.40,<4.0
 https://github.com/New-dev0/Telethon-Patch/archive/main.zip
-python-decouple
-python-dotenv
-telegraph
+python-decouple>=3.8,<4.0
+python-dotenv>=1.0.0,<2.0
+telegraph>=2.2.0,<3.0
 enhancer
-requests
-aiohttp
+requests>=2.31.0,<3.0
+aiohttp>=3.9.0,<4.0
 catbox-uploader
-cloudscraper
+cloudscraper>=1.2.71,<2.0

@@ -41,8 +41,8 @@ class Terminal:
 
     def terminate(self, pid: int) -> bool:
         try:
-            self._processes.pop(pid)
-            self._processes[pid].kill()
+            process = self._processes.pop(pid)
+            process.kill()
             return True
         except KeyError:
             return False
@@ -65,12 +65,11 @@ class Terminal:
             error.append(err)
         return "\n".join(error)
 
-    @property
-    def _auto_remove_processes(self) -> None:
-        while self._processes:
-            for proc in self._processes.keys():
-                if proc.returncode is not None:  # process is still running
-                    try:
-                        self._processes.pop(proc)
-                    except KeyError:
-                        pass
+    def cleanup_finished_processes(self) -> None:
+        """Remove finished processes from the tracking dict."""
+        finished = [
+            pid for pid, proc in self._processes.items()
+            if proc.returncode is not None
+        ]
+        for pid in finished:
+            self._processes.pop(pid, None)
