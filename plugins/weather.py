@@ -18,6 +18,7 @@
 
 import datetime
 import time
+import asyncio
 from datetime import timedelta
 from json import JSONDecodeError
 
@@ -65,7 +66,7 @@ async def get_air_pollution_data(latitude, longitude, api_key):
         async with aiohttp.ClientSession(timeout=timeout) as session:
             async with session.get(url) as response:
                 data = await response.json()
-    except TimeoutError:
+    except (asyncio.TimeoutError, TimeoutError):
         LOGS.exception("OpenWeather air pollution request timed out.")
         return None, "Air quality lookup timed out. Please try again in a moment."
     except aiohttp.ClientError:
@@ -90,7 +91,7 @@ async def get_geocode_data(input_str: str):
         geo_url = f"https://geocode.xyz/{input_str}?json=1"
     try:
         geo_data = await async_searcher(geo_url, re_json=True, timeout=12)
-    except TimeoutError:
+    except (asyncio.TimeoutError, TimeoutError):
         LOGS.exception("Geocoding request timed out for location: %s", input_str)
         return None, "Geocoding timed out. Try city,country format."
     except aiohttp.ClientError:
@@ -129,10 +130,11 @@ async def weather(event):
         return
     elif input_str == "butler":
         await event.eor("Search butler,au for Australia.", time=5)
+        return
     sample_url = f"https://api.openweathermap.org/data/2.5/weather?q={input_str}&APPID={x}&units=metric"
     try:
         response_api = await async_searcher(sample_url, re_json=True)
-        if response_api["cod"] == 200:
+        if str(response_api.get("cod")) == "200":
             country_time_zone = int(response_api["timezone"])
             tz = f"{await get_timezone(country_time_zone)}"
             sun_rise_time = int(response_api["sys"]["sunrise"]) + country_time_zone
@@ -156,11 +158,11 @@ async def weather(event):
                 f"╰────────────────•\n\n"
             )
         else:
-            await msg.edit(response_api["message"])
-    except Exception as e:
+            await msg.edit(response_api.get("message", "Location not found. Try city,country format."))
+    except Exception:
         LOGS.exception("Weather lookup failed for input: %s", input_str)
         await event.eor(
-            f"Unable to fetch weather right now ({str(e)}). Try city,country format.",
+            "Unable to fetch weather right now. Try city,country format.",
             time=5,
         )
 
@@ -191,17 +193,21 @@ async def air_pollution(event):
     if air_error:
         await event.eor(air_error, time=5)
         return
-    await msg.edit(
-        f"{geocode_data['city']}, {geocode_data['prov']}\n\n"
-        f"╭────────────────•\n"
-        f"╰➢ **𝖠𝖰𝖨:** {air_pollution_data['main']['aqi']}\n"
-        f"╰➢ **𝖢𝖺𝗋𝖻𝗈𝗇 𝖬𝗈𝗇𝗈𝗑𝗂𝖽𝖾:** {air_pollution_data['components']['co']}µg/m³\n"
-        f"╰➢ **𝖭𝗂𝗍𝗋𝗈𝗀𝖾𝗇 𝖬𝗈𝗇𝗈𝗑𝗂𝖽𝖾:** {air_pollution_data['components']['no']}µg/m³\n"
-        f"╰➢ **𝖭𝗂𝗍𝗋𝗈𝗀𝖾𝗇 𝖣𝗂𝗈𝗑𝗂𝖽𝖾:** {air_pollution_data['components']['no2']}µg/m³\n"
-        f"╰➢ **𝖮𝗓𝗈𝗇𝖾:** {air_pollution_data['components']['o3']}µg/m³\n"
-        f"╰➢ **𝖲𝗎𝗅𝗉𝗁𝗎𝗋 𝖣𝗂𝗈𝗑𝗂𝖽𝖾:** {air_pollution_data['components']['so2']}µg/m³\n"
-        f"╰➢ **𝖠𝗆𝗆𝗈𝗇𝗂𝖺:** {air_pollution_data['components']['nh3']}µg/m³\n"
-        f"╰➢ **𝖥𝗂𝗇𝖾 𝖯𝖺𝗋𝗍𝗂𝖼𝗅𝖾𝗌 (PM₂.₅):** {air_pollution_data['components']['pm2_5']}\n"
-        f"╰➢ **𝖢𝗈𝖺𝗋𝗌𝖾 𝖯𝖺𝗋𝗍𝗂𝖼𝗅𝖾𝗌 (PM₁₀):** {air_pollution_data['components']['pm10']}\n"
-        f"╰────────────────•\n\n"
-    )
+    try:
+        await msg.edit(
+            f"{geocode_data['city']}, {geocode_data['prov']}\n\n"
+            f"╭────────────────•\n"
+            f"╰➢ **𝖠𝖰𝖨:** {air_pollution_data['main']['aqi']}\n"
+            f"╰➢ **𝖢𝖺𝗋𝖻𝗈𝗇 𝖬𝗈𝗇𝗈𝗑𝗂𝖽𝖾:** {air_pollution_data['components']['co']}µg/m³\n"
+            f"╰➢ **𝖭𝗂𝗍𝗋𝗈𝗀𝖾𝗇 𝖬𝗈𝗇𝗈𝗑𝗂𝖽𝖾:** {air_pollution_data['components']['no']}µg/m³\n"
+            f"╰➢ **𝖭𝗂𝗍𝗋𝗈𝗀𝖾𝗇 𝖣𝗂𝗈𝗑𝗂𝖽𝖾:** {air_pollution_data['components']['no2']}µg/m³\n"
+            f"╰➢ **𝖮𝗓𝗈𝗇𝖾:** {air_pollution_data['components']['o3']}µg/m³\n"
+            f"╰➢ **𝖲𝗎𝗅𝗉𝗁𝗎𝗋 𝖣𝗂𝗈𝗑𝗂𝖽𝖾:** {air_pollution_data['components']['so2']}µg/m³\n"
+            f"╰➢ **𝖠𝗆𝗆𝗈𝗇𝗂𝖺:** {air_pollution_data['components']['nh3']}µg/m³\n"
+            f"╰➢ **𝖥𝗂𝗇𝖾 𝖯𝖺𝗋𝗍𝗂𝖼𝗅𝖾𝗌 (PM₂.₅):** {air_pollution_data['components']['pm2_5']}\n"
+            f"╰➢ **𝖢𝗈𝖺𝗋𝗌𝖾 𝖯𝖺𝗋𝗍𝗂𝖼𝗅𝖾𝗌 (PM₁₀):** {air_pollution_data['components']['pm10']}\n"
+            f"╰────────────────•\n\n"
+        )
+    except (KeyError, TypeError):
+        LOGS.exception("Air pollution data missing display fields: %s", air_pollution_data)
+        await event.eor("Air quality data is incomplete for this location. Try city,country format.", time=5)
