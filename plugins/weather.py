@@ -30,8 +30,9 @@ from . import LOGS, async_searcher, get_string, udB, ultroid_cmd
 
 async def get_timezone(offset_seconds, use_utc=False):
     offset = timedelta(seconds=offset_seconds)
-    hours, remainder = divmod(offset.seconds, 3600)
-    sign = "+" if offset.total_seconds() >= 0 else "-"
+    total_seconds = int(offset.total_seconds())
+    hours = abs(total_seconds) // 3600
+    sign = "+" if total_seconds >= 0 else "-"
     timezone = "UTC" if use_utc else "GMT"
     if use_utc:
         for m in pytz.all_timezones:
