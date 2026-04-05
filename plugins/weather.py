@@ -18,18 +18,21 @@
 
 import datetime
 import time
+import asyncio
 from datetime import timedelta
+from json import JSONDecodeError
 
 import aiohttp
 import pytz
 
-from . import async_searcher, get_string, udB, ultroid_cmd
+from . import LOGS, async_searcher, get_string, udB, ultroid_cmd
 
 
 async def get_timezone(offset_seconds, use_utc=False):
     offset = timedelta(seconds=offset_seconds)
-    hours, remainder = divmod(offset.seconds, 3600)
-    sign = "+" if offset.total_seconds() >= 0 else "-"
+    total_seconds = int(offset.total_seconds())
+    hours = abs(total_seconds) // 3600
+    sign = "+" if total_seconds >= 0 else "-"
     timezone = "UTC" if use_utc else "GMT"
     if use_utc:
         for m in pytz.all_timezones:
@@ -58,15 +61,56 @@ async def getWindinfo(speed: str, degree: str) -> str:
     return f"[{dirs[ix % len(dirs)]}] {kmph}"
 
 async def get_air_pollution_data(latitude, longitude, api_key):
-    url = f"http://api.openweathermap.org/data/2.5/air_pollution?lat={latitude}&lon={longitude}&appid={api_key}"
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            data = await response.json()
-            if "list" in data:
-                air_pollution = data["list"][0]
-                return air_pollution
-            else:
-                return None
+    url = f"https://api.openweathermap.org/data/2.5/air_pollution?lat={latitude}&lon={longitude}&appid={api_key}"
+    timeout = aiohttp.ClientTimeout(total=12)
+    try:
+        async with aiohttp.ClientSession(timeout=timeout) as session:
+            async with session.get(url) as response:
+                data = await response.json()
+    except (asyncio.TimeoutError, TimeoutError):
+        LOGS.exception("OpenWeather air pollution request timed out.")
+        return None, "Air quality lookup timed out. Please try again in a moment."
+    except aiohttp.ClientError:
+        LOGS.exception("OpenWeather air pollution request failed.")
+        return None, "Unable to reach the air quality service right now. Try again soon."
+    except (aiohttp.ContentTypeError, JSONDecodeError, ValueError):
+        LOGS.exception("Invalid air pollution response payload.")
+        return None, "Air quality service returned invalid data. Please try again."
+
+    try:
+        air_pollution = data["list"][0]
+    except (KeyError, IndexError, TypeError):
+        LOGS.exception("Air pollution response missing expected fields: %s", data)
+        return None, "No air quality data found for that location. Try city,country format."
+    return air_pollution, None
+
+
+async def get_geocode_data(input_str: str):
+    if input_str.lower() == "perth":
+        geo_url = "https://geocode.xyz/perth%20au?json=1"
+    else:
+        geo_url = f"https://geocode.xyz/{input_str}?json=1"
+    try:
+        geo_data = await async_searcher(geo_url, re_json=True, timeout=12)
+    except (asyncio.TimeoutError, TimeoutError):
+        LOGS.exception("Geocoding request timed out for location: %s", input_str)
+        return None, "Geocoding timed out. Try city,country format."
+    except aiohttp.ClientError:
+        LOGS.exception("Geocoding request failed for location: %s", input_str)
+        return None, "Unable to reach geocoding service. Try again soon."
+    except (aiohttp.ContentTypeError, JSONDecodeError, ValueError, TypeError):
+        LOGS.exception("Geocoding response is not valid JSON for location: %s", input_str)
+        return None, "Could not read geocoding response. Try city,country format."
+
+    try:
+        latitude = geo_data["latt"]
+        longitude = geo_data["longt"]
+        city = geo_data["standard"]["city"]
+        prov = geo_data["standard"]["prov"]
+    except (KeyError, TypeError):
+        LOGS.exception("Geocoding response missing expected fields: %s", geo_data)
+        return None, "Location not found. Try city,country format (example: London,GB)."
+    return {"latitude": latitude, "longitude": longitude, "city": city, "prov": prov}, None
 
 
 @ultroid_cmd(pattern="weather ?(.*)")
@@ -83,14 +127,15 @@ async def weather(event):
         return
     input_str = event.pattern_match.group(1)
     if not input_str:
-        await event.eor("No Location was Given...", time=5)
+        await event.eor("No location was given. Try city,country format.", time=5)
         return
     elif input_str == "butler":
-        await event.eor("search butler,au for australila", time=5)
+        await event.eor("Search butler,au for Australia.", time=5)
+        return
     sample_url = f"https://api.openweathermap.org/data/2.5/weather?q={input_str}&APPID={x}&units=metric"
     try:
         response_api = await async_searcher(sample_url, re_json=True)
-        if response_api["cod"] == 200:
+        if str(response_api.get("cod")) == "200":
             country_time_zone = int(response_api["timezone"])
             tz = f"{await get_timezone(country_time_zone)}"
             sun_rise_time = int(response_api["sys"]["sunrise"]) + country_time_zone
@@ -114,9 +159,13 @@ async def weather(event):
                 f"╰────────────────•\n\n"
             )
         else:
-            await msg.edit(response_api["message"])
-    except Exception as e:
-        await event.eor(f"An unexpected error occurred: {str(e)}", time=5)
+            await msg.edit(response_api.get("message", "Location not found. Try city,country format."))
+    except Exception:
+        LOGS.exception("Weather lookup failed for input: %s", input_str)
+        await event.eor(
+            "Unable to fetch weather right now. Try city,country format.",
+            time=5,
+        )
 
 
 @ultroid_cmd(pattern="air ?(.*)")
@@ -133,44 +182,33 @@ async def air_pollution(event):
         return
     input_str = event.pattern_match.group(1)
     if not input_str:
-        await event.eor("`No Location was Given...`", time=5)
+        await event.eor("No location was given. Try city,country format.", time=5)
         return
-    if input_str.lower() == "perth":
-        geo_url = f"https://geocode.xyz/perth%20au?json=1"
-    else:
-        geo_url = f"https://geocode.xyz/{input_str}?json=1"
-    geo_data = await async_searcher(geo_url, re_json=True)
-    try:
-        longitude = geo_data["longt"]
-        latitude = geo_data["latt"]
-    except KeyError as e:
-        LOGS.info(e)
-        await event.eor("`Unable to find coordinates for the given location.`", time=5)
+    geocode_data, geocode_error = await get_geocode_data(input_str)
+    if geocode_error:
+        await event.eor(geocode_error, time=5)
         return
-    try:
-        city = geo_data["standard"]["city"]
-        prov = geo_data["standard"]["prov"]
-    except KeyError as e:
-        LOGS.info(e)
-        await event.eor("`Unable to find city for the given coordinates.`", time=5)
-        return
-    air_pollution_data = await get_air_pollution_data(latitude, longitude, x)
-    if air_pollution_data is None:
-        await event.eor(
-            "`Unable to fetch air pollution data for the given location.`", time=5
-        )
-        return
-    await msg.edit(
-        f"{city}, {prov}\n\n"
-        f"╭────────────────•\n"
-        f"╰➢ **𝖠𝖰𝖨:** {air_pollution_data['main']['aqi']}\n"
-        f"╰➢ **𝖢𝖺𝗋𝖻𝗈𝗇 𝖬𝗈𝗇𝗈𝗑𝗂𝖽𝖾:** {air_pollution_data['components']['co']}µg/m³\n"
-        f"╰➢ **𝖭𝗈𝗂𝗍𝗋𝗈𝗀𝖾𝗇 𝖬𝗈𝗇𝗈𝗑𝗂𝖽𝖾:** {air_pollution_data['components']['no']}µg/m³\n"
-        f"╰➢ **𝖭𝗂𝗍𝗋𝗈𝗀𝖾𝗇 𝖣𝗂𝗈𝗑𝗂𝖽𝖾:** {air_pollution_data['components']['no2']}µg/m³\n"
-        f"╰➢ **𝖮𝗓𝗈𝗇𝖾:** {air_pollution_data['components']['o3']}µg/m³\n"
-        f"╰➢ **𝖲𝗎𝗅𝗉𝗁𝗎𝗋 𝖣𝗂𝗈𝗑𝗂𝖽𝖾:** {air_pollution_data['components']['so2']}µg/m³\n"
-        f"╰➢ **𝖠𝗆𝗆𝗈𝗇𝗂𝖺:** {air_pollution_data['components']['nh3']}µg/m³\n"
-        f"╰➢ **𝖥𝗂𝗇𝖾 𝖯𝖺𝗋𝗍𝗂𝖼𝗅𝖾𝗌 (PM₂.₅):** {air_pollution_data['components']['pm2_5']}\n"
-        f"╰➢ **𝖢𝗈𝖺𝗋𝗌𝖾 𝖯𝖺𝗋𝗍𝗂𝖼𝗅𝖾𝗌 (PM₁₀):** {air_pollution_data['components']['pm10']}\n"
-        f"╰────────────────•\n\n"
+    air_pollution_data, air_error = await get_air_pollution_data(
+        geocode_data["latitude"], geocode_data["longitude"], x
     )
+    if air_error:
+        await event.eor(air_error, time=5)
+        return
+    try:
+        await msg.edit(
+            f"{geocode_data['city']}, {geocode_data['prov']}\n\n"
+            f"╭────────────────•\n"
+            f"╰➢ **𝖠𝖰𝖨:** {air_pollution_data['main']['aqi']}\n"
+            f"╰➢ **𝖢𝖺𝗋𝖻𝗈𝗇 𝖬𝗈𝗇𝗈𝗑𝗂𝖽𝖾:** {air_pollution_data['components']['co']}µg/m³\n"
+            f"╰➢ **𝖭𝗂𝗍𝗋𝗈𝗀𝖾𝗇 𝖬𝗈𝗇𝗈𝗑𝗂𝖽𝖾:** {air_pollution_data['components']['no']}µg/m³\n"
+            f"╰➢ **𝖭𝗂𝗍𝗋𝗈𝗀𝖾𝗇 𝖣𝗂𝗈𝗑𝗂𝖽𝖾:** {air_pollution_data['components']['no2']}µg/m³\n"
+            f"╰➢ **𝖮𝗓𝗈𝗇𝖾:** {air_pollution_data['components']['o3']}µg/m³\n"
+            f"╰➢ **𝖲𝗎𝗅𝗉𝗁𝗎𝗋 𝖣𝗂𝗈𝗑𝗂𝖽𝖾:** {air_pollution_data['components']['so2']}µg/m³\n"
+            f"╰➢ **𝖠𝗆𝗆𝗈𝗇𝗂𝖺:** {air_pollution_data['components']['nh3']}µg/m³\n"
+            f"╰➢ **𝖥𝗂𝗇𝖾 𝖯𝖺𝗋𝗍𝗂𝖼𝗅𝖾𝗌 (PM₂.₅):** {air_pollution_data['components']['pm2_5']}\n"
+            f"╰➢ **𝖢𝗈𝖺𝗋𝗌𝖾 𝖯𝖺𝗋𝗍𝗂𝖼𝗅𝖾𝗌 (PM₁₀):** {air_pollution_data['components']['pm10']}\n"
+            f"╰────────────────•\n\n"
+        )
+    except (KeyError, TypeError):
+        LOGS.exception("Air pollution data missing display fields: %s", air_pollution_data)
+        await event.eor("Air quality data is incomplete for this location. Try city,country format.", time=5)
