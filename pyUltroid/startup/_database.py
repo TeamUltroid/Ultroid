@@ -39,13 +39,7 @@ elif Var.DATABASE_URL:
         os.system(f"{sys.executable} -m pip install -q psycopg2-binary")
         import psycopg2
 else:
-    try:
-        from localdb import Database
-    except ImportError:
-        LOGS.info("Using local file as database.")
-        os.system(f"{sys.executable} -m pip install -q localdb.json")
-        from localdb import Database
-
+    LOGS.info("Using SQLite as local database.")
 # --------------------------------------------------------------------------------------------- #
 
 
@@ -300,13 +294,28 @@ class RedisDB(_BaseDatabase):
 
 # --------------------------------------------------------------------------------------------- #
 
-
 class LocalDB(_BaseDatabase):
-    def __init__(self):
-        self.db = Database("ultroid")
-        self.get = self.db.get
-        self.set = self.db.set
-        self.delete = self.db.delete
+    def __init__(self, db_name="ultroid.db"):
+        import sqlite3
+
+        self.conn = sqlite3.connect(db_name, check_same_thread=False)
+        self.cursor = self.conn.cursor()
+
+        # Performance tweaks
+        self.cursor.execute("PRAGMA journal_mode=WAL;")
+        self.cursor.execute("PRAGMA synchronous=NORMAL;")
+
+        # Create table
+        self.cursor.execute(
+            "CREATE TABLE IF NOT EXISTS ultroid (key TEXT PRIMARY KEY, value TEXT)"
+        )
+        self.conn.commit()
+
+        # Bind methods like original LocalDB
+        self.get = self._get
+        self.set = self._set
+        self.delete = self._delete
+
         super().__init__()
 
     @property
@@ -314,12 +323,40 @@ class LocalDB(_BaseDatabase):
         return "LocalDB"
 
     def keys(self):
-        return self._cache.keys()
+        self.cursor.execute("SELECT key FROM ultroid")
+        return [row[0] for row in self.cursor.fetchall()]
+
+    # ------------------ INTERNAL METHODS ------------------ #
+
+    def _get(self, key):
+        self.cursor.execute("SELECT value FROM ultroid WHERE key=?", (key,))
+        row = self.cursor.fetchone()
+        return row[0] if row else None
+
+    def _set(self, key, value):
+        self.cursor.execute(
+            "INSERT OR REPLACE INTO ultroid (key, value) VALUES (?, ?)",
+            (key, str(value)),
+        )
+        self.conn.commit()
+        return True
+
+    def _delete(self, key):
+        self.cursor.execute("DELETE FROM ultroid WHERE key=?", (key,))
+        self.conn.commit()
+        return True
+
+    # ------------------ EXTRA ------------------ #
+
+    def flushall(self):
+        self.cursor.execute("DELETE FROM ultroid")
+        self.conn.commit()
+        self._cache.clear()
+        return True
 
     def __repr__(self):
-        return f"<Ultroid.LocalDB\n -total_keys: {len(self.keys())}\n>"
-
-
+        return f"<Ultroid.LocalDB(SQLite)\n -total_keys: {len(self.keys())}\n>"
+        
 def UltroidDB():
     _er = False
     from .. import HOSTED_ON
@@ -341,7 +378,7 @@ def UltroidDB():
             return SqlDB(Var.DATABASE_URL)
         else:
             LOGS.critical(
-                "No DB requirement fullfilled!\nPlease install redis, mongo or sql dependencies...\nTill then using local file as database."
+                "No DB requirement fullfilled!\nPlease install redis, mongo or sql dependencies...\nTill then using SQLite as database."
             )
             return LocalDB()
     except BaseException as err:
