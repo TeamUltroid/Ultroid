@@ -58,7 +58,7 @@ if run_as_module:
 
     _, v, __ = platform.python_version_tuple()
 
-    if int(v) < 10:
+    if sys.version_info < (3, 10):
         from ._extra import _fix_logging
 
         _fix_logging(FileHandler)
