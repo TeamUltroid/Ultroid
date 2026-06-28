@@ -126,13 +126,17 @@ def ultroid_cmd(
             try:
                 await dec(ult)
             except FloodWaitError as fwerr:
+                # Sleep in-place; disconnecting + reconnecting was racy and
+                # caused other in-flight requests to fail with broken-auth
+                # errors. Telethon already retries automatically once we
+                # resume awaiting.
+                wait = fwerr.seconds + 10
                 await asst.send_message(
                     udB.get_key("LOG_CHANNEL"),
-                    f"`FloodWaitError:\n{str(fwerr)}\n\nSleeping for {tf((fwerr.seconds + 10)*1000)}`",
+                    f"`FloodWaitError:\n{fwerr}\n\n"
+                    f"Sleeping for {tf(wait * 1000)}`",
                 )
-                await ultroid_bot.disconnect()
-                await asyncio.sleep(fwerr.seconds + 10)
-                await ultroid_bot.connect()
+                await asyncio.sleep(wait)
                 await asst.send_message(
                     udB.get_key("LOG_CHANNEL"),
                     "`Bot is working again`",

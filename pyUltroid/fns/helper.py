@@ -11,6 +11,8 @@ import os
 import re
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
+from functools import partial, wraps
 from traceback import format_exc
 from urllib.parse import unquote
 from urllib.request import urlretrieve
@@ -42,10 +44,7 @@ except ImportError:
     Repo = None
 
 
-import asyncio
 import multiprocessing
-from concurrent.futures import ThreadPoolExecutor
-from functools import partial, wraps
 
 from telethon.helpers import _maybe_await
 from telethon.tl import types
@@ -64,12 +63,18 @@ from .FastTelethon import download_file as downloadable
 from .FastTelethon import upload_file as uploadable
 
 
+# A single shared executor is far cheaper than spawning one per call.
+_RUN_ASYNC_EXECUTOR = ThreadPoolExecutor(max_workers=multiprocessing.cpu_count() * 5)
+
+
 def run_async(function):
+    """Run a blocking ``function`` on the shared thread pool from async code."""
+
     @wraps(function)
     async def wrapper(*args, **kwargs):
-        return await asyncio.get_event_loop().run_in_executor(
-            ThreadPoolExecutor(max_workers=multiprocessing.cpu_count() * 5),
-            partial(function, *args, **kwargs),
+        loop = asyncio.get_running_loop()
+        return await loop.run_in_executor(
+            _RUN_ASYNC_EXECUTOR, partial(function, *args, **kwargs)
         )
 
     return wrapper
@@ -84,15 +89,23 @@ def make_mention(user, custom=None):
     return inline_mention(user, custom=custom)
 
 
-def inline_mention(user, custom=None, html=False):
-    mention_text = get_display_name(user) or "Deleted Account" if not custom else custom
+def inline_mention(user, custom=None, as_html: bool = False, **kwargs):
+    """Return a markdown/HTML mention for ``user``.
+
+    The legacy keyword ``html`` is still accepted for backwards compatibility
+    with existing plugins, but it shadowed the stdlib ``html`` module so
+    ``as_html`` is preferred internally.
+    """
+    if "html" in kwargs:  # pragma: no cover - legacy callers
+        as_html = kwargs.pop("html")
+    mention_text = custom or (get_display_name(user) or "Deleted Account")
     if isinstance(user, types.User):
-        if html:
-            return f"<a href=tg://user?id={user.id}>{mention_text}</a>"
+        if as_html:
+            return f'<a href="tg://user?id={user.id}">{mention_text}</a>'
         return f"[{mention_text}](tg://user?id={user.id})"
     if isinstance(user, types.Channel) and user.username:
-        if html:
-            return f"<a href=https://t.me/{user.username}>{mention_text}</a>"
+        if as_html:
+            return f'<a href="https://t.me/{user.username}">{mention_text}</a>'
         return f"[{mention_text}](https://t.me/{user.username})"
     return mention_text
 
@@ -231,20 +244,31 @@ if run_as_module:
 
     @run_async
     def gen_chlog(repo, diff):
-        """Generate Changelogs..."""
-        UPSTREAM_REPO_URL = (
-            Repo().remotes[0].config_reader.get("url").replace(".git", "")
+        """Generate changelogs between local HEAD and the given diff spec."""
+        upstream_url = (
+            repo.remotes[0].config_reader.get("url").replace(".git", "")
         )
         ac_br = repo.active_branch.name
         ch_log = tldr_log = ""
-        ch = f"<b>Ultroid {ultroid_version} updates for <a href={UPSTREAM_REPO_URL}/tree/{ac_br}>[{ac_br}]</a>:</b>"
+        ch = (
+            f"<b>Ultroid {ultroid_version} updates for "
+            f"<a href={upstream_url}/tree/{ac_br}>[{ac_br}]</a>:</b>"
+        )
         ch_tl = f"Ultroid {ultroid_version} updates for {ac_br}:"
         d_form = "%d/%m/%y || %H:%M"
         for c in repo.iter_commits(diff):
-            ch_log += f"\n\n💬 <b>{c.count()}</b> 🗓 <b>[{c.committed_datetime.strftime(d_form)}]</b>\n<b><a href={UPSTREAM_REPO_URL.rstrip('/')}/commit/{c}>[{c.summary}]</a></b> 👨‍💻 <code>{c.author}</code>"
-            tldr_log += f"\n\n💬 {c.count()} 🗓 [{c.committed_datetime.strftime(d_form)}]\n[{c.summary}] 👨‍💻 {c.author}"
+            ch_log += (
+                f"\n\n💬 <b>{c.count()}</b> 🗓 "
+                f"<b>[{c.committed_datetime.strftime(d_form)}]</b>\n"
+                f"<b><a href={upstream_url.rstrip('/')}/commit/{c}>[{c.summary}]</a>"
+                f"</b> 👨‍💻 <code>{c.author}</code>"
+            )
+            tldr_log += (
+                f"\n\n💬 {c.count()} 🗓 [{c.committed_datetime.strftime(d_form)}]"
+                f"\n[{c.summary}] 👨‍💻 {c.author}"
+            )
         if ch_log:
-            return str(ch + ch_log), str(ch_tl + tldr_log)
+            return ch + ch_log, ch_tl + tldr_log
         return ch_log, tldr_log
 
 
@@ -263,7 +287,7 @@ async def bash(cmd, run_code=0):
     err = stderr.decode().strip() or None
     out = stdout.decode().strip()
     if not run_code and err:
-        if match := re.match("\/bin\/sh: (.*): ?(\w+): not found", err):
+        if match := re.match(r"\/bin\/sh: (.*): ?(\w+): not found", err):
             return out, f"{match.group(2).upper()}_NOT_FOUND"
     return out, err
 
@@ -273,35 +297,33 @@ async def bash(cmd, run_code=0):
 
 
 async def updater():
+    """Check upstream for new commits and return ``True`` if updates exist."""
     from .. import LOGS
 
     try:
-        off_repo = Repo().remotes[0].config_reader.get("url").replace(".git", "")
+        repo = Repo()
+    except InvalidGitRepositoryError:
+        LOGS.warning("Not running from a git checkout; skipping updater.")
+        return False
+    except NoSuchPathError as error:
+        LOGS.info(f"Directory not found while loading repo: {error}")
+        return False
+    except GitCommandError as error:
+        LOGS.info(f"Git error: {error}")
+        return False
+
+    try:
+        off_repo = repo.remotes[0].config_reader.get("url").replace(".git", "")
     except Exception as er:
         LOGS.exception(er)
-        return
-    try:
-        repo = Repo()
-    except NoSuchPathError as error:
-        LOGS.info(f"`directory {error} is not found`")
-        Repo().__del__()
-        return
-    except GitCommandError as error:
-        LOGS.info(f"`Early failure! {error}`")
-        Repo().__del__()
-        return
-    except InvalidGitRepositoryError:
-        repo = Repo.init()
-        origin = repo.create_remote("upstream", off_repo)
-        origin.fetch()
-        repo.create_head("main", origin.refs.main)
-        repo.heads.main.set_tracking_branch(origin.refs.main)
-        repo.heads.main.checkout(True)
+        return False
+
     ac_br = repo.active_branch.name
-    repo.create_remote("upstream", off_repo) if "upstream" not in repo.remotes else None
+    if "upstream" not in [r.name for r in repo.remotes]:
+        repo.create_remote("upstream", off_repo)
     ups_rem = repo.remote("upstream")
     ups_rem.fetch(ac_br)
-    changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
+    changelog, _ = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     return bool(changelog)
 
 
@@ -315,14 +337,8 @@ async def uploader(file, name, taime, event, msg):
             client=event.client,
             file=f,
             filename=name,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(
-                    d,
-                    t,
-                    event,
-                    taime,
-                    msg,
-                ),
+            progress_callback=lambda d, t: asyncio.create_task(
+                progress(d, t, event, taime, msg),
             ),
         )
     return result
@@ -334,14 +350,8 @@ async def downloader(filename, file, event, taime, msg):
             client=event.client,
             location=file,
             out=fk,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(
-                    d,
-                    t,
-                    event,
-                    taime,
-                    msg,
-                ),
+            progress_callback=lambda d, t: asyncio.create_task(
+                progress(d, t, event, taime, msg),
             ),
         )
     return result
@@ -493,71 +503,62 @@ def time_formatter(milliseconds):
 def humanbytes(size):
     if not size:
         return "0 B"
-    for unit in ["", "K", "M", "G", "T"]:
+    unit = ""
+    size = float(size)
+    for unit in ("", "K", "M", "G", "T"):
         if size < 1024:
             break
         size /= 1024
-    if isinstance(size, int):
-        size = f"{size}{unit}B"
-    elif isinstance(size, float):
-        size = f"{size:.2f}{unit}B"
-    return size
+    return f"{size:.2f}{unit}B"
 
 
 def numerize(number):
     if not number:
         return None
     unit = ""
-    for unit in ["", "K", "M", "B", "T"]:
+    number = float(number)
+    for unit in ("", "K", "M", "B", "T"):
         if number < 1000:
             break
         number /= 1000
-    if isinstance(number, int):
-        number = f"{number}{unit}"
-    elif isinstance(number, float):
-        number = f"{number:.2f}{unit}"
-    return number
+    return f"{number:.2f}{unit}"
 
 
 No_Flood = {}
 
 
 async def progress(current, total, event, start, type_of_ps, file_name=None):
+    """Edit ``event`` with a progress bar at most ~once per second."""
     now = time.time()
-    if No_Flood.get(event.chat_id):
-        if No_Flood[event.chat_id].get(event.id):
-            if (now - No_Flood[event.chat_id][event.id]) < 1.1:
-                return
-        else:
-            No_Flood[event.chat_id].update({event.id: now})
+    if event.chat_id in No_Flood:
+        last = No_Flood[event.chat_id].get(event.id)
+        if last is not None and (now - last) < 1.1:
+            return
+        No_Flood[event.chat_id][event.id] = now
     else:
-        No_Flood.update({event.chat_id: {event.id: now}})
-    diff = time.time() - start
-    if round(diff % 10.00) == 0 or current == total:
-        percentage = current * 100 / total
-        speed = current / diff
-        time_to_completion = round((total - current) / speed) * 1000
-        progress_str = "`[{0}{1}] {2}%`\n\n".format(
-            "".join("●" for i in range(math.floor(percentage / 5))),
-            "".join("" for i in range(20 - math.floor(percentage / 5))),
-            round(percentage, 2),
-        )
+        No_Flood[event.chat_id] = {event.id: now}
 
-        tmp = (
-            progress_str
-            + "`{0} of {1}`\n\n`✦ Speed: {2}/s`\n\n`✦ ETA: {3}`\n\n".format(
-                humanbytes(current),
-                humanbytes(total),
-                humanbytes(speed),
-                time_formatter(time_to_completion),
-            )
-        )
-        if file_name:
-            await event.edit(
-                "`✦ {}`\n\n`File Name: {}`\n\n{}".format(type_of_ps, file_name, tmp)
-            )
-        else:
-            await event.edit("`✦ {}`\n\n{}".format(type_of_ps, tmp))
+    diff = now - start
+    if not (round(diff % 10.00) == 0 or current == total):
+        return
+
+    percentage = current * 100 / total
+    speed = current / diff if diff else 0
+    time_to_completion = round((total - current) / speed) * 1000 if speed else 0
+    filled = math.floor(percentage / 5)
+    bar = "●" * filled + "○" * (20 - filled)
+    progress_str = f"`[{bar}] {round(percentage, 2)}%`\n\n"
+
+    tmp = (
+        f"{progress_str}"
+        f"`{humanbytes(current)} of {humanbytes(total)}`\n\n"
+        f"`✦ Speed: {humanbytes(speed)}/s`\n\n"
+        f"`✦ ETA: {time_formatter(time_to_completion)}`\n\n"
+    )
+    if file_name:
+        await event.edit(f"`✦ {type_of_ps}`\n\n`File Name: {file_name}`\n\n{tmp}")
+    else:
+        await event.edit(f"`✦ {type_of_ps}`\n\n{tmp}")
 
 
 # ------------------System\\Heroku stuff----------------
@@ -580,21 +581,8 @@ async def restart(ult=None):
                 )
             LOGS.exception(er)
     else:
-        if len(sys.argv) == 1:
-            os.execl(sys.executable, sys.executable, "-m", "pyUltroid")
-        else:
-            os.execl(
-                sys.executable,
-                sys.executable,
-                "-m",
-                "pyUltroid",
-                sys.argv[1],
-                sys.argv[2],
-                sys.argv[3],
-                sys.argv[4],
-                sys.argv[5],
-                sys.argv[6],
-            )
+        # Re-exec ourselves, forwarding any CLI args we originally received.
+        os.execl(sys.executable, sys.executable, "-m", "pyUltroid", *sys.argv[1:])
 
 
 async def shutdown(ult):

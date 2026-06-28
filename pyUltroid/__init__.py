@@ -31,9 +31,9 @@ if run_as_module:
 
     if not os.path.exists("./plugins"):
         LOGS.error(
-            "'plugins' folder not found!\nMake sure that, you are on correct path."
+            "'plugins' folder not found! Make sure you are running from the project root."
         )
-        exit()
+        sys.exit(1)
 
     start_time = time.time()
     _ult_cache = {}
@@ -63,8 +63,7 @@ if run_as_module:
             LOGS.critical(
                 '"BOT_TOKEN" not Found! Please add it, in order to use "BOTMODE"'
             )
-
-            sys.exit()
+            sys.exit(1)
     else:
         ultroid_bot = UltroidClient(
             validate_session(Var.SESSION, LOGS),
@@ -81,10 +80,11 @@ if run_as_module:
 
     if BOT_MODE:
         ultroid_bot = asst
-        if udB.get_key("OWNER_ID"):
+        owner_id = udB.get_key("OWNER_ID")
+        if owner_id:
             try:
                 ultroid_bot.me = ultroid_bot.run_in_loop(
-                    ultroid_bot.get_entity(udB.get_key("OWNER_ID"))
+                    ultroid_bot.get_entity(owner_id)
                 )
             except Exception as er:
                 LOGS.exception(er)
