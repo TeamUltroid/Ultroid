@@ -22,9 +22,10 @@ if run_as_module:
 
 
 try:
-    from aiohttp import ClientSession as aiohttp_client
+    from aiohttp import ClientSession as aiohttp_client, ClientTimeout as aiohttp_timeout
 except ImportError:
     aiohttp_client = None
+    aiohttp_timeout = None
     try:
         import requests
     except ImportError:
@@ -78,6 +79,24 @@ def run_async(function):
 # ~~~~~~~~~~~~~~~~~~~~ small funcs ~~~~~~~~~~~~~~~~~~~~ #
 
 
+class KEEP_SAFE:
+    """Patterns to scan for in plugins before allowing installation."""
+
+    All = [
+        r"os\.system",
+        r"subprocess\.(run|call|Popen|check_output)",
+        r"exec\s*\(",
+        r"eval\s*\(",
+        r"__import__\s*\(",
+        r"open\s*\(.*['\"]w['\"]",
+        r"shutil\.(rmtree|move|copy)",
+        r"session\.string",
+        r"get_me\(\)",
+        r"api_id",
+        r"api_hash",
+    ]
+
+
 def make_mention(user, custom=None):
     if user.username:
         return f"@{user.username}"
@@ -88,11 +107,11 @@ def inline_mention(user, custom=None, html=False):
     mention_text = get_display_name(user) or "Deleted Account" if not custom else custom
     if isinstance(user, types.User):
         if html:
-            return f"<a href=tg://user?id={user.id}>{mention_text}</a>"
+            return f'<a href="tg://user?id={user.id}">{mention_text}</a>'
         return f"[{mention_text}](tg://user?id={user.id})"
     if isinstance(user, types.Channel) and user.username:
         if html:
-            return f"<a href=https://t.me/{user.username}>{mention_text}</a>"
+            return f'<a href="https://t.me/{user.username}">{mention_text}</a>'
         return f"[{mention_text}](https://t.me/{user.username})"
     return mention_text
 
@@ -370,7 +389,7 @@ async def async_searcher(
             if evaluate:
                 return await evaluate(data)
             if re_json:
-                return await data.json()
+                return await data.json(content_type=None)
             if re_content:
                 return await data.read()
             if head or object:
@@ -410,8 +429,9 @@ async def download_file(link, name, validate=False):
 async def fast_download(download_url, filename=None, progress_callback=None):
     if not aiohttp_client:
         return await download_file(download_url, filename)[0], None
-    async with aiohttp_client() as session:
-        async with session.get(download_url, timeout=None) as response:
+    _timeout = aiohttp_timeout(total=None) if aiohttp_timeout else None
+    async with aiohttp_client(timeout=_timeout) as session:
+        async with session.get(download_url) as response:
             if not filename:
                 filename = unquote(download_url.rpartition("/")[-1])
             total_size = int(response.headers.get("content-length", 0)) or None

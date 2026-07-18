@@ -20,6 +20,45 @@ from pyUltroid.dB.base import KeyManager
 from . import HNDLR, LOGS, eor, get_string, udB, ultroid_bot, ultroid_cmd
 
 KeyM = KeyManager("BROADCAST", cast=list)
+BlackM = KeyManager("BROADCAST_BLACKLIST", cast=list)
+
+
+@ultroid_cmd(
+    pattern=r"addblacklist( (.*)|$)",
+    allow_sudo=False,
+)
+async def broadcast_blacklist_add(event):
+    msgg = event.pattern_match.group(1).strip()
+    chat_id = int(msgg) if msgg and msgg.lstrip("-").isdigit() else event.chat_id
+    if BlackM.contains(chat_id):
+        return await event.eor("`Already in broadcast blacklist.`", time=5)
+    BlackM.add(chat_id)
+    await event.eor(f"`Added {chat_id} to broadcast blacklist.`", time=5)
+
+
+@ultroid_cmd(
+    pattern=r"remblacklist( (.*)|$)",
+    allow_sudo=False,
+)
+async def broadcast_blacklist_rem(event):
+    msgg = event.pattern_match.group(1).strip()
+    chat_id = int(msgg) if msgg and msgg.lstrip("-").isdigit() else event.chat_id
+    if not BlackM.contains(chat_id):
+        return await event.eor("`Not in broadcast blacklist.`", time=5)
+    BlackM.remove(chat_id)
+    await event.eor(f"`Removed {chat_id} from broadcast blacklist.`", time=5)
+
+
+@ultroid_cmd(
+    pattern="listblacklist$",
+    allow_sudo=False,
+)
+async def broadcast_blacklist_list(event):
+    bl = BlackM.get()
+    if not bl:
+        return await event.eor("`Broadcast blacklist is empty.`", time=5)
+    msg = "**Broadcast Blacklist:**\n" + "\n".join(f"• `{c}`" for c in bl)
+    await event.eor(msg)
 
 
 @ultroid_cmd(
@@ -147,7 +186,10 @@ async def forw(event):
     sent_count = 0
     previous_message = await event.get_reply_message()
     error_count = 0
+    blacklist = BlackM.get() or []
     for channel in channels:
+        if channel in blacklist:
+            continue
         try:
             await ultroid_bot.forward_messages(channel, previous_message)
             sent_count += 1
@@ -192,7 +234,10 @@ async def sending(event):
         if previous_message:
             error_count = 0
             sent_count = 0
+            blacklist = BlackM.get() or []
             for channel in channels:
+                if channel in blacklist:
+                    continue
                 try:
                     await ultroid_bot.send_message(channel, previous_message)
                     sent_count += 1

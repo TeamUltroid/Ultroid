@@ -53,3 +53,5 @@ class Var:
     DATABASE_URL = config("DATABASE_URL", default=None)
     # for MONGODB users
     MONGO_URI = config("MONGO_URI", default=None)
+    # for local Telegram DB backup
+    TGDB_URL = config("TGDB_URL", default=None)

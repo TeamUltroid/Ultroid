@@ -94,8 +94,12 @@ def update_envs():
     """Update Var. attributes to udB"""
     from .. import udB
     _envs = [*list(os.environ)]
-    if ".env" in os.listdir("."):
-        [_envs.append(_) for _ in list(RepositoryEnv(config._find_file(".")).data)]
+    env_file = config._find_file(".")
+    if env_file:
+        try:
+            [_envs.append(_) for _ in list(RepositoryEnv(env_file).data)]
+        except Exception:
+            pass
     for envs in _envs:
         if (
             envs in ["LOG_CHANNEL", "BOT_TOKEN", "BOTMODE", "DUAL_MODE", "language"]
@@ -104,7 +108,7 @@ def update_envs():
             if _value := os.environ.get(envs):
                 udB.set_key(envs, _value)
             else:
-                udB.set_key(envs, config.config.get(envs))
+                udB.set_key(envs, config(envs, default=None))
 
 
 async def startup_stuff():
@@ -540,11 +544,11 @@ def _version_changes(udb):
         "BROADCAST",
     ]:
         key = udb.get_key(_)
-        if key and str(key)[0] != "[":
-            key = udb.get(_)
+        if key and not isinstance(key, list):
+            key_str = str(key)
             new_ = [
                 int(z) if z.isdigit() or (z.startswith("-") and z[1:].isdigit()) else z
-                for z in key.split()
+                for z in key_str.split()
             ]
             udb.set_key(_, new_)
 

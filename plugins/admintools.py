@@ -469,3 +469,37 @@ async def autodelte(ult):
             f"Auto Delete Setting is Already same to `{match}`", time=5
         )
     await ult.eor(f"Auto Delete Status Changed to `{match}` !")
+
+
+@ultroid_cmd(
+    pattern=r"kickall( (.*)|$)",
+    admins_only=True,
+    fullsudo=True,
+    require="ban_users",
+)
+async def kickall_cmd(ult):
+    """Kick all non-admin members from the group."""
+    if ult.is_private:
+        return await ult.eor("`Use this in a Group.`", time=5)
+    match = ult.pattern_match.group(1).strip()
+    confirm = match.lower() == "confirm"
+    if not confirm:
+        return await ult.eor(
+            f"`Are you sure? This will kick ALL non-admin members!\nUse` `{HNDLR}kickall confirm` `to proceed.`",
+            time=10,
+        )
+    xx = await ult.eor("`Starting KickAll...`")
+    kicked = 0
+    failed = 0
+    async for member in ult.client.iter_participants(ult.chat_id):
+        if member.bot or getattr(member.participant, "admin_rights", None) or getattr(member.participant, "creator", False):
+            continue
+        try:
+            await ult.client.kick_participant(ult.chat_id, member.id)
+            kicked += 1
+            await asyncio.sleep(0.5)
+        except Exception:
+            failed += 1
+    await xx.edit(
+        f"**KickAll Done!**\n**Kicked:** `{kicked}`\n**Failed:** `{failed}`"
+    )

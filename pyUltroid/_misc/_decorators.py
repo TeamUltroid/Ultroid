@@ -126,17 +126,20 @@ def ultroid_cmd(
             try:
                 await dec(ult)
             except FloodWaitError as fwerr:
-                await asst.send_message(
-                    udB.get_key("LOG_CHANNEL"),
-                    f"`FloodWaitError:\n{str(fwerr)}\n\nSleeping for {tf((fwerr.seconds + 10)*1000)}`",
-                )
+                _log_ch = udB.get_key("LOG_CHANNEL")
+                if _log_ch:
+                    await asst.send_message(
+                        _log_ch,
+                        f"`FloodWaitError:\n{str(fwerr)}\n\nSleeping for {tf((fwerr.seconds + 10)*1000)}`",
+                    )
                 await ultroid_bot.disconnect()
                 await asyncio.sleep(fwerr.seconds + 10)
                 await ultroid_bot.connect()
-                await asst.send_message(
-                    udB.get_key("LOG_CHANNEL"),
-                    "`Bot is working again`",
-                )
+                if _log_ch:
+                    await asst.send_message(
+                        _log_ch,
+                        "`Bot is working again`",
+                    )
                 return
             except ChatSendInlineForbiddenError:
                 return await eod(ult, "`Inline Locked In This Chat.`")
@@ -203,22 +206,25 @@ def ultroid_cmd(
 
                 ftext += f"{result}`"
 
-                if len(ftext) > 4096:
-                    with BytesIO(ftext.encode()) as file:
-                        file.name = "logs.txt"
-                        error_log = await asst.send_file(
-                            udB.get_key("LOG_CHANNEL"),
-                            file,
-                            caption="**Ultroid Client Error:** `Forward this to` @UltroidSupportChat\n\n",
+                _log_ch = udB.get_key("LOG_CHANNEL")
+                error_log = None
+                if _log_ch:
+                    if len(ftext) > 4096:
+                        with BytesIO(ftext.encode()) as file:
+                            file.name = "logs.txt"
+                            error_log = await asst.send_file(
+                                _log_ch,
+                                file,
+                                caption="**Ultroid Client Error:** `Forward this to` @UltroidSupportChat\n\n",
+                            )
+                    else:
+                        error_log = await asst.send_message(
+                            _log_ch,
+                            ftext,
                         )
-                else:
-                    error_log = await asst.send_message(
-                        udB.get_key("LOG_CHANNEL"),
-                        ftext,
-                    )
-                if ult.out:
+                if ult.out and error_log:
                     await ult.edit(
-                        f"<b><a href={error_log.message_link}>[An error occurred]</a></b>",
+                        f'<b><a href="{error_log.message_link}">[An error occurred]</a></b>',
                         link_preview=False,
                         parse_mode="html",
                     )
