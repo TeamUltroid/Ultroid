@@ -33,6 +33,19 @@ import time
 import cv2
 import numpy as np
 
+from pyUltroid.fns.tools import four_point_transform
+
+from . import (
+    HNDLR,
+    LOGS,
+    bash,
+    check_filename,
+    downloader,
+    eor,
+    get_string,
+    ultroid_cmd,
+)
+
 try:
     from PIL import Image
 except ImportError:
@@ -46,19 +59,6 @@ try:
 except ImportError:
     from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
 from telethon.errors.rpcerrorlist import PhotoSaveFileInvalidError
-
-from pyUltroid.fns.tools import four_point_transform
-
-from . import (
-    HNDLR,
-    LOGS,
-    bash,
-    check_filename,
-    downloader,
-    eor,
-    get_string,
-    ultroid_cmd,
-)
 
 if not os.path.isdir("pdf"):
     os.mkdir("pdf")

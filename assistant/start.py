@@ -7,7 +7,10 @@
 
 from datetime import datetime
 
-from pytz import timezone as tz
+try:
+    from pytz import timezone as tz
+except ImportError:
+    tz = None
 from telethon import Button, events
 from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
 from telethon.utils import get_display_name
@@ -211,6 +214,11 @@ async def setting(event):
 @callback("tz", owner=True)
 async def timezone_(event):
     await event.delete()
+    if tz is None:
+        return await event.client.send_message(
+            event.sender_id,
+            f"`pytz` is not installed, TimeZone feature is unavailable.\n\nInstall it via `{HNDLR}update` or `{HNDLR}bash pip install pytz`.",
+        )
     pru = event.sender_id
     var = "TIMEZONE"
     name = "Timezone"
