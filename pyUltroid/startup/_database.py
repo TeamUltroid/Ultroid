@@ -314,7 +314,13 @@ class LocalDB(_BaseDatabase):
         return "LocalDB"
 
     def keys(self):
-        return self._cache.keys()
+        try:
+            raw = self.db._raw_data()
+            if isinstance(raw, dict):
+                return list(raw.keys())
+        except Exception:
+            pass
+        return list(self._cache.keys())
 
     def __repr__(self):
         return f"<Ultroid.LocalDB\n -total_keys: {len(self.keys())}\n>"

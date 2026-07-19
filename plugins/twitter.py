@@ -22,8 +22,23 @@
 
 """
 
+import asyncio
 import os
+
+try:
+    _current_loop = asyncio.get_event_loop()
+except RuntimeError:
+    _current_loop = None
+
 from twikit import Client
+
+if _current_loop is not None:
+    # On Windows, importing twikit replaces the global asyncio event loop
+    # policy (see twikit/__init__.py), which orphans the loop Ultroid's
+    # clients are already connected to. Re-register it so existing
+    # Telethon connections keep working.
+    asyncio.set_event_loop(_current_loop)
+
 from . import LOGS, eor, get_string, udB, ultroid_cmd
 
 # Store client globally

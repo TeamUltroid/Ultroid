@@ -33,14 +33,6 @@ import time
 import cv2
 import numpy as np
 
-try:
-    from PIL import Image
-except ImportError:
-    Image = None
-    LOGS.info(f"{__file__}: PIL  not Installed.")
-from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
-from telethon.errors.rpcerrorlist import PhotoSaveFileInvalidError
-
 from pyUltroid.fns.tools import four_point_transform
 
 from . import (
@@ -53,6 +45,20 @@ from . import (
     get_string,
     ultroid_cmd,
 )
+
+try:
+    from PIL import Image
+except ImportError:
+    Image = None
+    LOGS.info(f"{__file__}: PIL  not Installed.")
+try:
+    from PyPDF2 import PdfReader, PdfWriter, PdfMerger
+    PdfFileReader = PdfReader
+    PdfFileWriter = PdfWriter
+    PdfFileMerger = PdfMerger
+except ImportError:
+    from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
+from telethon.errors.rpcerrorlist import PhotoSaveFileInvalidError
 
 if not os.path.isdir("pdf"):
     os.mkdir("pdf")

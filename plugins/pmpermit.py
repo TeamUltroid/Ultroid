@@ -36,6 +36,9 @@
 
 • `{i}listapproved`
    List all approved PMs.
+
+• `{i}pmpermit on/off`
+    Enable or disable PMPermit. Check current status with no argument.
 """
 
 import asyncio
@@ -100,7 +103,7 @@ PMCMDS = [
 _not_approved = {}
 _to_delete = {}
 
-my_bot = asst.me.username
+my_bot = asst.me.username if asst.me else None
 
 
 def update_pm(userid, message, warns_given):
@@ -163,74 +166,102 @@ if udB.get_key("PMLOG"):
         await event.forward_to(udB.get_key("PMLOGGROUP") or LOG_CHANNEL)
 
 
-if udB.get_key("PMSETTING"):
-    if udB.get_key("AUTOAPPROVE"):
-
-        @ultroid_bot.on(
-            events.NewMessage(
-                outgoing=True,
-                func=lambda e: e.is_private and e.out and not e.text.startswith(HNDLR),
-            ),
+@ultroid_cmd(pattern="pmpermit( (.*)|$)", fullsudo=True)
+async def toggle_pmpermit(e):
+    arg = e.pattern_match.group(1).strip().lower()
+    if arg in ("on", "enable", "1"):
+        udB.set_key("PMSETTING", True)
+        await e.eor("`PMPermit enabled.`", time=5)
+    elif arg in ("off", "disable", "0"):
+        udB.del_key("PMSETTING")
+        await e.eor("`PMPermit disabled.`", time=5)
+    else:
+        status = "enabled" if udB.get_key("PMSETTING") else "disabled"
+        await e.eor(
+            f"`PMPermit is currently {status}.\nUse {HNDLR}pmpermit on/off to toggle.`",
+            time=8,
         )
-        async def autoappr(e):
-            miss = await e.get_chat()
-            if miss.bot or miss.is_self or miss.verified or miss.id in DEVLIST:
-                return
-            if keym.contains(miss.id):
-                return
-            keym.add(miss.id)
-            await delete_pm_warn_msgs(miss.id)
-            try:
-                await ultroid_bot.edit_folder(miss.id, folder=0)
-            except BaseException:
-                pass
-            try:
-                await asst.edit_message(
-                    LOG_CHANNEL,
-                    _not_approved[miss.id],
-                    f"#AutoApproved : <b>OutGoing Message.\nUser : {inline_mention(miss, html=True)}</b> [<code>{miss.id}</code>]",
-                    parse_mode="html",
-                )
-            except KeyError:
-                await asst.send_message(
-                    LOG_CHANNEL,
-                    f"#AutoApproved : <b>OutGoing Message.\nUser : {inline_mention(miss, html=True)}</b> [<code>{miss.id}</code>]",
-                    parse_mode="html",
-                )
-            except MessageNotModifiedError:
-                pass
 
-    @ultroid_bot.on(
-        events.NewMessage(
-            incoming=True,
-            func=lambda e: e.is_private
-            and e.sender_id not in DEVLIST
-            and not e.out
-            and not e.sender.bot
-            and not e.sender.is_self
-            and not e.sender.verified,
+
+@ultroid_bot.on(
+    events.NewMessage(
+        outgoing=True,
+        func=lambda e: e.is_private and e.out and bool(e.text) and not e.text.startswith(HNDLR),
+    ),
+)
+async def autoappr(e):
+    if not udB.get_key("PMSETTING") or not udB.get_key("AUTOAPPROVE"):
+        return
+    miss = await e.get_chat()
+    if miss.bot or miss.is_self or miss.verified or miss.id in DEVLIST:
+        return
+    if keym.contains(miss.id):
+        return
+    keym.add(miss.id)
+    await delete_pm_warn_msgs(miss.id)
+    try:
+        await ultroid_bot.edit_folder(miss.id, folder=0)
+    except BaseException:
+        pass
+    _log_ch = udB.get_key("LOG_CHANNEL")
+    if not _log_ch:
+        return
+    try:
+        await asst.edit_message(
+            _log_ch,
+            _not_approved[miss.id],
+            f"#AutoApproved : <b>OutGoing Message.\nUser : {inline_mention(miss, html=True)}</b> [<code>{miss.id}</code>]",
+            parse_mode="html",
         )
+    except KeyError:
+        await asst.send_message(
+            _log_ch,
+            f"#AutoApproved : <b>OutGoing Message.\nUser : {inline_mention(miss, html=True)}</b> [<code>{miss.id}</code>]",
+            parse_mode="html",
+        )
+    except MessageNotModifiedError:
+        pass
+
+
+@ultroid_bot.on(
+    events.NewMessage(
+        incoming=True,
+        func=lambda e: e.is_private
+        and e.sender_id not in DEVLIST
+        and not e.out
+        and e.sender is not None
+        and not e.sender.bot
+        and not e.sender.is_self
+        and not e.sender.verified,
     )
-    async def permitpm(event):
-        inline_pm = Redis("INLINE_PM") or False
-        user = event.sender
-        if not keym.contains(user.id) and event.text != UND:
-            if Redis("MOVE_ARCHIVE"):
-                try:
-                    await ultroid_bot.edit_folder(user.id, folder=1)
-                except BaseException as er:
-                    LOGS.info(er)
-            if event.media and not udB.get_key("DISABLE_PMDEL"):
-                await event.delete()
-            name = user.first_name
-            fullname = get_display_name(user)
-            username = f"@{user.username}"
-            mention = inline_mention(user)
-            count = keym.count()
+)
+async def permitpm(event):
+    if not udB.get_key("PMSETTING"):
+        return
+    inline_pm = (Redis("INLINE_PM") and my_bot) or False
+    user = event.sender
+    if user is None:
+        return
+    cur_text = event.text or ""
+    if not keym.contains(user.id) and cur_text != UND:
+        if Redis("MOVE_ARCHIVE"):
             try:
-                wrn = COUNT_PM[user.id] + 1
+                await ultroid_bot.edit_folder(user.id, folder=1)
+            except BaseException as er:
+                LOGS.info(er)
+        if event.media and not udB.get_key("DISABLE_PMDEL"):
+            await event.delete()
+        name = user.first_name
+        fullname = get_display_name(user)
+        username = f"@{user.username}" if user.username else str(user.id)
+        mention = inline_mention(user)
+        count = keym.count()
+        _log_ch = udB.get_key("LOG_CHANNEL")
+        try:
+            wrn = COUNT_PM[user.id] + 1
+            if _log_ch:
                 await asst.edit_message(
-                    udB.get_key("LOG_CHANNEL"),
+                    _log_ch,
                     _not_approved[user.id],
                     f"Incoming PM from **{mention}** [`{user.id}`] with **{wrn}/{WARNS}** warning!",
                     buttons=[
@@ -238,195 +269,126 @@ if udB.get_key("PMSETTING"):
                         Button.inline("Block PM", data=f"block_{user.id}"),
                     ],
                 )
-            except KeyError:
+        except KeyError:
+            if _log_ch:
                 _not_approved[user.id] = await asst.send_message(
-                    udB.get_key("LOG_CHANNEL"),
+                    _log_ch,
                     f"Incoming PM from **{mention}** [`{user.id}`] with **1/{WARNS}** warning!",
                     buttons=[
                         Button.inline("Approve PM", data=f"approve_{user.id}"),
                         Button.inline("Block PM", data=f"block_{user.id}"),
                     ],
                 )
-                wrn = 1
-            except MessageNotModifiedError:
-                wrn = 1
-            if user.id in LASTMSG:
-                prevmsg = LASTMSG[user.id]
-                if event.text != prevmsg:
-                    if "PMSecurity" in event.text or "**PMSecurity" in event.text:
-                        return
-                    await delete_pm_warn_msgs(user.id)
-                    message_ = UNAPPROVED_MSG.format(
-                        ON=OWNER_NAME,
-                        warn=wrn,
-                        twarn=WARNS,
-                        UND=UND,
-                        name=name,
-                        fullname=fullname,
-                        username=username,
-                        count=count,
-                        mention=mention,
-                    )
-                    update_pm(user.id, message_, wrn)
-                    if inline_pm:
-                        results = await ultroid_bot.inline_query(
-                            my_bot, f"ip_{user.id}"
-                        )
-                        try:
-                            _to_delete[user.id] = await results[0].click(
-                                user.id, reply_to=event.id, hide_via=True
-                            )
-                        except Exception as e:
-                            LOGS.info(str(e))
-                    elif PMPIC:
-                        _to_delete[user.id] = await ultroid_bot.send_file(
-                            user.id,
-                            PMPIC,
-                            caption=message_,
-                        )
-                    else:
-                        _to_delete[user.id] = await ultroid_bot.send_message(
-                            user.id, message_
-                        )
+            wrn = 1
+        except MessageNotModifiedError:
+            wrn = 1
 
-                else:
-                    await delete_pm_warn_msgs(user.id)
-                    message_ = UNAPPROVED_MSG.format(
-                        ON=OWNER_NAME,
-                        warn=wrn,
-                        twarn=WARNS,
-                        UND=UND,
-                        name=name,
-                        fullname=fullname,
-                        username=username,
-                        count=count,
-                        mention=mention,
-                    )
-                    update_pm(user.id, message_, wrn)
-                    if inline_pm:
-                        try:
-                            results = await ultroid_bot.inline_query(
-                                my_bot, f"ip_{user.id}"
-                            )
-                            _to_delete[user.id] = await results[0].click(
-                                user.id, reply_to=event.id, hide_via=True
-                            )
-                        except Exception as e:
-                            LOGS.info(str(e))
-                    elif PMPIC:
-                        _to_delete[user.id] = await ultroid_bot.send_file(
-                            user.id,
-                            PMPIC,
-                            caption=message_,
-                        )
-                    else:
-                        _to_delete[user.id] = await ultroid_bot.send_message(
-                            user.id, message_
-                        )
-                LASTMSG.update({user.id: event.text})
-            else:
-                await delete_pm_warn_msgs(user.id)
-                message_ = UNAPPROVED_MSG.format(
-                    ON=OWNER_NAME,
-                    warn=wrn,
-                    twarn=WARNS,
-                    UND=UND,
-                    name=name,
-                    fullname=fullname,
-                    username=username,
-                    count=count,
-                    mention=mention,
-                )
-                update_pm(user.id, message_, wrn)
-                if inline_pm:
-                    try:
-                        results = await ultroid_bot.inline_query(
-                            my_bot, f"ip_{user.id}"
-                        )
-                        _to_delete[user.id] = await results[0].click(
-                            user.id, reply_to=event.id, hide_via=True
-                        )
-                    except Exception as e:
-                        LOGS.info(str(e))
-                elif PMPIC:
-                    _to_delete[user.id] = await ultroid_bot.send_file(
-                        user.id,
-                        PMPIC,
-                        caption=message_,
-                    )
-                else:
-                    _to_delete[user.id] = await ultroid_bot.send_message(
-                        user.id, message_
-                    )
-            LASTMSG.update({user.id: event.text})
-            if user.id not in COUNT_PM:
-                COUNT_PM.update({user.id: 1})
-            else:
-                COUNT_PM[user.id] = COUNT_PM[user.id] + 1
-            if COUNT_PM[user.id] >= WARNS:
-                await delete_pm_warn_msgs(user.id)
-                _to_delete[user.id] = await event.respond(UNS)
+        async def _send_warn_msg():
+            message_ = UNAPPROVED_MSG.format(
+                ON=OWNER_NAME,
+                warn=wrn,
+                twarn=WARNS,
+                UND=UND,
+                name=name,
+                fullname=fullname,
+                username=username,
+                count=count,
+                mention=mention,
+            )
+            update_pm(user.id, message_, wrn)
+            if inline_pm:
                 try:
-                    del COUNT_PM[user.id]
-                    del LASTMSG[user.id]
-                except KeyError:
-                    await asst.send_message(
-                        udB.get_key("LOG_CHANNEL"),
-                        "PMPermit is messed! Pls restart the bot!!",
+                    results = await ultroid_bot.inline_query(my_bot, f"ip_{user.id}")
+                    _to_delete[user.id] = await results[0].click(
+                        user.id, reply_to=event.id, hide_via=True
                     )
-                    return LOGS.info("COUNT_PM is messed.")
-                await ultroid_bot(BlockRequest(user.id))
-                await ultroid_bot(ReportSpamRequest(peer=user.id))
+                except Exception as ex:
+                    LOGS.info(str(ex))
+            elif PMPIC:
+                _to_delete[user.id] = await ultroid_bot.send_file(
+                    user.id, PMPIC, caption=message_
+                )
+            else:
+                _to_delete[user.id] = await ultroid_bot.send_message(user.id, message_)
+
+        prevmsg = LASTMSG.get(user.id)
+        if prevmsg is not None:
+            if cur_text != prevmsg:
+                if "PMSecurity" in cur_text:
+                    return
+                await delete_pm_warn_msgs(user.id)
+                await _send_warn_msg()
+            else:
+                await delete_pm_warn_msgs(user.id)
+                await _send_warn_msg()
+        else:
+            await delete_pm_warn_msgs(user.id)
+            await _send_warn_msg()
+
+        LASTMSG[user.id] = cur_text
+        COUNT_PM[user.id] = COUNT_PM.get(user.id, 0) + 1
+        if COUNT_PM[user.id] >= WARNS:
+            await delete_pm_warn_msgs(user.id)
+            _to_delete[user.id] = await event.respond(UNS)
+            COUNT_PM.pop(user.id, None)
+            LASTMSG.pop(user.id, None)
+            await ultroid_bot(BlockRequest(user.id))
+            await ultroid_bot(ReportSpamRequest(peer=user.id))
+            if _log_ch:
                 await asst.edit_message(
-                    udB.get_key("LOG_CHANNEL"),
+                    _log_ch,
                     _not_approved[user.id],
                     f"**{mention}** [`{user.id}`] was Blocked for spamming.",
                 )
 
-    @ultroid_cmd(pattern="(start|stop|clear)archive$", fullsudo=True)
-    async def _(e):
-        x = e.pattern_match.group(1).strip()
-        if x == "start":
-            udB.set_key("MOVE_ARCHIVE", "True")
-            await e.eor("Now I will move new Unapproved DM's to archive", time=5)
-        elif x == "stop":
-            udB.set_key("MOVE_ARCHIVE", "False")
-            await e.eor("Now I won't move new Unapproved DM's to archive", time=5)
-        elif x == "clear":
-            try:
-                await e.client.edit_folder(unpack=1)
-                await e.eor("Unarchived all chats", time=5)
-            except Exception as mm:
-                await e.eor(str(mm), time=5)
 
-    @ultroid_cmd(pattern="(a|approve)(?: |$)", fullsudo=True)
-    async def approvepm(apprvpm):
-        if apprvpm.reply_to_msg_id:
-            user = (await apprvpm.get_reply_message()).sender
-        elif apprvpm.is_private:
-            user = await apprvpm.get_chat()
-        else:
-            return await apprvpm.edit(NO_REPLY)
-        if user.id in DEVLIST:
-            return await eor(
-                apprvpm,
-                "This is a developer account.\nAutomatically approved.",
-            )
-        if not keym.contains(user.id):
-            keym.add(user.id)
-            try:
-                await delete_pm_warn_msgs(user.id)
-                await apprvpm.client.edit_folder(user.id, folder=0)
-            except BaseException:
-                pass
-            await eod(
-                apprvpm,
-                f"<b>{inline_mention(user, html=True)}</b> <code>approved to PM!</code>",
-                parse_mode="html",
-            )
+@ultroid_cmd(pattern="(start|stop|clear)archive$", fullsudo=True)
+async def _(e):
+    x = e.pattern_match.group(1).strip()
+    if x == "start":
+        udB.set_key("MOVE_ARCHIVE", "True")
+        await e.eor("Now I will move new Unapproved DM's to archive", time=5)
+    elif x == "stop":
+        udB.set_key("MOVE_ARCHIVE", "False")
+        await e.eor("Now I won't move new Unapproved DM's to archive", time=5)
+    elif x == "clear":
+        try:
+            await e.client.edit_folder(unpack=1)
+            await e.eor("Unarchived all chats", time=5)
+        except Exception as mm:
+            await e.eor(str(mm), time=5)
+
+
+@ultroid_cmd(pattern="(a|approve)(?: |$)", fullsudo=True)
+async def approvepm(apprvpm):
+    if apprvpm.reply_to_msg_id:
+        user = (await apprvpm.get_reply_message()).sender
+    elif apprvpm.is_private:
+        user = await apprvpm.get_chat()
+    else:
+        return await apprvpm.edit(NO_REPLY)
+    if user.id in DEVLIST:
+        return await eor(
+            apprvpm,
+            "This is a developer account.\nAutomatically approved.",
+        )
+    if not keym.contains(user.id):
+        keym.add(user.id)
+        try:
+            await delete_pm_warn_msgs(user.id)
+            await apprvpm.client.edit_folder(user.id, folder=0)
+        except BaseException:
+            pass
+        await eod(
+            apprvpm,
+            f"<b>{inline_mention(user, html=True)}</b> <code>approved to PM!</code>",
+            parse_mode="html",
+        )
+        _log_ch = udB.get_key("LOG_CHANNEL")
+        if _log_ch:
             try:
                 await asst.edit_message(
-                    udB.get_key("LOG_CHANNEL"),
+                    _log_ch,
                     _not_approved[user.id],
                     f"#APPROVED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was approved to PM you!</code>",
                     buttons=[
@@ -437,7 +399,7 @@ if udB.get_key("PMSETTING"):
                 )
             except KeyError:
                 _not_approved[user.id] = await asst.send_message(
-                    udB.get_key("LOG_CHANNEL"),
+                    _log_ch,
                     f"#APPROVED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was approved to PM you!</code>",
                     buttons=[
                         Button.inline("Disapprove PM", data=f"disapprove_{user.id}"),
@@ -447,32 +409,35 @@ if udB.get_key("PMSETTING"):
                 )
             except MessageNotModifiedError:
                 pass
-        else:
-            await apprvpm.eor("`User may already be approved.`", time=5)
+    else:
+        await apprvpm.eor("`User may already be approved.`", time=5)
 
-    @ultroid_cmd(pattern="(da|disapprove)(?: |$)", fullsudo=True)
-    async def disapprovepm(e):
-        if e.reply_to_msg_id:
-            user = (await e.get_reply_message()).sender
-        elif e.is_private:
-            user = await e.get_chat()
-        else:
-            return await e.edit(NO_REPLY)
-        if user.id in DEVLIST:
-            return await eor(
-                e,
-                "`This is a developer account.\nCannot be disapproved.`",
-            )
-        if keym.contains(user.id):
-            keym.remove(user.id)
-            await eod(
-                e,
-                f"<b>{inline_mention(user, html=True)}</b> <code>Disapproved to PM!</code>",
-                parse_mode="html",
-            )
+
+@ultroid_cmd(pattern="(da|disapprove)(?: |$)", fullsudo=True)
+async def disapprovepm(e):
+    if e.reply_to_msg_id:
+        user = (await e.get_reply_message()).sender
+    elif e.is_private:
+        user = await e.get_chat()
+    else:
+        return await e.edit(NO_REPLY)
+    if user.id in DEVLIST:
+        return await eor(
+            e,
+            "`This is a developer account.\nCannot be disapproved.`",
+        )
+    if keym.contains(user.id):
+        keym.remove(user.id)
+        await eod(
+            e,
+            f"<b>{inline_mention(user, html=True)}</b> <code>Disapproved to PM!</code>",
+            parse_mode="html",
+        )
+        _log_ch = udB.get_key("LOG_CHANNEL")
+        if _log_ch:
             try:
                 await asst.edit_message(
-                    udB.get_key("LOG_CHANNEL"),
+                    _log_ch,
                     _not_approved[user.id],
                     f"#DISAPPROVED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was disapproved to PM you.</code>",
                     buttons=[
@@ -483,7 +448,7 @@ if udB.get_key("PMSETTING"):
                 )
             except KeyError:
                 _not_approved[user.id] = await asst.send_message(
-                    udB.get_key("LOG_CHANNEL"),
+                    _log_ch,
                     f"#DISAPPROVED\n\n<b>{inline_mention(user, html=True)}</b> [<code>{user.id}</code>] <code>was disapproved to PM you.</code>",
                     buttons=[
                         Button.inline("Approve PM", data=f"approve_{user.id}"),
@@ -493,12 +458,12 @@ if udB.get_key("PMSETTING"):
                 )
             except MessageNotModifiedError:
                 pass
-        else:
-            await eod(
-                e,
-                f"<b>{inline_mention(user, html=True)}</b> <code>was never approved!</code>",
-                parse_mode="html",
-            )
+    else:
+        await eod(
+            e,
+            f"<b>{inline_mention(user, html=True)}</b> <code>was never approved!</code>",
+            parse_mode="html",
+        )
 
 
 @ultroid_cmd(pattern="block( (.*)|$)", fullsudo=True)

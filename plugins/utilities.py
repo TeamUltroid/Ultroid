@@ -214,8 +214,14 @@ async def stats(
         sp_count = len(sp.sets)
     except BaseException:
         sp_count = 0
-    full_name = inline_mention(event.client.me)
-    response = f"🔸 **Stats for {full_name}** \n\n"
+    me = event.client.me
+    full_name = inline_mention(me)
+    username_line = (
+        f" (`@{me.username}` | [Profile](https://t.me/{me.username}))"
+        if me.username
+        else f" (`ID: {me.id}`)"
+    )
+    response = f"🔸 **Stats for {full_name}**{username_line}\n\n"
     response += f"**Private Chats:** {private_chats} \n"
     response += f"**  •• **`Users: {private_chats - bots}` \n"
     response += f"**  •• **`Bots: {bots}` \n"

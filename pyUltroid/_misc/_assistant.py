@@ -66,8 +66,10 @@ def asst_cmd(pattern=None, load=None, owner=False, **kwargs):
     return ult
 
 
-def callback(data=None, from_users=[], admins=False, owner=False, **kwargs):
+def callback(data=None, from_users=None, admins=False, owner=False, **kwargs):
     """Assistant's callback decorator"""
+    if from_users is None:
+        from_users = []
     if "me" in from_users:
         from_users.remove("me")
         from_users.append(ultroid_bot.uid)
