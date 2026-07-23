@@ -430,12 +430,23 @@ async def customize():
 
 
 async def plug(plugin_channels):
-    from .. import ultroid_bot
+    from .. import udB, ultroid_bot
     from .utils import load_addons
 
     if ultroid_bot._bot:
         LOGS.info("Plugin Channels can't be used in 'BOTMODE'")
         return
+
+    # Addon security: official-only blocks channel plugins entirely.
+    mode = (udB.get_key("ADDONS_MODE") or os.getenv("ADDONS_MODE") or "any")
+    mode = str(mode).strip().lower()
+    if mode in {"official", "official-only", "off"}:
+        LOGS.warning(
+            "ADDONS_MODE=%s — skipping PLUGIN_CHANNEL loads (remote code disabled).",
+            mode,
+        )
+        return
+
     if os.path.exists("addons") and not os.path.exists("addons/.git"):
         shutil.rmtree("addons")
     if not os.path.exists("addons"):
@@ -443,6 +454,10 @@ async def plug(plugin_channels):
     if not os.path.exists("addons/__init__.py"):
         with open("addons/__init__.py", "w") as f:
             f.write("from plugins import *\n\nbot = ultroid_bot")
+    LOGS.warning(
+        "Loading plugins from PLUGIN_CHANNEL — this runs arbitrary remote Python. "
+        "Set ADDONS_MODE=official-only to disable."
+    )
     LOGS.info("• Loading Plugins from Plugin Channel(s) •")
     for chat in plugin_channels:
         LOGS.info(f"{'•'*4} {chat}")
@@ -450,6 +465,8 @@ async def plug(plugin_channels):
             async for x in ultroid_bot.iter_messages(
                 chat, search=".py", filter=InputMessagesFilterDocument, wait_time=10
             ):
+                if not x.file or not x.file.name:
+                    continue
                 plugin = "addons/" + x.file.name.replace("_", "-").replace("|", "-")
                 if not os.path.exists(plugin):
                     await asyncio.sleep(0.6)
@@ -461,7 +478,10 @@ async def plug(plugin_channels):
                     except Exception as e:
                         LOGS.info(f"Ultroid - PLUGIN_CHANNEL - ERROR - {plugin}")
                         LOGS.exception(e)
-                        os.remove(plugin)
+                        try:
+                            os.remove(plugin)
+                        except OSError:
+                            pass
         except Exception as er:
             LOGS.exception(er)
 

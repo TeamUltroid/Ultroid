@@ -68,6 +68,11 @@ def _as_hndlr(raw: str) -> str:
 KNOWN_KEYS: dict[str, tuple[str, Any, str]] = {
     # core toggles
     "ADDONS": ("bool", _as_bool, "Load UltroidAddons on boot"),
+    "ADDONS_MODE": (
+        "str",
+        _as_str,
+        "Addon policy: any | official-only (blocks UltroidAddons + PLUGIN_CHANNEL)",
+    ),
     "VCBOT": ("bool", _as_bool, "Load VcBot on boot"),
     "PMBOT": ("bool", _as_bool, "Enable assistant PM bot"),
     "MANAGER": ("bool", _as_bool, "Enable group manager plugins"),

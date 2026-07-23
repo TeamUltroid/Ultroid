@@ -128,8 +128,25 @@ def main():
 
     try:
         udB.re_cache()
-    except BaseException:
+    except Exception:
         pass
+
+    # Container / orchestrator friendly ready marker (K8s/Railway probes can check this).
+    try:
+        from pyUltroid.loader import LOAD_REPORT
+
+        ready_path = os.getenv("ULTROID_READY_FILE", "ultroid.ready")
+        with open(ready_path, "w", encoding="utf-8") as rf:
+            rf.write(
+                "ok\n"
+                f"version={os.getenv('ULTROID_VERSION', '')}\n"
+                f"host={HOSTED_ON}\n"
+                f"plugins_loaded={len(LOAD_REPORT.get('loaded') or [])}\n"
+                f"plugins_failed={len(LOAD_REPORT.get('failed') or [])}\n"
+            )
+        LOGS.info("Ready file written: %s", ready_path)
+    except Exception as er:
+        LOGS.debug("Could not write ready file: %s", er)
 
     LOGS.info(
         f"Took {time_formatter((time.time() - start_time)*1000)} to start •ULTROID•"

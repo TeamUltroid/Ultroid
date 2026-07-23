@@ -22,9 +22,9 @@
 ----
 
 # Deploy
-- [Heroku](#deploy-to-heroku)
-- [Okteto](#deploy-to-okteto)
+- [Docker Compose (recommended)](#deploy-with-docker-compose)
 - [Local Machine](#deploy-locally)
+- [Legacy hosts (Heroku / Okteto)](#legacy-hosts-heroku--okteto)
 
 # Documentation 
 [![Documentation](https://img.shields.io/badge/Documentation-Ultroid-blue)](http://ultroid.tech/)
@@ -35,7 +35,11 @@
 - Tutorial to get Redis URL and password - [here.](./resources/extras/redistut.md)
 ---
 
-## Deploy to Heroku
+## Legacy hosts (Heroku / Okteto)
+
+> Free tiers have changed; prefer Docker Compose or a VPS.
+
+### Heroku
 Get the [Necessary Variables](#Necessary-Variables) and then click the button below!  
 
 <summary>Deploy To Heroku</summary>
@@ -45,7 +49,7 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
   <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
 </a>
 </p>
-## Deploy to Okteto
+### Okteto
 Get the [Necessary Variables](#Necessary-Variables) and then click the button below!
 
 [![Develop on Okteto](https://okteto.com/develop-okteto.svg)](https://cloud.okteto.com/deploy?repository=https://github.com/TeamUltroid/Ultroid)
@@ -59,6 +63,9 @@ python -m pyUltroid doctor   # on host, or: docker compose logs -f ultroid
 ```
 
 Bundled Redis is available at `redis:6379` inside the compose network.
+
+Multi-account: set `SESSION1`… and see [docs/MULTI_CLIENT.md](docs/MULTI_CLIENT.md).
+Addon safety: `ADDONS_MODE=official-only` blocks remote plugin code.
 
 ## Deploy Locally
 - [Traditional Method](#local-deploy---traditional-method)

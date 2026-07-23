@@ -1,32 +1,25 @@
 #!/usr/bin/env bash
-# Ultroid - UserBot
-# Copyright (C) 2021-2026 TeamUltroid
-#
-# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
-# PLease read the GNU Affero General Public License in <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
+# Ultroid session generator launcher
+# Prefers the in-repo ssgen.py; falls back to a fresh copy only if missing.
 
-clear
-echo -e "\e[1m"
-echo "  _    _ _ _             _     _ "
-echo " | |  | | | |           (_)   | |"
-echo " | |  | | | |_ _ __ ___  _  __| |"
-echo " | |  | | | __| '__/ _ \| |/ _  |"
-echo " | |__| | | |_| | | (_) | | (_| |"
-echo "  \____/|_|\__|_|  \___/|_|\__,_|"
-echo -e "\e[0m"
-sec=5
-spinner=(⣻ ⢿ ⡿ ⣟ ⣯ ⣷)
-while [ $sec -gt 0 ]; do
-    echo -ne "\e[33m ${spinner[sec]} Starting dependency installation in $sec seconds...\r"
-    sleep 1
-    sec=$(($sec - 1))
-done
-echo -e "\e[1;32mInstalling Dependencies ---------------------------\e[0m\n" # Don't Remove Dashes / Fix it
-apt-get update
-apt-get upgrade -y
-pkg upgrade -y
-pkg install python wget -y
-wget https://raw.githubusercontent.com/TeamUltroid/ultroid/main/resources/session/ssgen.py
-pip uninstall telethon -y && install telethon
-clear
+set -euo pipefail
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$DIR"
+
+install_deps() {
+  if command -v apt-get >/dev/null 2>&1 && [[ "$(id -u)" -eq 0 || -n "${TERMUX_VERSION:-}" ]]; then
+    apt-get install -y python3 python3-pip >/dev/null 2>&1 || true
+  fi
+}
+
+install_deps
+
+if [[ ! -f ssgen.py ]]; then
+  echo "ssgen.py missing locally — downloading from TeamUltroid/Ultroid…"
+  curl -fsSL -o ssgen.py \
+    "https://raw.githubusercontent.com/TeamUltroid/Ultroid/main/resources/session/ssgen.py" \
+    || wget -q -O ssgen.py \
+    "https://raw.githubusercontent.com/TeamUltroid/Ultroid/main/resources/session/ssgen.py"
+fi
+
 python3 ssgen.py

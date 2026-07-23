@@ -32,3 +32,6 @@ jobs:
         run: python -m pyUltroid doctor || true
       - name: CLI help
         run: python -m pyUltroid --help
+      - name: i18n key parity (warn)
+        run: python scripts/check_i18n_keys.py
+

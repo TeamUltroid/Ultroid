@@ -46,8 +46,8 @@ services:
       redis:
         condition: service_healthy
     healthcheck:
-      # Process still running (full Telegram health needs a live session)
-      test: ["CMD-SHELL", "pgrep -f 'python3 -m pyUltroid|multi_client|startup' >/dev/null || exit 1"]
+      # Ready marker written after plugins load (see ULTROID_READY_FILE)
+      test: ["CMD-SHELL", "test -f /root/TeamUltroid/ultroid.ready || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5

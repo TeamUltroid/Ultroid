@@ -15,7 +15,7 @@ import os
 
 from pyUltroid.startup.loader import load_addons
 
-from . import LOGS, async_searcher, eod, get_string, safeinstall, ultroid_cmd, un_plug
+from . import LOGS, async_searcher, eod, get_string, safeinstall, udB, ultroid_cmd, un_plug
 
 
 @ultroid_cmd(pattern="install", fullsudo=True)
@@ -99,11 +99,21 @@ async def get_the_addons_lol(event):
     thelink = event.pattern_match.group(1).strip()
     xx = await event.eor(get_string("com_1"))
     fool = get_string("gas_1")
+    mode = str(udB.get_key("ADDONS_MODE") or "any").strip().lower()
+    if mode in {"official", "official-only", "off"}:
+        return await xx.eor(
+            "`ADDONS_MODE` blocks remote plugin installs. "
+            "Set `.setdb ADDONS_MODE any` to allow.",
+            time=10,
+        )
     if thelink is None:
         return await xx.eor(fool, time=10)
     split_thelink = thelink.split("/")
     if not ("raw" in thelink and thelink.endswith(".py")):
         return await xx.eor(fool, time=10)
+    # Basic SSRF guard — only https raw hosts
+    if not thelink.lower().startswith("https://"):
+        return await xx.eor("`Only https:// raw links are allowed.`", time=10)
     name_of_it = split_thelink[-1]
     plug = await async_searcher(thelink)
     fil = f"addons/{name_of_it}"

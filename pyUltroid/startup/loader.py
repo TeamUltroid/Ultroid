@@ -70,6 +70,15 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
 
     # for addons
     if addons:
+        mode = str(
+            udB.get_key("ADDONS_MODE") or config("ADDONS_MODE", default="any") or "any"
+        ).strip().lower()
+        if mode in {"official", "official-only", "off"}:
+            LOGS.warning(
+                "ADDONS_MODE=%s — skipping UltroidAddons clone/load.", mode
+            )
+            addons = False
+    if addons:
         if url := udB.get_key("ADDONS_URL"):
             subprocess.run(f"git clone -q {url} addons", shell=True)
         if os.path.exists("addons") and not os.path.exists("addons/.git"):

@@ -126,20 +126,36 @@ def ultroid_cmd(
             try:
                 await dec(ult)
             except FloodWaitError as fwerr:
+                # Prefer waiting without a full disconnect when the wait is short.
+                # Long waits still recycle the connection to avoid stalled sockets.
+                wait_for = int(getattr(fwerr, "seconds", 0) or 0) + 5
                 _log_ch = udB.get_key("LOG_CHANNEL")
                 if _log_ch:
-                    await asst.send_message(
-                        _log_ch,
-                        f"`FloodWaitError:\n{str(fwerr)}\n\nSleeping for {tf((fwerr.seconds + 10)*1000)}`",
-                    )
-                await ultroid_bot.disconnect()
-                await asyncio.sleep(fwerr.seconds + 10)
-                await ultroid_bot.connect()
+                    try:
+                        await asst.send_message(
+                            _log_ch,
+                            f"`FloodWaitError: sleeping {tf(wait_for * 1000)} "
+                            f"(disconnect={'yes' if wait_for > 120 else 'no'})`",
+                        )
+                    except Exception:
+                        pass
+                if wait_for > 120:
+                    try:
+                        await ultroid_bot.disconnect()
+                    except Exception:
+                        pass
+                    await asyncio.sleep(wait_for)
+                    try:
+                        await ultroid_bot.connect()
+                    except Exception:
+                        LOGS.exception("Reconnect after FloodWait failed")
+                else:
+                    await asyncio.sleep(wait_for)
                 if _log_ch:
-                    await asst.send_message(
-                        _log_ch,
-                        "`Bot is working again`",
-                    )
+                    try:
+                        await asst.send_message(_log_ch, "`Bot is working again`")
+                    except Exception:
+                        pass
                 return
             except ChatSendInlineForbiddenError:
                 return await eod(ult, "`Inline Locked In This Chat.`")
