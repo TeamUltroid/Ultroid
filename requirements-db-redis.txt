@@ -1,0 +1,3 @@
+# Redis database driver (install with requirements.txt)
+redis>=5.0.0
+hiredis>=2.3.0

@@ -69,9 +69,13 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 - Create a virtual env:      
 `virtualenv -p /usr/bin/python3 venv`
 `. ./venv/bin/activate`
-- Install the requirements:      
-`pip(3) install -U -r re*/st*/optional-requirements.txt`
-`pip(3) install -U -r requirements.txt`
+- **Recommended:** guided setup (writes `.env`, installs deps by profile):  
+  `python -m pyUltroid setup`  
+  Health check anytime: `python -m pyUltroid doctor`
+- Or install requirements manually:      
+`pip install -U -r requirements.txt`  
+`pip install -U -r requirements-db-redis.txt`  # or requirements-db-mongo.txt / requirements-db-postgres.txt  
+`pip install -U -r requirements-full.txt`     # optional plugin extras  
 - Generate your `SESSION`:
   - For Linux users:
     `bash sessiongen`
@@ -91,16 +95,22 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 
 ---
 ## Necessary Variables
+- `API_ID` / `API_HASH` - from [my.telegram.org](https://my.telegram.org) (**required**; shared Telegram Android defaults are rejected).
 - `SESSION` - SessionString for your accounts login session. Get it from [here](#Session-String)
 
 One of the following database:
 - For **Redis** (tutorial [here](./resources/extras/redistut.md))
-  - `REDIS_URI` - Redis endpoint URL, from [redislabs](http://redislabs.com/).
+  - `REDIS_URI` - Redis `host:port` only (no `redis://` / `https://`), from [redislabs](http://redislabs.com/) or similar.
   - `REDIS_PASSWORD` - Redis endpoint Password, from [redislabs](http://redislabs.com/).
 - For **MONGODB**
   - `MONGO_URI` - Get it from [mongodb](https://mongodb.com/atlas).
 - For **SQLDB**
   - `DATABASE_URL`- Get it from [elephantsql](https://elephantsql.com).
+
+Optional safety toggles (see `.env.sample`):
+- `ULTROID_AUTO_PIP` — runtime pip fallback for missing DB drivers (`1` default, set `0` on locked hosts).
+- `SKIP_AUTOPILOT` / `SKIP_AUTOBOT` / `SKIP_AUTOJOIN` / `SKIP_ASSISTANT_CUSTOMIZE` — opt out of startup side-effects.
+- `ULTROID_STRICT_CONFIG=1` — require a remote DB at boot.
 
 ## Session String
 Different ways to get your `SESSION`:

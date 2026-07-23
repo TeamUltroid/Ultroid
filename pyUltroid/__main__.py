@@ -5,16 +5,35 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
-from . import *
+import sys
+
+_CLI = {"setup", "doctor", "-h", "--help", "help"}
+
+
+def _run_cli():
+    from .startup.setup_cli import main as setup_main
+
+    raise SystemExit(setup_main(sys.argv[1:]))
 
 
 def main():
     import os
-    import sys
     import time
 
-    from .fns.helper import bash, time_formatter, updater
-    from .startup.funcs import (
+    # Full boot only when not a CLI command (import * must stay at function scope
+    # carefully — pull symbols explicitly after package init).
+    import pyUltroid as _pkg
+    from pyUltroid import (
+        HOSTED_ON,
+        LOGS,
+        Var,
+        asst,
+        start_time,
+        udB,
+        ultroid_bot,
+    )
+    from pyUltroid.fns.helper import bash, time_formatter, updater
+    from pyUltroid.startup.funcs import (
         WasItRestart,
         autopilot,
         customize,
@@ -23,7 +42,7 @@ def main():
         ready,
         startup_stuff,
     )
-    from .startup.loader import load_other_plugins
+    from pyUltroid.startup.loader import load_other_plugins
 
     try:
         from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -49,7 +68,18 @@ def main():
 
     LOGS.info("Initialising...")
 
-    ultroid_bot.run_in_loop(autopilot())
+    skip_autopilot = Var.SKIP_AUTOPILOT or udB.get_key("SKIP_AUTOPILOT")
+    if skip_autopilot:
+        if not (udB.get_key("LOG_CHANNEL") or Var.LOG_CHANNEL):
+            LOGS.critical(
+                "SKIP_AUTOPILOT is set but LOG_CHANNEL is missing.\n"
+                "  → Create a private group, add your assistant, set LOG_CHANNEL to its id."
+            )
+            sys.exit(1)
+        LOGS.info("SKIP_AUTOPILOT set — not auto-creating log channel.")
+    else:
+        ultroid_bot.run_in_loop(autopilot())
+
     ultroid_bot.loop.create_task(keep_redis_alive())
 
     pmbot = udB.get_key("PMBOT")
@@ -77,7 +107,13 @@ def main():
     plugin_channels = udB.get_key("PLUGIN_CHANNEL")
 
     # Customize Ultroid Assistant...
-    ultroid_bot.run_in_loop(customize())
+    skip_customize = Var.SKIP_ASSISTANT_CUSTOMIZE or udB.get_key(
+        "SKIP_ASSISTANT_CUSTOMIZE"
+    )
+    if skip_customize:
+        LOGS.info("SKIP_ASSISTANT_CUSTOMIZE set — skipping BotFather customisation.")
+    else:
+        ultroid_bot.run_in_loop(customize())
 
     # Load Addons from Plugin Channels.
     if plugin_channels:
@@ -99,9 +135,12 @@ def main():
         f"Took {time_formatter((time.time() - start_time)*1000)} to start •ULTROID•"
     )
     LOGS.info(suc_msg)
+    return asst
 
 
 if __name__ == "__main__":
-    main()
-
-    asst.run()
+    if len(sys.argv) > 1 and sys.argv[1] in _CLI:
+        _run_cli()
+    else:
+        _asst = main()
+        _asst.run()

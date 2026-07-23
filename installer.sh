@@ -176,15 +176,31 @@ misc_install() {
 
 dep_install() {
     echo -e "\n\nInstalling DB Requirement..."
-    if [ $MONGO_URI ]; then
+    # Prefer declarative profiles when present (P0 QoL); fall back to package names.
+    if [ "$MONGO_URI" ]; then
         echo -e "   Installing MongoDB Requirements..."
-        pip3 install -q pymongo[srv]
-    elif [ $DATABASE_URL ]; then
+        if [ -f "$DIR/requirements-db-mongo.txt" ]; then
+            pip3 install -q -r "$DIR/requirements-db-mongo.txt"
+        else
+            pip3 install -q "pymongo[srv]"
+        fi
+    elif [ "$DATABASE_URL" ]; then
         echo -e "   Installing PostgreSQL Requirements..."
-        pip3 install -q psycopg2-binary
-    elif [ $REDIS_URI ]; then
+        if [ -f "$DIR/requirements-db-postgres.txt" ]; then
+            pip3 install -q -r "$DIR/requirements-db-postgres.txt"
+        else
+            pip3 install -q psycopg2-binary
+        fi
+    elif [ "$REDIS_URI" ] || [ "$REDISHOST" ]; then
         echo -e "   Installing Redis Requirements..."
-        pip3 install -q redis hiredis
+        if [ -f "$DIR/requirements-db-redis.txt" ]; then
+            pip3 install -q -r "$DIR/requirements-db-redis.txt"
+        else
+            pip3 install -q redis hiredis
+        fi
+    else
+        echo -e "   No remote DB env detected — installing localdb fallback..."
+        pip3 install -q localdb.json
     fi
 }
 

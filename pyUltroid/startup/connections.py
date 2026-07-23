@@ -33,12 +33,20 @@ DC_IPV4 = {
 def validate_session(session, logger=LOGS, _exit=True):
     from strings import get_string
 
+    _hint = (
+        "Generate a new session: bash sessiongen\n"
+        "  or: python -m pyUltroid setup\n"
+        "Then set SESSION in .env / host config vars and restart."
+    )
+
     if session:
         # Telethon Session
         if session.startswith(CURRENT_VERSION):
             if len(session.strip()) != 353:
-                logger.exception(get_string("py_c1"))
-                sys.exit()
+                logger.error("%s\n  → %s", get_string("py_c1"), _hint)
+                if _exit:
+                    sys.exit(1)
+                return
             return StringSession(session)
 
         # Pyrogram Session
@@ -65,12 +73,22 @@ def validate_session(session, logger=LOGS, _exit=True):
                 ).decode("ascii")
             )
         else:
-            logger.exception(get_string("py_c1"))
+            logger.error(
+                "SESSION is not a valid Telethon or Pyrogram string session.\n"
+                "  → %s\n  → %s",
+                get_string("py_c1"),
+                _hint,
+            )
             if _exit:
-                sys.exit()
-    logger.exception(get_string("py_c2"))
+                sys.exit(1)
+            return
+    logger.error(
+        "SESSION is missing.\n  → %s\n  → %s",
+        get_string("py_c2"),
+        _hint,
+    )
     if _exit:
-        sys.exit()
+        sys.exit(1)
 
 
 def vc_connection(udB, ultroid_bot):

@@ -1,4 +1,8 @@
-# Important Requirements here.
+# Core Ultroid requirements (always install these).
+# DB drivers: also install one of
+#   requirements-db-redis.txt | requirements-db-mongo.txt | requirements-db-postgres.txt
+# Full plugins: requirements-full.txt
+# Setup wizard: python -m pyUltroid setup
 telethon>=1.44.0
 gitpython>=3.1.52
 https://github.com/New-dev0/Telethon-Patch/archive/main.zip
@@ -10,3 +14,4 @@ requests>=2.34.2
 aiohttp>=3.14.1
 catbox-uploader>=2.9
 cloudscraper>=1.2.71
+
