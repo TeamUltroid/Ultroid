@@ -1,14 +1,65 @@
+# Ultroid — recommended self-host stack
+#   cp .env.sample .env   # fill API_ID, API_HASH, SESSION
+#   docker compose up -d --build
+#
+# Redis is included. For external Redis/Mongo/Postgres, remove the redis
+# service and set REDIS_URI / MONGO_URI / DATABASE_URL in .env.
+
 services:
-  worker:
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"]
+    volumes:
+      - ultroid-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - ultroid
+
+  ultroid:
     build: .
+    restart: unless-stopped
+    env_file:
+      - .env
     environment:
-      REDIS_URI: $REDIS_URI
-      REDIS_PASSWORD: $REDIS_PASSWORD
-      SESSION: $SESSION
-      API_ID: $API_ID  # defaults to None
-      API_HASH: $API_HASH  # defaults to None
-      MONGO_URI: $MONGO_URI  # defaults to None
-      BOT_TOKEN: $BOT_TOKEN # Not mandatory
-      LOG_CHANNEL: $LOG_CHANNEL # Not mandatory
-      DATABASE_URL: $DATABASE_URL  # defaults to None
-      OKTETO_TOKEN: $OKTETO_TOKEN
+      # In-compose Redis (override in .env to use an external DB)
+      REDIS_URI: ${REDIS_URI:-redis:6379}
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+      SESSION: ${SESSION}
+      API_ID: ${API_ID}
+      API_HASH: ${API_HASH}
+      BOT_TOKEN: ${BOT_TOKEN:-}
+      LOG_CHANNEL: ${LOG_CHANNEL:-}
+      MONGO_URI: ${MONGO_URI:-}
+      DATABASE_URL: ${DATABASE_URL:-}
+      ULTROID_AUTO_PIP: ${ULTROID_AUTO_PIP:-0}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      SKIP_AUTOJOIN: ${SKIP_AUTOJOIN:-False}
+    volumes:
+      - ultroid-data:/root/TeamUltroid/resources/downloads
+      - ultroid-auth:/root/TeamUltroid/resources/auth
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      # Process still running (full Telegram health needs a live session)
+      test: ["CMD-SHELL", "pgrep -f 'python3 -m pyUltroid|multi_client|startup' >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    networks:
+      - ultroid
+
+volumes:
+  ultroid-redis:
+  ultroid-data:
+  ultroid-auth:
+
+networks:
+  ultroid:
+    driver: bridge

@@ -84,12 +84,44 @@ async def _help(ult):
                         # the enter command/plugin name is not found
                         text = f"`{plug}` is not a valid plugin!"
                         best_match = None
-                        for _ in compare_strings:
-                            if plug in _ and not _.startswith("_"):
+                        # Prefer substring, then simple edit-distance-ish ranking
+                        candidates = [
+                            c for c in compare_strings if c and not str(c).startswith("_")
+                        ]
+                        plug_l = plug.lower()
+                        for _ in candidates:
+                            if plug_l in str(_).lower():
                                 best_match = _
                                 break
+                        if not best_match:
+                            def _score(a: str, b: str) -> int:
+                                a, b = a.lower(), b.lower()
+                                if a == b:
+                                    return 0
+                                # cheap distance: shared prefix + length delta
+                                n = 0
+                                for x, y in zip(a, b):
+                                    if x != y:
+                                        break
+                                    n += 1
+                                return abs(len(a) - len(b)) + (min(len(a), len(b)) - n)
+
+                            ranked = sorted(
+                                candidates,
+                                key=lambda c: _score(plug, str(c)),
+                            )
+                            if ranked and _score(plug, str(ranked[0])) <= max(
+                                3, len(plug) // 2
+                            ):
+                                best_match = ranked[0]
                         if best_match:
                             text += f"\nDid you mean `{best_match}`?"
+                        # category hint
+                        cats = [k for k in HELP if HELP.get(k)]
+                        if cats:
+                            text += f"\nBrowse: `{HNDLR}help` · categories: " + ", ".join(
+                                f"`{c}`" for c in cats
+                            )
                         return await ult.eor(text)
                     output = f"**Command** `{plug}` **found in plugin** - `{file}`\n"
                     if file in HELP["Official"]:

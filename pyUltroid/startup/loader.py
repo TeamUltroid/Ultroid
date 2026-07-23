@@ -46,6 +46,9 @@ def _after_load(loader, module, plugin_name=""):
 
 
 def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
+    from ..loader import reset_load_report, summarize_load_report
+
+    reset_load_report()
 
     # for official
     _exclude = udB.get_key("EXCLUDE_OFFICIAL") or config("EXCLUDE_OFFICIAL", None)
@@ -142,3 +145,5 @@ def load_other_plugins(addons=None, pmbot=None, manager=None, vcbot=None):
                 LOGS.error(f"{e} Skipping VCBot Installation.")
         except ModuleNotFoundError:
             LOGS.error("'pytgcalls' not installed!\nSkipping loading of VCBOT.")
+
+    summarize_load_report(LOGS)

@@ -50,6 +50,16 @@ Get the [Necessary Variables](#Necessary-Variables) and then click the button be
 
 [![Develop on Okteto](https://okteto.com/develop-okteto.svg)](https://cloud.okteto.com/deploy?repository=https://github.com/TeamUltroid/Ultroid)
 
+## Deploy with Docker Compose
+
+```bash
+cp .env.sample .env   # set API_ID, API_HASH, SESSION
+docker compose up -d --build
+python -m pyUltroid doctor   # on host, or: docker compose logs -f ultroid
+```
+
+Bundled Redis is available at `redis:6379` inside the compose network.
+
 ## Deploy Locally
 - [Traditional Method](#local-deploy---traditional-method)
 - [Easy Method](#local-deploy---easy-method)

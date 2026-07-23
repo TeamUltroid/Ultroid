@@ -16,5 +16,8 @@ RUN bash installer.sh
 # changing workdir
 WORKDIR "/root/TeamUltroid"
 
+# Prefer compose-provided env; disable surprise runtime pip in containers
+ENV ULTROID_AUTO_PIP=0
+
 # start the bot.
 CMD ["bash", "startup"]

@@ -5,10 +5,23 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
+import logging
 import os
 import platform
+import re
 import sys
-from logging import INFO, WARNING, FileHandler, StreamHandler, basicConfig, getLogger
+from logging import (
+    DEBUG,
+    ERROR,
+    INFO,
+    WARNING,
+    FileHandler,
+    Filter,
+    Formatter,
+    StreamHandler,
+    basicConfig,
+    getLogger,
+)
 
 from .. import run_as_module
 from ._extra import _ask_input
@@ -17,6 +30,38 @@ if run_as_module:
     from ..configs import Var
 else:
     Var = None
+
+_SECRET_RE = re.compile(
+    r"(?i)(api_hash|api_id|session|bot_token|password|token|secret|authorization)"
+    r"([\"']?\s*[:=]\s*[\"']?)([^\s,\"']{6,})"
+)
+
+
+class _RedactFilter(Filter):
+    """Strip common secret patterns from log records."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        try:
+            msg = record.getMessage()
+        except Exception:
+            return True
+        redacted = _SECRET_RE.sub(r"\1\2***", msg)
+        if redacted != msg:
+            record.msg = redacted
+            record.args = ()
+        return True
+
+
+def _resolve_log_level():
+    name = (os.getenv("LOG_LEVEL") or os.getenv("ULTROID_LOG_LEVEL") or "INFO").upper()
+    return {
+        "DEBUG": DEBUG,
+        "INFO": INFO,
+        "WARNING": WARNING,
+        "WARN": WARNING,
+        "ERROR": ERROR,
+        "CRITICAL": logging.CRITICAL,
+    }.get(name, INFO)
 
 
 def where_hosted():
@@ -54,7 +99,10 @@ if run_as_module:
     HOSTED_ON = where_hosted()
     LOGS = getLogger("pyUltLogs")
     TelethonLogger = getLogger("Telethon")
-    TelethonLogger.setLevel(INFO)
+    _level = _resolve_log_level()
+    TelethonLogger.setLevel(
+        DEBUG if _level <= DEBUG else INFO if _level <= INFO else WARNING
+    )
 
     _, v, __ = platform.python_version_tuple()
 
@@ -66,17 +114,33 @@ if run_as_module:
     _ask_input()
 
     _LOG_FORMAT = "%(asctime)s | %(name)s [%(levelname)s] : %(message)s"
-    basicConfig(
-        format=_LOG_FORMAT,
-        level=INFO,
-        datefmt="%m/%d/%Y, %H:%M:%S",
-        handlers=[FileHandler(file), StreamHandler()],
-    )
+    _redact = _RedactFilter()
+    _fh = FileHandler(file)
+    _sh = StreamHandler()
+    for _h in (_fh, _sh):
+        _h.addFilter(_redact)
+    try:
+        basicConfig(
+            format=_LOG_FORMAT,
+            level=_level,
+            datefmt="%m/%d/%Y, %H:%M:%S",
+            handlers=[_fh, _sh],
+            force=True,
+        )
+    except TypeError:
+        # Python < 3.8 has no force=
+        basicConfig(
+            format=_LOG_FORMAT,
+            level=_level,
+            datefmt="%m/%d/%Y, %H:%M:%S",
+            handlers=[_fh, _sh],
+        )
+    LOGS.setLevel(_level)
     try:
 
         import coloredlogs
 
-        coloredlogs.install(level=None, logger=LOGS, fmt=_LOG_FORMAT)
+        coloredlogs.install(level=_level, logger=LOGS, fmt=_LOG_FORMAT)
     except ImportError:
         pass
 
@@ -92,6 +156,7 @@ if run_as_module:
     LOGS.info(f"py-Ultroid Version - {__pyUltroid__}")
     LOGS.info(f"Telethon Version - {__version__} [Layer: {LAYER}]")
     LOGS.info(f"Ultroid Version - {ultroid_version} [{HOSTED_ON}]")
+    LOGS.info(f"Log level - {logging.getLevelName(_level)}")
 
     try:
         from safety.tools import *

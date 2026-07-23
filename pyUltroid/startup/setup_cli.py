@@ -116,6 +116,109 @@ def _probe_import(name: str) -> bool:
         return False
 
 
+def _disk_free_mb(path: Path) -> str:
+    try:
+        usage = shutil.disk_usage(path)
+        return f"{usage.free // (1024 * 1024)} MB free / {usage.total // (1024 * 1024)} MB total"
+    except Exception as er:
+        return f"n/a ({er})"
+
+
+def _probe_db(cfg) -> list[str]:
+    """Best-effort DB connectivity lines (no hard fail)."""
+    lines = []
+    redis_uri = cfg("REDIS_URI", default=None) or cfg("REDIS_URL", default=None)
+    redis_host = cfg("REDISHOST", default=None)
+    mongo = cfg("MONGO_URI", default=None)
+    pg = cfg("DATABASE_URL", default=None)
+    if redis_uri or redis_host:
+        try:
+            import time
+
+            from redis import Redis
+
+            host = redis_uri or redis_host
+            port = 6379
+            password = cfg("REDIS_PASSWORD", default=None) or cfg(
+                "REDISPASSWORD", default=None
+            )
+            if redis_uri and "://" not in str(redis_uri) and ":" in str(redis_uri):
+                host, _, p = str(redis_uri).rpartition(":")
+                port = int(p)
+            elif redis_host:
+                host = redis_host
+                port = int(cfg("REDISPORT", default=6379) or 6379)
+            t0 = time.time()
+            r = Redis(
+                host=host,
+                port=port,
+                password=password,
+                socket_timeout=3,
+                decode_responses=True,
+            )
+            r.ping()
+            ms = int((time.time() - t0) * 1000)
+            lines.append(f"  OK  Redis ping {host}:{port} ({ms} ms)")
+        except Exception as er:
+            lines.append(f"  --  Redis: {er}")
+    elif mongo:
+        try:
+            import time
+
+            from pymongo import MongoClient
+
+            t0 = time.time()
+            MongoClient(mongo, serverSelectionTimeoutMS=3000).server_info()
+            ms = int((time.time() - t0) * 1000)
+            lines.append(f"  OK  MongoDB ping ({ms} ms)")
+        except Exception as er:
+            lines.append(f"  --  MongoDB: {er}")
+    elif pg:
+        try:
+            import time
+
+            import psycopg2
+
+            t0 = time.time()
+            conn = psycopg2.connect(dsn=pg, connect_timeout=3)
+            conn.close()
+            ms = int((time.time() - t0) * 1000)
+            lines.append(f"  OK  PostgreSQL connect ({ms} ms)")
+        except Exception as er:
+            lines.append(f"  --  PostgreSQL: {er}")
+    else:
+        lines.append("  --  No remote DB configured (LocalDB fallback)")
+    return lines
+
+
+def _plugin_inventory() -> list[str]:
+    lines = []
+    plugins = ROOT / "plugins"
+    if not plugins.is_dir():
+        return ["  MISSING plugins/"]
+    py_files = sorted(p.stem for p in plugins.glob("*.py") if not p.name.startswith("_"))
+    lines.append(f"  official plugins on disk: {len(py_files)}")
+    asst = ROOT / "assistant"
+    if asst.is_dir():
+        a = len(list(asst.glob("*.py")))
+        lines.append(f"  assistant modules on disk: {a}")
+    # last boot report if present in process (usually empty in CLI)
+    try:
+        from pyUltroid.loader import LOAD_REPORT
+
+        if LOAD_REPORT["loaded"] or LOAD_REPORT["failed"] or LOAD_REPORT["skipped_missing_dep"]:
+            lines.append(
+                "  last load: {} ok / {} missing-dep / {} failed".format(
+                    len(LOAD_REPORT["loaded"]),
+                    len(LOAD_REPORT["skipped_missing_dep"]),
+                    len(LOAD_REPORT["failed"]),
+                )
+            )
+    except Exception:
+        pass
+    return lines
+
+
 def cmd_doctor() -> int:
     print("Ultroid doctor\n" + "-" * 40)
     print(f"Python     : {platform.python_version()} ({sys.executable})")
@@ -123,12 +226,15 @@ def cmd_doctor() -> int:
     print(f"Cwd        : {ROOT}")
     print(f".env       : {'yes' if ENV_PATH.exists() else 'no'}")
     print(f"plugins/   : {'yes' if (ROOT / 'plugins').is_dir() else 'MISSING'}")
+    print(f"disk       : {_disk_free_mb(ROOT)}")
     print(f"ffmpeg     : {shutil.which('ffmpeg') or 'not found'}")
     print(f"mediainfo  : {shutil.which('mediainfo') or 'not found'}")
     print(f"git        : {shutil.which('git') or 'not found'}")
+    print(f"LOG_LEVEL  : {os.getenv('LOG_LEVEL') or os.getenv('ULTROID_LOG_LEVEL') or 'INFO'}")
 
     mods = {
         "telethon": "telethon",
+        "telethonpatch": "telethonpatch",
         "decouple": "decouple",
         "dotenv": "dotenv",
         "redis": "redis",
@@ -145,9 +251,14 @@ def cmd_doctor() -> int:
         ok = _probe_import(mod)
         print(f"  {'OK' if ok else '--'}  {label}")
 
+    print("\nPlugins:")
+    for line in _plugin_inventory():
+        print(line)
+
     # Light config check without full boot
     if str(ROOT) not in sys.path:
         sys.path.insert(0, str(ROOT))
+    exit_code = 0
     try:
         import importlib.util
 
@@ -190,10 +301,32 @@ def cmd_doctor() -> int:
             print(f"  WARN: {w.splitlines()[0]}")
         for e in errors:
             print(f"  ERR:  {e.splitlines()[0]}")
-        return 1 if errors else 0
+        if errors:
+            exit_code = 1
+
+        print("\nDatabase:")
+        for line in _probe_db(_cfg):
+            print(line)
+
+        session = _Var.SESSION
+        print("\nSession:")
+        if not session:
+            print("  --  SESSION unset")
+        else:
+            # shape only — no network
+            if str(session).startswith("1") and len(str(session).strip()) == 353:
+                print("  OK  looks like Telethon string session (353 chars)")
+            elif len(str(session)) in {351, 356, 362}:
+                print(f"  OK  looks like Pyrogram session ({len(str(session))} chars)")
+            else:
+                print(
+                    f"  WARN length/format unusual ({len(str(session))} chars) — "
+                    "run bash sessiongen if login fails"
+                )
+        return exit_code
     except Exception as er:
         print(f"\nConfig check skipped: {er}")
-        return 0
+        return exit_code
 
 
 def cmd_setup() -> int:
