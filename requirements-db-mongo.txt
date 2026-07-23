@@ -1,0 +1,2 @@
+# MongoDB database driver (install with requirements.txt)
+pymongo[srv]>=4.6.0

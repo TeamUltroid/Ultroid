@@ -1,0 +1,8 @@
+# Full local/plugin dependency set.
+#   pip install -r requirements.txt -r requirements-full.txt
+# Plus the DB profile you use (requirements-db-redis.txt / mongo / postgres).
+
+-r requirements.txt
+-r resources/startup/optional-requirements.txt
+-r requirements-db-redis.txt
+localdb.json

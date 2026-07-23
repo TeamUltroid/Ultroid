@@ -16,35 +16,69 @@ if run_as_module:
     from ..configs import Var
 
 
+def _try_auto_pip(packages: str, reason: str) -> bool:
+    """Install packages at runtime only when ULTROID_AUTO_PIP allows it."""
+    from .config_validate import auto_pip_enabled, pip_install_hint
+
+    if not auto_pip_enabled():
+        LOGS.error(pip_install_hint(packages))
+        LOGS.error("Runtime auto-pip is disabled (ULTROID_AUTO_PIP=0).")
+        return False
+    LOGS.info("Installing '%s' for %s (ULTROID_AUTO_PIP).", packages, reason)
+    rc = os.system(f"{sys.executable} -m pip install -q {packages}")
+    return rc == 0
+
+
 Redis = MongoClient = psycopg2 = Database = None
 if Var.REDIS_URI or Var.REDISHOST:
     try:
         from redis import Redis
     except ImportError:
-        LOGS.info("Installing 'redis' for database.")
-        os.system(f"{sys.executable} -m pip install -q redis hiredis")
-        from redis import Redis
+        if _try_auto_pip("redis hiredis", "database"):
+            from redis import Redis
+        else:
+            LOGS.critical(
+                "Redis configured but 'redis' is not installed.\n"
+                "  → pip install -r requirements-db-redis.txt"
+            )
+            sys.exit(1)
 elif Var.MONGO_URI:
     try:
         from pymongo import MongoClient
     except ImportError:
-        LOGS.info("Installing 'pymongo' for database.")
-        os.system(f"{sys.executable} -m pip install -q pymongo[srv]")
-        from pymongo import MongoClient
+        if _try_auto_pip("'pymongo[srv]'", "database"):
+            from pymongo import MongoClient
+        else:
+            LOGS.critical(
+                "MongoDB configured but 'pymongo' is not installed.\n"
+                "  → pip install -r requirements-db-mongo.txt"
+            )
+            sys.exit(1)
 elif Var.DATABASE_URL:
     try:
         import psycopg2
     except ImportError:
-        LOGS.info("Installing 'pyscopg2' for database.")
-        os.system(f"{sys.executable} -m pip install -q psycopg2-binary")
-        import psycopg2
+        if _try_auto_pip("psycopg2-binary", "database"):
+            import psycopg2
+        else:
+            LOGS.critical(
+                "PostgreSQL configured but 'psycopg2' is not installed.\n"
+                "  → pip install -r requirements-db-postgres.txt"
+            )
+            sys.exit(1)
 else:
     try:
         from localdb import Database
     except ImportError:
-        LOGS.info("Using local file as database.")
-        os.system(f"{sys.executable} -m pip install -q localdb.json")
-        from localdb import Database
+        if _try_auto_pip("localdb.json", "local database"):
+            from localdb import Database
+        else:
+            LOGS.critical(
+                "No remote DB set and 'localdb' is not installed.\n"
+                "  → Set REDIS_URI / MONGO_URI / DATABASE_URL, or:\n"
+                "  → pip install localdb.json"
+            )
+            sys.exit(1)
 
 # --------------------------------------------------------------------------------------------- #
 

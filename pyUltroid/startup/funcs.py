@@ -469,14 +469,21 @@ async def plug(plugin_channels):
 
 async def ready():
     from .. import asst, udB, ultroid_bot
+    from ..configs import Var
 
     chat_id = udB.get_key("LOG_CHANNEL")
     spam_sent = None
     if not udB.get_key("INIT_DEPLOY"):  # Detailed Message at Initial Deploy
         MSG = """🎇 **Thanks for Deploying Ultroid Userbot!**
-• Here, are the Some Basic stuff from, where you can Know, about its Usage."""
+• Tap below for a short onboarding (language, handler, optional toggles).
+• Or run `{i}help` anytime.""".replace(
+            "{i}", udB.get_key("HNDLR") or "."
+        )
         PHOTO = "https://graph.org/file/54a917cc9dbb94733ea5f.jpg"
-        BTTS = Button.inline("• Click to Start •", "initft_2")
+        BTTS = [
+            [Button.inline("• Click to Start •", "initft_2")],
+            [Button.inline("⚙️ Quick setup", "onboard_menu")],
+        ]
         udB.set_key("INIT_DEPLOY", "Done")
     else:
         MSG = f"**Ultroid has been deployed!**\n➖➖➖➖➖➖➖➖➖➖\n**UserMode**: {inline_mention(ultroid_bot.me)}\n**Assistant**: @{asst.me.username}\n➖➖➖➖➖➖➖➖➖➖\n**Support**: @TeamUltroid\n➖➖➖➖➖➖➖➖➖➖"
@@ -507,6 +514,10 @@ async def ready():
     if spam_sent and not spam_sent.media:
         udB.set_key("LAST_UPDATE_LOG_SPAM", spam_sent.id)
 
+    skip_join = Var.SKIP_AUTOJOIN or udB.get_key("SKIP_AUTOJOIN")
+    if skip_join:
+        LOGS.info("SKIP_AUTOJOIN set — not joining @TheUltroid.")
+        return
     try:
         await ultroid_bot(JoinChannelRequest("TheUltroid"))
     except Exception as er:

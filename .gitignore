@@ -2,13 +2,11 @@
 *.session-journal
 *.session
 build
-test*
 *.mp3
 *.webm
 *.webp
 *.mp4
 *.tgs
-*.txt
 /*.jpg
 /*.png
 /*.mp4
@@ -24,6 +22,7 @@ addons/
 vcbot/
 __pycache__/
 venv/
+.venv/
 node_modules/
 glitch_me/
 src/glitch-me
