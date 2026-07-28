@@ -10,75 +10,73 @@ import re
 from . import *
 
 STRINGS = {
-    1: """🎇 **Thanks for Deploying Ultroid Userbot!**
+    1: """🎆 **Tʜᴀɴᴋs ғᴏʀ Dᴇᴘʟᴏʏɪɴɢ Uʟᴛʀᴏɪᴅ U sᴇʀʙᴏᴛ!**
 
-• Here, are the Some Basic stuff from, where you can Know, about its Usage.""",
-    2: """🎉** About Ultroid**
+• Welcome aboard! Here is a quick guide to help you get started with the basics.""",
+    2: """🎉 **Aʙᴏᴜᴛ Uʟᴛʀᴏɪᴅ**
 
-🧿 Ultroid is Pluggable and powerful Telethon Userbot, made in Python from Scratch. It is Aimed to Increase Security along with Addition of Other Useful Features.
+🧿 **Ultroid** is a pluggable, feature-rich, and high-performance Telethon Userbot written in Python from scratch. Designed with maximum security and efficiency in mind.
 
-❣ Made by **@TeamUltroid**""",
-    3: """**💡• FAQs •**
+❤️ **Dᴇᴠᴇʟᴏᴘᴇᴅ ʙʏ @TeamUltroid**""",
+    3: """💡 **Fʀᴇǫᴜᴇɴᴛʟʏ Asᴋᴇᴅ Qᴜᴇsᴛɪᴏɴs (FAQs)**
 
--> [Username Tracker](https://t.me/UltroidUpdates/24)
--> [Keeping Custom Addons Repo](https://t.me/UltroidUpdates/28)
--> [Disabling Deploy message](https://t.me/UltroidUpdates/27)
--> [Setting up TimeZone](https://t.me/UltroidUpdates/22)
--> [About Inline PmPermit](https://t.me/UltroidUpdates/21)
--> [About Dual Mode](https://t.me/UltroidUpdates/18)
--> [Custom Thumbnail](https://t.me/UltroidUpdates/13)
--> [About FullSudo](https://t.me/UltroidUpdates/11)
--> [Setting Up PmBot](https://t.me/UltroidUpdates/2)
--> [Also Check](https://t.me/UltroidUpdates/14)
+📌 [Username Tracker](https://t.me/UltroidUpdates/24)
+📌 [Keeping Custom Addons Repo](https://t.me/UltroidUpdates/28)
+📌 [Disabling Deploy Message](https://t.me/UltroidUpdates/27)
+📌 [Setting Up TimeZone](https://t.me/UltroidUpdates/22)
+📌 [About Inline PM Permit](https://t.me/UltroidUpdates/21)
+📌 [About Dual Mode](https://t.me/UltroidUpdates/18)
+📌 [Custom Thumbnail Guide](https://t.me/UltroidUpdates/13)
+📌 [About FullSudo Permissions](https://t.me/UltroidUpdates/11)
+📌 [Setting Up PM Bot](https://t.me/UltroidUpdates/2)
+📌 [Additional Useful Info](https://t.me/UltroidUpdates/14)
 
-**• To Know About Updates**
-  - Join @TeamUltroid.""",
-    4: f"""• `To Know All Available Commands`
+📢 **Sᴛᴀʏ Uᴘᴅᴀᴛᴇᴅ:** Join **@TeamUltroid** for news!""",
+    4: f"""📜 **Aᴠᴀɪʟᴀʙʟᴇ Cᴏᴍᴍᴀɴᴅs**
 
-  - `{HNDLR}help`
-  - `{HNDLR}cmds`""",
-    5: """• **For Any Other Query or Suggestion**
-  - Move to **@UltroidSupportChat**.
+To explore all available commands and features, run:
+• `{HNDLR}help` — Interactive help menu
+• `{HNDLR}cmds` — Complete command list""",
+    5: """💬 **Sᴜᴘᴘᴏʀᴛ & Cᴏᴍᴍᴜɴɪᴛʏ**
 
-• Thanks for Reaching till END.""",
+• **Hᴀᴠᴇ ǫᴜᴇsᴛɪᴏɴs ᴏʀ sᴜɢɢᴇsᴛɪᴏɴs?**
+  Feel free to join our support group: **@UltroidSupportChat**
+
+✨ *Thank you for reaching the end! Enjoy using Ultroid.*""",
 }
 
 
-@callback(re.compile("initft_(\\d+)"))
+@callback(re.compile(r"initft_(\d+)"))
 async def init_depl(e):
-    CURRENT = int(e.data_match.group(1))
-    if CURRENT == 5:
-        return await e.edit(
-            STRINGS[5],
-            buttons=Button.inline("<< Back", "initbk_4"),
-            link_preview=False,
-        )
+    current = int(e.data_match.group(1))
+    text = STRINGS.get(current, STRINGS[5])
 
-    await e.edit(
-        STRINGS[CURRENT],
-        buttons=[
-            Button.inline("<<", f"initbk_{str(CURRENT - 1)}"),
-            Button.inline(">>", f"initft_{str(CURRENT + 1)}"),
-        ],
-        link_preview=False,
-    )
+    if current >= 5:
+        buttons = [Button.inline("« Bᴀᴄᴋ", "initbk_4")]
+    else:
+        buttons = [
+            [
+                Button.inline("« Bᴀᴄᴋ", f"initbk_{current - 1}"),
+                Button.inline("Nᴇxᴛ »", f"initft_{current + 1}"),
+            ]
+        ]
+
+    await e.edit(text, buttons=buttons, link_preview=False)
 
 
-@callback(re.compile("initbk_(\\d+)"))
+@callback(re.compile(r"initbk_(\d+)"))
 async def ineiq(e):
-    CURRENT = int(e.data_match.group(1))
-    if CURRENT == 1:
-        return await e.edit(
-            STRINGS[1],
-            buttons=Button.inline("Start Back >>", "initft_2"),
-            link_preview=False,
-        )
+    current = int(e.data_match.group(1))
+    text = STRINGS.get(current, STRINGS[1])
 
-    await e.edit(
-        STRINGS[CURRENT],
-        buttons=[
-            Button.inline("<<", f"initbk_{str(CURRENT - 1)}"),
-            Button.inline(">>", f"initft_{str(CURRENT + 1)}"),
-        ],
-        link_preview=False,
-    )
+    if current <= 1:
+        buttons = [Button.inline("Sᴛᴀʀᴛ Tᴏᴜʀ »", "initft_2")]
+    else:
+        buttons = [
+            [
+                Button.inline("« Bᴀᴄᴋ", f"initbk_{current - 1}"),
+                Button.inline("Nᴇxᴛ »", f"initft_{current + 1}"),
+            ]
+        ]
+
+    await e.edit(text, buttons=buttons, link_preview=False)
