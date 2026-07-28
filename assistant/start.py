@@ -2,17 +2,19 @@
 # Copyright (C) 2021-2026 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
-# PLease read the GNU Affero General Public License in
+# Please read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+import asyncio
 from datetime import datetime
 
 try:
     from pytz import timezone as tz
 except ImportError:
     tz = None
+
 from telethon import Button, events
-from telethon.errors.rpcerrorlist import MessageDeleteForbiddenError
+from telethon.errors.rpcerrorlist import FloodWaitError, MessageDeleteForbiddenError
 from telethon.utils import get_display_name
 
 from pyUltroid._misc import SUDO_M, owner_and_sudos
@@ -22,59 +24,76 @@ from strings import get_string
 
 from . import *
 
+# ------------------------------------------------------------------
+#  Owner Info Configuration
+# ------------------------------------------------------------------
+
 Owner_info_msg = udB.get_key("BOT_INFO_START")
-custom_info = True
-if Owner_info_msg is None:
-    custom_info = False
+custom_info = bool(Owner_info_msg)
+
+if not Owner_info_msg:
     Owner_info_msg = f"""
-**Owner** - {OWNER_NAME}
-**OwnerID** - `{OWNER_ID}`
+👑 **Oᴡɴᴇʀ:** {OWNER_NAME}
+🆔 **Oᴡɴᴇʀ ID:** `{OWNER_ID}`
 
-**Message Forwards** - {udB.get_key("PMBOT")}
+💬 **Mᴇssᴀɢᴇ Fᴏʀᴡᴀʀᴅs:** {udB.get_key("PMBOT")}
 
-**Ultroid [v{ultroid_version}](https://github.com/TeamUltroid/Ultroid), powered by @TeamUltroid**
+⚡ **Uʟᴛʀᴏɪᴅ** [`v{ultroid_version}`](https://github.com/TeamUltroid/Ultroid) | **Pᴏᴡᴇʀᴇᴅ ʙʏ @TeamUltroid**
 """
 
+# ------------------------------------------------------------------
+#  Button Layouts (Callbacks are strictly preserved)
+# ------------------------------------------------------------------
 
 _settings = [
     [
-        Button.inline("API Keys", data="cbs_apiset"),
-        Button.inline("PM Bot", data="cbs_chatbot"),
+        Button.inline("🔑 Aᴘɪ Kᴇʏs", data="cbs_apiset"),
+        Button.inline("🤖 PM Bᴏᴛ", data="cbs_chatbot"),
     ],
     [
-        Button.inline("Alive", data="cbs_alvcstm"),
-        Button.inline("PMPermit", data="cbs_ppmset"),
+        Button.inline("✨ Aʟɪᴠᴇ", data="cbs_alvcstm"),
+        Button.inline("🛡️ PM Pᴇʀᴍɪᴛ", data="cbs_ppmset"),
     ],
     [
-        Button.inline("Features", data="cbs_otvars"),
-        Button.inline("VC Song Bot", data="cbs_vcb"),
+        Button.inline("⚙️ Fᴇᴀᴛᴜʀᴇs", data="cbs_otvars"),
+        Button.inline("🎵 VC Sᴏɴɢ Bᴏᴛ", data="cbs_vcb"),
     ],
-    [Button.inline("« Back", data="mainmenu")],
+    [Button.inline("« Bᴀᴄᴋ Mᴇɴᴜ", data="mainmenu")],
 ]
 
 _start = [
     [
-        Button.inline("Language 🌐", data="lang"),
-        Button.inline("Settings ⚙️", data="setter"),
+        Button.inline("🌐 Lᴀɴɢᴜᴀɢᴇ", data="lang"),
+        Button.inline("⚙️ Sᴇᴛᴛɪɴɢs", data="setter"),
     ],
     [
-        Button.inline("Sᴛᴀᴛs ✨", data="stat"),
-        Button.inline("Bʀᴏᴀᴅᴄᴀsᴛ 📻", data="bcast"),
+        Button.inline("📊 Sᴛᴀᴛs", data="stat"),
+        Button.inline("📻 Bʀᴏᴀᴅᴄᴀsᴛ", data="bcast"),
     ],
-    [Button.inline("TɪᴍᴇZᴏɴᴇ 🌎", data="tz")],
+    [Button.inline("🌎 TɪᴍᴇZᴏɴᴇ", data="tz")],
 ]
 
 
+# ------------------------------------------------------------------
+#  Callback & Command Handlers
+# ------------------------------------------------------------------
+
 @callback("ownerinfo")
 async def own(event):
-    msg = Owner_info_msg.format(
-        mention=event.sender.mention, me=inline_mention(ultroid_bot.me)
-    )
+    try:
+        msg = Owner_info_msg.format(
+            mention=event.sender.mention,
+            me=inline_mention(ultroid_bot.me),
+        )
+    except (KeyError, IndexError, ValueError):
+        msg = Owner_info_msg
+
     if custom_info:
-        msg += "\n\n• Powered by **@TeamUltroid**"
+        msg += "\n\n• **Pᴏᴡᴇʀᴇᴅ ʙʏ @TeamUltroid**"
+
     await event.edit(
         msg,
-        buttons=[Button.inline("Close", data="closeit")],
+        buttons=[Button.inline("❌ Cʟᴏsᴇ", data="closeit")],
         link_preview=False,
     )
 
@@ -84,71 +103,94 @@ async def closet(lol):
     try:
         await lol.delete()
     except MessageDeleteForbiddenError:
-        await lol.answer("MESSAGE_TOO_OLD", alert=True)
+        await lol.answer("⚠️ Mᴇssᴀɢᴇ ɪs ᴛᴏᴏ ᴏʟᴅ ᴛᴏ ᴅᴇʟᴇᴛᴇ!", alert=True)
 
 
 @asst_cmd(pattern="start( (.*)|$)", forwards=False, func=lambda x: not x.is_group)
 async def ultroid(event):
     args = event.pattern_match.group(1).strip()
     keym = KeyManager("BOT_USERS", cast=list)
+
+    # Log new visitors safely
     if not keym.contains(event.sender_id) and event.sender_id not in owner_and_sudos():
         keym.add(event.sender_id)
-        kak_uiw = udB.get_key("OFF_START_LOG")
-        if not kak_uiw or kak_uiw != True:
-            msg = f"{inline_mention(event.sender)} `[{event.sender_id}]` started your [Assistant bot](@{asst.me.username})."
-            buttons = [[Button.inline("Info", "itkkstyo")]]
-            if event.sender.username:
-                buttons[0].append(
-                    Button.mention(
-                        "User", await event.client.get_input_entity(event.sender_id)
-                    )
-                )
-            await event.client.send_message(
-                udB.get_key("LOG_CHANNEL"), msg, buttons=buttons
+        if not udB.get_key("OFF_START_LOG"):
+            log_msg = (
+                f"👤 {inline_mention(event.sender)} `[{event.sender_id}]` "
+                f"sᴛᴀʀᴛᴇᴅ ʏᴏᴜʀ [Assɪsᴛᴀɴᴛ Bᴏᴛ](@{asst.me.username})."
             )
+            buttons = [[Button.inline("ℹ️ Iɴғᴏ", "itkkstyo")]]
+            if event.sender.username:
+                try:
+                    input_ent = await event.client.get_input_entity(event.sender_id)
+                    buttons[0].append(Button.mention("👤 Usᴇʀ", input_ent))
+                except Exception:
+                    pass
+
+            log_channel = udB.get_key("LOG_CHANNEL")
+            if log_channel:
+                await event.client.send_message(
+                    log_channel, log_msg, buttons=buttons
+                )
+
+    # Regular User Handler
     if event.sender_id not in SUDO_M.fullsudos:
-        ok = ""
         me = inline_mention(ultroid_bot.me)
         mention = inline_mention(event.sender)
+
         if args and args != "set":
             await get_stored_file(event, args)
-        if not udB.get_key("STARTMSG"):
-            if udB.get_key("PMBOT"):
-                ok = "You can contact my master using this bot!!\n\nSend your Message, I will Deliver it To Master."
-            await event.reply(
-                f"Hey there {mention}, this is Ultroid Assistant of {me}!\n\n{ok}",
-                file=udB.get_key("STARTMEDIA"),
-                buttons=[Button.inline("Info.", data="ownerinfo")]
-                if Owner_info_msg
-                else None,
+
+        custom_start_msg = udB.get_key("STARTMSG")
+        info_btn = [Button.inline("ℹ️ Oᴡɴᴇʀ Iɴғᴏ", data="ownerinfo")] if Owner_info_msg else None
+
+        if not custom_start_msg:
+            pm_text = (
+                "\n\n💬 **Yᴏᴜ ᴄᴀɴ sᴇɴᴅ ʏᴏᴜʀ ᴍᴇssᴀɢᴇ ʜᴇʀᴇ ᴛᴏ ᴄᴏɴᴛᴀᴄᴛ ᴍʏ ᴍᴀsᴛᴇʀ.**"
+                if udB.get_key("PMBOT")
+                else ""
+            )
+            start_text = (
+                f"👋 **Hᴇʏ** {mention},\n\n"
+                f"I ᴀᴍ ᴛʜᴇ **Assɪsᴛᴀɴᴛ Bᴏᴛ** ᴏғ {me}.{pm_text}"
             )
         else:
-            await event.reply(
-                udB.get_key("STARTMSG").format(me=me, mention=mention),
-                file=udB.get_key("STARTMEDIA"),
-                buttons=[Button.inline("Info.", data="ownerinfo")]
-                if Owner_info_msg
-                else None,
-            )
+            try:
+                start_text = custom_start_msg.format(me=me, mention=mention)
+            except (KeyError, IndexError, ValueError):
+                start_text = custom_start_msg
+
+        await event.reply(
+            start_text,
+            file=udB.get_key("STARTMEDIA"),
+            buttons=[info_btn] if info_btn else None,
+        )
+
+    # Sudo / Owner User Handler
     else:
         name = get_display_name(event.sender)
         if args == "set":
             await event.reply(
-                "Choose from the below options -",
+                "⚙️ **Cʜᴏᴏsᴇ ᴀɴ ᴏᴘᴛɪᴏɴ ᴛᴏ ᴄᴏɴғɪɢᴜʀᴇ:**",
                 buttons=_settings,
             )
         elif args:
             await get_stored_file(event, args)
         else:
+            menu_text = get_string("ast_3").format(name)
             await event.reply(
-                get_string("ast_3").format(name),
+                f"✨ {menu_text}",
                 buttons=_start,
             )
 
 
 @callback("itkkstyo", owner=True)
 async def ekekdhdb(e):
-    text = f"When New Visitor will visit your Assistant Bot. You will get this log message!\n\nTo Disable : {HNDLR}setdb OFF_START_LOG True"
+    text = (
+        "ℹ️ **Nᴇᴡ Vɪsɪᴛᴏʀ Lᴏɢ**\n\n"
+        "Wʜᴇɴ a ɴᴇᴡ ᴜsᴇʀ sᴛᴀʀᴛs ʏᴏᴜʀ Bᴏᴛ, ʏᴏᴜ ᴡɪʟʟ ʀᴇᴄᴇɪᴠᴇ ᴀ ʟᴏɢ.\n\n"
+        f"🚫 **Tᴏ Dɪsᴀʙʟᴇ:** `{HNDLR}setdb OFF_START_LOG True`"
+    )
     await e.answer(text, alert=True)
 
 
@@ -162,10 +204,11 @@ async def ultroid(event):
 
 @callback("stat", owner=True)
 async def botstat(event):
-    ok = len(udB.get_key("BOT_USERS") or [])
-    msg = """Ultroid Assistant - Stats
-Total Users - {}""".format(
-        ok,
+    total_users = len(udB.get_key("BOT_USERS") or [])
+    msg = (
+        "📊 **Uʟᴛʀᴏɪᴅ Assɪsᴛᴀɴᴛ - Sᴛᴀᴛs**\n"
+        "━━━━━━━━━━━━━━━━━━━\n"
+        f"👥 **Tᴏᴛᴀʟ Usᴇʀs:** `{total_users}`"
     )
     await event.answer(msg, cache_time=0, alert=True)
 
@@ -173,40 +216,62 @@ Total Users - {}""".format(
 @callback("bcast", owner=True)
 async def bdcast(event):
     keym = KeyManager("BOT_USERS", cast=list)
-    total = keym.count()
-    await event.edit(f"• Broadcast to {total} users.")
-    async with event.client.conversation(OWNER_ID) as conv:
-        await conv.send_message(
-            "Enter your broadcast message.\nUse /cancel to stop the broadcast.",
-        )
-        response = await conv.get_response()
-        if response.message == "/cancel":
-            return await conv.send_message("Cancelled!!")
-        success = 0
-        fail = 0
-        await conv.send_message(f"Starting a broadcast to {total} users...")
-        start = datetime.now()
-        for i in keym.get():
-            try:
-                await asst.send_message(int(i), response)
-                success += 1
-            except BaseException:
-                fail += 1
-        end = datetime.now()
-        time_taken = (end - start).seconds
-        await conv.send_message(
-            f"""
-**Broadcast completed in {time_taken} seconds.**
-Total Users in Bot - {total}
-**Sent to** : `{success} users.`
-**Failed for** : `{fail} user(s).`""",
-        )
+    users_list = keym.get() or []
+    total = len(users_list)
+
+    await event.edit(f"📻 **Bʀᴏᴀᴅᴄᴀsᴛ Mᴏᴅᴇ**\n\n👥 **Tᴀʀɢᴇᴛ Aᴜᴅɪᴇɴᴄᴇ:** `{total}` users.")
+
+    async with event.client.conversation(OWNER_ID, timeout=120) as conv:
+        try:
+            await conv.send_message(
+                "📝 **Eɴᴛᴇʀ ʏᴏᴜʀ ʙʀᴏᴀᴅᴄᴀsᴛ ᴍᴇssᴀɢᴇ.**\n"
+                "💡 *Send /cancel to abort the operation.*"
+            )
+            response = await conv.get_response()
+
+            if response.message.strip() == "/cancel":
+                return await conv.send_message("❌ **Bʀᴏᴀᴅᴄᴀsᴛ ᴄᴀɴᴄᴇʟʟᴇᴅ!**")
+
+            await conv.send_message(f"🚀 **Sᴛᴀʀᴛɪɴɢ ʙʀᴏᴀᴅᴄᴀsᴛ ᴛᴏ {total} ᴜsᴇʀs...**")
+
+            success, fail = 0, 0
+            start = datetime.now()
+
+            for user_id in users_list:
+                try:
+                    await asst.send_message(int(user_id), response)
+                    success += 1
+                    await asyncio.sleep(0.05)  # Telegram API limit korumasi
+                except FloodWaitError as fw:
+                    await asyncio.sleep(fw.seconds + 2)  # Otomatik FloodWait beklemesi
+                    try:
+                        await asst.send_message(int(user_id), response)
+                        success += 1
+                    except Exception:
+                        fail += 1
+                except Exception:
+                    fail += 1
+
+            time_taken = (datetime.now() - start).seconds
+
+            summary = (
+                "✅ **Bʀᴏᴀᴅᴄᴀsᴛ Cᴏᴍᴘʟᴇᴛᴇᴅ!**\n"
+                "━━━━━━━━━━━━━━━━━━━\n"
+                f"⏱️ **Tɪᴍᴇ Tᴀᴋᴇɴ:** `{time_taken}s`\n"
+                f"👥 **Tᴏᴛᴀʟ Usᴇʀs:** `{total}`\n"
+                f"🎯 **Sᴜᴄᴄᴇss:** `{success}`\n"
+                f"❌ **Fᴀɪʟᴇᴅ:** `{fail}`"
+            )
+            await conv.send_message(summary)
+
+        except asyncio.TimeoutError:
+            await conv.send_message("⌛ **Oᴘᴇʀᴀᴛɪᴏɴ ᴛɪᴍᴇᴅ ᴏᴜᴛ! Bʀᴏᴀᴅᴄᴀsᴛ ᴄᴀɴᴄᴇʟʟᴇᴅ.**")
 
 
 @callback("setter", owner=True)
 async def setting(event):
     await event.edit(
-        "Choose from the below options -",
+        "⚙️ **Cʜᴏᴏsᴇ ғʀᴏᴍ ᴛʜᴇ ᴏᴘᴛɪᴏɴs ʙᴇʟᴏᴡ:**",
         buttons=_settings,
     )
 
@@ -217,32 +282,45 @@ async def timezone_(event):
     if tz is None:
         return await event.client.send_message(
             event.sender_id,
-            f"`pytz` is not installed, TimeZone feature is unavailable.\n\nInstall it via `{HNDLR}update` or `{HNDLR}bash pip install pytz`.",
+            "⚠️ **`pytz` is not installed! TimeZone feature is unavailable.**\n\n"
+            f"💡 *Install it via:* `{HNDLR}update` or `{HNDLR}bash pip install pytz`",
         )
+
     pru = event.sender_id
     var = "TIMEZONE"
     name = "Timezone"
-    async with event.client.conversation(pru) as conv:
-        await conv.send_message(
-            "Send Your TimeZone From This List [Check From Here](http://www.timezoneconverter.com/cgi-bin/findzone.tzc)"
-        )
-        response = conv.wait_event(events.NewMessage(chats=pru))
-        response = await response
-        themssg = response.message.message
-        if themssg == "/cancel":
-            return await conv.send_message(
-                "Cancelled!!",
-                buttons=get_back_button("mainmenu"),
-            )
+
+    async with event.client.conversation(pru, timeout=60) as conv:
         try:
-            tz(themssg)
-            await setit(event, var, themssg)
             await conv.send_message(
-                f"{name} changed to {themssg}\n",
-                buttons=get_back_button("mainmenu"),
+                "🌎 **Sᴇɴᴅ ʏᴏᴜʀ TɪᴍᴇZᴏɴᴇ ғʀᴏᴍ ᴛʜɪs ʟɪsᴛ:**\n"
+                "[🔗 Cʟɪᴄᴋ Hᴇʀᴇ Mᴀᴘ Lɪsᴛ](http://www.timezoneconverter.com/cgi-bin/findzone.tzc)\n\n"
+                "💡 *Send /cancel to abort.*"
             )
-        except BaseException:
+            response = await conv.get_response()
+            themssg = response.message.strip()
+
+            if themssg == "/cancel":
+                return await conv.send_message(
+                    "❌ **OᴘᴇRᴀᴛɪᴏɴ Cᴀɴᴄᴇʟʟᴇᴅ!**",
+                    buttons=get_back_button("mainmenu"),
+                )
+
+            try:
+                tz(themssg)
+                await setit(event, var, themssg)
+                await conv.send_message(
+                    f"✅ **{name} sᴜᴄᴄᴇssғᴜʟʟʏ ᴄʜᴀɴɢᴇᴅ ᴛᴏ:** `{themssg}`\n",
+                    buttons=get_back_button("mainmenu"),
+                )
+            except Exception:
+                await conv.send_message(
+                    "❌ **Iɴᴠᴀʟɪᴅ TɪᴍᴇZᴏɴᴇ format! Pʟᴇᴀsᴇ ᴛʀʏ ᴀɢᴀɪɴ.**",
+                    buttons=get_back_button("mainmenu"),
+                )
+
+        except asyncio.TimeoutError:
             await conv.send_message(
-                "Wrong TimeZone, Try again",
+                "⌛ **Oᴘᴇʀᴀᴛɪᴏɴ ᴛɪᴍᴇᴅ ᴏᴜᴛ!**",
                 buttons=get_back_button("mainmenu"),
             )
