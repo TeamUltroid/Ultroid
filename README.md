@@ -1,3 +1,16 @@
+## Disclaimer and Attribution
+
+This project is an independent fork of [Ultroid](https://github.com/TeamUltroid/Ultroid).
+
+* **Independent Project:** This project is **not** officially supported, maintained, or endorsed by the official Ultroid core developers or administrators.
+* **No Guarantee of Parity:** Due to custom modifications, this version may not produce the same results or behave in the exact same manner as the original project.
+* **No Responsibility for Account/Data Loss:** The developer(s) of this fork shall NOT be held responsible for any Telegram account bans, limitations, data loss, or system outages resulting from the use of this software.
+* **No Support Service:** This fork is provided as-is for personal/experimental use. No official customer support, troubleshooting, or uptime guarantees are provided.
+* **Compliance Notice:** Users are solely responsible for ensuring their usage complies with Telegram's Terms of Service and local regulations.
+* **As-Is Provision:** This software is provided "as is" without warranty of any kind, express or implied. Users proceed entirely at their own risk.
+
+All modifications remain open source under the terms of the GNU Affero General Public License v3.0 (AGPLv3).
+
 <p align="center">
   <img src="./resources/extras/logo_readme.jpg" alt="TeamUltroid Logo">
 </p>
