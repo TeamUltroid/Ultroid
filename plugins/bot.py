@@ -20,21 +20,13 @@ from telethon.errors.rpcerrorlist import (
     BotMethodInvalidError,
     ChatSendMediaForbiddenError,
 )
+from telethon.utils import resolve_bot_file_id
 
 from pyUltroid.version import __version__ as UltVer
 
-from . import HOSTED_ON, LOGS
-
-try:
-    from git import Repo
-except ImportError:
-    LOGS.error("bot: 'gitpython' module not found!")
-    Repo = None
-
-from telethon.utils import resolve_bot_file_id
-
 from . import (
     ATRA_COL,
+    HOSTED_ON,
     LOGS,
     OWNER_NAME,
     ULTROID_IMAGES,
@@ -63,6 +55,12 @@ from . import (
     updater,
 )
 
+try:
+    from git import Repo
+except ImportError:
+    LOGS.error("bot: 'gitpython' module not found!")
+    Repo = None
+
 
 def ULTPIC():
     return inline_pic() or choice(ULTROID_IMAGES)
@@ -75,16 +73,23 @@ buttons = [
     ]
 ]
 
-# Will move to strings
 alive_txt = """
-The Ultroid Userbot
+⚡ **Uʟᴛʀᴏɪᴅ U sᴇʀʙᴏᴛ Sᴛᴀᴛᴜs**
 
-  ◍ Version - {}
-  ◍ Py-Ultroid - {}
-  ◍ Telethon - {}
+• **Vᴇʀsɪᴏɴ:** {}
+• **Pʏ-Uʟᴛʀᴏɪᴅ:** {}
+• **Tᴇʟᴇᴛʜᴏɴ:** {}
 """
 
-in_alive = "{}\n\n🌀 <b>Ultroid Version -><b> <code>{}</code>\n🌀 <b>PyUltroid -></b> <code>{}</code>\n🌀 <b>Python -></b> <code>{}</code>\n🌀 <b>Uptime -></b> <code>{}</code>\n🌀 <b>Branch -></b>[ {} ]\n\n• <b>Join @TeamUltroid</b>"
+in_alive = """{}
+
+<b>🤖 Uʟᴛʀᴏɪᴅ Vᴇʀsɪᴏɴ:</b> <code>{}</code>
+<b>⚡ PʏUʟᴛʀᴏɪᴅ:</b> <code>{}</code>
+<b>🐍 Pʏᴛʜᴏɴ:</b> <code>{}</code>
+<b>⏳ Uᴘᴛɪᴍᴇ:</b> <code>{}</code>
+<b>🌿 Bʀᴀɴᴄʜ:</b> <a href="{}">{}</a>
+
+• <b>Jᴏɪɴ @TeamUltroid</b>"""
 
 
 @callback("alive")
@@ -93,9 +98,7 @@ async def alive(event):
     await event.answer(text, alert=True)
 
 
-@ultroid_cmd(
-    pattern="alive( (.*)|$)",
-)
+@ultroid_cmd(pattern="alive( (.*)|$)")
 async def lol(ult):
     match = ult.pattern_match.group(1).strip()
     inline = None
@@ -108,17 +111,18 @@ async def lol(ult):
         except BaseException as er:
             LOGS.exception(er)
         inline = True
+
     pic = udB.get_key("ALIVE_PIC")
     if isinstance(pic, list):
         pic = choice(pic)
+
     uptime = time_formatter((time.time() - start_time) * 1000)
     header = udB.get_key("ALIVE_TEXT") or get_string("bot_1")
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
-    kk = f" `[{y}]({rep})` "
+
     if inline:
-        kk = f"<a href={rep}>{y}</a>"
         parse = "html"
         als = in_alive.format(
             header,
@@ -126,13 +130,15 @@ async def lol(ult):
             UltVer,
             pyver(),
             uptime,
-            kk,
+            rep,
+            y,
         )
 
         if _e := udB.get_key("ALIVE_EMOJI"):
-            als = als.replace("🌀", _e)
+            als = als.replace("🤖", _e)
     else:
         parse = "md"
+        kk = f" `[{y}]({rep})` "
         als = (get_string("alive_1")).format(
             header,
             OWNER_NAME,
@@ -146,6 +152,7 @@ async def lol(ult):
 
         if a := udB.get_key("ALIVE_EMOJI"):
             als = als.replace("✵", a)
+
     if pic:
         try:
             await ult.reply(
@@ -171,6 +178,7 @@ async def lol(ult):
                 return await ult.try_delete()
             except BaseException as er:
                 LOGS.exception(er)
+
     await eor(
         ult,
         als,
@@ -183,15 +191,13 @@ async def lol(ult):
 @ultroid_cmd(pattern="ping$", chats=[], type=["official", "assistant"])
 async def _(event):
     start = time.time()
-    x = await event.eor("Pong !")
+    x = await event.eor("🏓 **Pᴏɴɢ!**")
     end = round((time.time() - start) * 1000)
     uptime = time_formatter((time.time() - start_time) * 1000)
     await x.edit(get_string("ping").format(end, uptime))
 
 
-@ultroid_cmd(
-    pattern="cmds$",
-)
+@ultroid_cmd(pattern="cmds$")
 async def cmds(event):
     await allcmds(event, Telegraph)
 
@@ -199,10 +205,7 @@ async def cmds(event):
 heroku_api = Var.HEROKU_API
 
 
-@ultroid_cmd(
-    pattern="restart$",
-    fullsudo=True,
-)
+@ultroid_cmd(pattern="restart$", fullsudo=True)
 async def restartbt(ult):
     ok = await ult.eor(get_string("bot_5"))
     call_back()
@@ -218,18 +221,12 @@ async def restartbt(ult):
         os.execl(sys.executable, sys.executable, "-m", "pyUltroid")
 
 
-@ultroid_cmd(
-    pattern="shutdown$",
-    fullsudo=True,
-)
+@ultroid_cmd(pattern="shutdown$", fullsudo=True)
 async def shutdownbot(ult):
     await shutdown(ult)
 
 
-@ultroid_cmd(
-    pattern="logs( (.*)|$)",
-    chats=[],
-)
+@ultroid_cmd(pattern="logs( (.*)|$)", chats=[])
 async def _(event):
     opt = event.pattern_match.group(1).strip()
     file = f"ultroid{sys.argv[-1]}.log" if len(sys.argv) > 1 else "ultroid.log"
@@ -247,14 +244,12 @@ async def _(event):
         if isinstance(file, dict):
             await event.eor(f"`{file}`")
             return
-        await event.reply("**Ultroid Logs.**", file=file)
+        await event.reply("📜 **Uʟᴛʀᴏɪᴅ Lᴏɢs**", file=file)
     elif opt == "open":
         with open("ultroid.log", "r") as f:
             file = f.read()[-4000:]
         return await event.eor(f"`{file}`")
-    elif (
-        opt.isdigit() and 5 <= int(opt) <= 100
-    ):  # Check if input is a number between 10 and 100
+    elif opt.isdigit() and 5 <= int(opt) <= 100:
         num_lines = int(opt)
         with open("ultroid.log", "r") as f:
             lines = f.readlines()[-num_lines:]
@@ -275,13 +270,19 @@ async def inline_alive(ult):
     y = Repo().active_branch
     xx = Repo().remotes[0].config_reader.get("url")
     rep = xx.replace(".git", f"/tree/{y}")
-    kk = f"<a href={rep}>{y}</a>"
+
     als = in_alive.format(
-        header, f"{ultroid_version} [{HOSTED_ON}]", UltVer, pyver(), uptime, kk
+        header,
+        f"{ultroid_version} [{HOSTED_ON}]",
+        UltVer,
+        pyver(),
+        uptime,
+        rep,
+        y,
     )
 
     if _e := udB.get_key("ALIVE_EMOJI"):
-        als = als.replace("🌀", _e)
+        als = als.replace("🤖", _e)
     builder = ult.builder
     if pic:
         try:
@@ -329,20 +330,19 @@ async def _(e):
         call_back()
         await xx.edit(get_string("upd_7"))
         os.execl(sys.executable, "python3", "-m", "pyUltroid")
-        # return
     m = await updater()
     branch = (Repo.init()).active_branch
     if m:
         x = await asst.send_file(
             udB.get_key("LOG_CHANNEL"),
             ULTPIC(),
-            caption="• **Update Available** •",
+            caption="📢 **Uᴘᴅᴀᴛᴇ Aᴠᴀɪʟᴀʙʟᴇ!**",
             force_document=False,
-            buttons=Button.inline("Changelogs", data="changes"),
+            buttons=Button.inline("📋 Cʜᴀɴɢᴇʟᴏɢs", data="changes"),
         )
         Link = x.message_link
         await xx.edit(
-            f'<strong><a href="{Link}">[ChangeLogs]</a></strong>',
+            f'<strong><a href="{Link}">[CʜᴀɴɢᴇLᴏɢs]</a></strong>',
             parse_mode="html",
             link_preview=False,
         )
@@ -360,7 +360,7 @@ async def updava(event):
     await asst.send_file(
         udB.get_key("LOG_CHANNEL"),
         ULTPIC(),
-        caption="• **Update Available** •",
+        caption="📢 **Uᴘᴅᴀᴛᴇ Aᴠᴀɪʟᴀʙʟᴇ!**",
         force_document=False,
-        buttons=Button.inline("Changelogs", data="changes"),
+        buttons=Button.inline("📋 Cʜᴀɴɢᴇʟᴏɢs", data="changes"),
     )
