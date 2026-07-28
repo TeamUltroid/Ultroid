@@ -7,35 +7,59 @@
 
 """
 • `{i}akinator` | `/akinator`
-   Start akinator game from Userbot/Assistant
+    Start akinator game from Userbot/Assistant
 
 • `/startgame`
-   Open Portal for Games
+    Open Portal for Games
 """
 
 import asyncio
-import re, uuid, operator
+import operator
+import re
+import uuid
+from html import unescape
+from logging import getLogger
 from random import choice, shuffle
 
 from akipy.async_akipy import Akinator
+from telethon.errors import ChatSendStickersForbiddenError
 from telethon.errors.rpcerrorlist import BotMethodInvalidError
 from telethon.events import Raw
-from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
+from telethon.tl.types import (
+    InputMediaPoll,
+    InputWebDocument,
+    Poll,
+    PollAnswer,
+    TextWithEntities,
+    UpdateMessagePollVote,
+)
 
 from pyUltroid._misc._decorators import ultroid_cmd
-from logging import getLogger
-from html import unescape
-from telethon.tl.types import TextWithEntities
 from pyUltroid.fns.helper import inline_mention
 from pyUltroid.fns.tools import async_searcher
-from telethon.errors import ChatSendStickersForbiddenError
 
-from . import *  # Ensure this import matches your project structure
+from . import *
 
 games = {}
 aki_photo = "https://graph.org/file/3cc8825c029fd0cab9edc.jpg"
+GIMAGE = "https://graph.org/file/1c51015bae5205a65fd69.jpg"
 
 akipyLOGS = getLogger("akipy")
+
+TR_BTS = {}
+RAW_DIFI_KEYS = ["Easy", "Medium", "Hard"]
+TRIVIA_CHATS = {}
+POLLS = {}
+CONGO_STICKER = [
+    "CAADAgADSgIAAladvQrJasZoYBh68AI",
+    "CAADAgADXhIAAuyZKUl879mlR_dkOwI",
+    "CAADAgADpQAD9wLID-xfZCDwOI5LAg",
+    "CAADAgADjAADECECEFZM-SrKO9GgAg",
+    "CAADAgADSwIAAj-VzArAzNCDiGWAHAI",
+    "CAADAgADhQADwZxgDIuMHR9IU10iAg",
+    "CAADAgADiwMAAsSraAuoe2BwYu1sdQI",
+]
+
 
 @ultroid_cmd(pattern="akinator")
 async def akina(e):
@@ -74,10 +98,11 @@ async def doai(e):
     await e.edit(get_string("com_1"))
     try:
         await games[ch][mid].start_game(child_mode=False)
-        bts = [Button.inline(o, f"aka_{adt}_{o}") for o in ["Yes", "No", "Idk"]]
-        cts = [Button.inline(o, f"aka_{adt}_{o}") for o in ["Probably", "Probably Not"]]
-        bts = [bts, cts]
-        await e.edit(f"Q. {games[ch][mid].question}", buttons=bts)
+        bts = [
+            [Button.inline(o, f"aka_{adt}_{o}") for o in ["Yes", "No", "Idk"]],
+            [Button.inline(o, f"aka_{adt}_{o}") for o in ["Probably", "Probably Not"]],
+        ]
+        await e.edit(f"❓ **Qᴜᴇsᴛɪᴏɴ:** {games[ch][mid].question}", buttons=bts)
     except KeyError:
         return await e.answer(get_string("aki_1"), alert=True)
 
@@ -86,7 +111,6 @@ async def doai(e):
 async def okah(e):
     try:
         mk = e.pattern_match.group(1).decode("utf-8").split("_")
-        #akipyLOGS.info(f"Parsed values: {mk}")
 
         if len(mk) < 3:
             akipyLOGS.error("Pattern match did not return enough parts.")
@@ -99,18 +123,20 @@ async def okah(e):
         gm = games[ch][mid]
         await gm.answer(ans)
 
-        # Check for the final guess in the API response
         if gm.name_proposition and gm.description_proposition:
             gm.win = True
-            text = f"It's {gm.name_proposition}\n{gm.description_proposition}"
+            text = (
+                "🔮 **Aᴋɪɴᴀᴛᴏʀ's Gᴜᴇss:**\n\n"
+                f"🎯 **Nᴀᴍᴇ:** `{gm.name_proposition}`\n"
+                f"📝 **Dᴇsᴄʀɪᴘᴛɪᴏɴ:** `{gm.description_proposition}`"
+            )
             await e.edit(text, file=gm.photo)
         else:
-            # Game is not won yet, continue asking questions
             buttons = [
                 [Button.inline(o, f"aka_{ch}_{mid}_{o}") for o in ["Yes", "No", "Idk"]],
                 [Button.inline(o, f"aka_{ch}_{mid}_{o}") for o in ["Probably", "Probably Not"]],
             ]
-            await e.edit(gm.question, buttons=buttons)
+            await e.edit(f"❓ **Qᴜᴇsᴛɪᴏɴ:** {gm.question}", buttons=buttons)
 
     except KeyError:
         await e.answer(get_string("aki_3"))
@@ -121,7 +147,7 @@ async def okah(e):
 @in_pattern(re.compile("aki_?(.*)"), owner=True)
 async def eiagx(e):
     bts = Button.inline(get_string("aki_2"), data=e.text)
-    ci = types.InputWebDocument(aki_photo, 0, "image/jpeg", [])
+    ci = InputWebDocument(aki_photo, 0, "image/jpeg", [])
     ans = [
         await e.builder.article(
             "Akinator",
@@ -136,38 +162,17 @@ async def eiagx(e):
     await e.answer(ans)
 
 
-# ----------------------- Main Command ------------------- #
-
-GIMAGE = "https://graph.org/file/1c51015bae5205a65fd69.jpg"
-
 @asst_cmd(pattern="startgame", owner=True)
 async def magic(event):
     buttons = [
-        [Button.inline("Trivia Quiz", "trzia")],
-        [Button.inline("Cancel ❌", "delit")],
+        [Button.inline("🎲 Tʀɪᴠɪᴀ Qᴜɪᴢ", "trzia")],
+        [Button.inline("❌ Cᴀɴᴄᴇʟ", "delit")],
     ]
     await event.reply(
         get_string("games_1"),
         file=GIMAGE,
         buttons=buttons,
     )
-
-
-# -------------------------- Trivia ----------------------- #
-
-TR_BTS = {}
-DIFI_KEYS = ["Easy", "Medium", "Hard"]
-TRIVIA_CHATS = {}
-POLLS = {}
-CONGO_STICKER = [
-    "CAADAgADSgIAAladvQrJasZoYBh68AI",
-    "CAADAgADXhIAAuyZKUl879mlR_dkOwI",
-    "CAADAgADpQAD9wLID-xfZCDwOI5LAg",
-    "CAADAgADjAADECECEFZM-SrKO9GgAg",
-    "CAADAgADSwIAAj-VzArAzNCDiGWAHAI",
-    "CAADAgADhQADwZxgDIuMHR9IU10iAg",
-    "CAADAgADiwMAAsSraAuoe2BwYu1sdQI",
-]
 
 
 @callback("delit", owner=True)
@@ -178,7 +183,7 @@ async def delete_it(event):
 @callback(re.compile("ctdown(.*)"), owner=True)
 async def ct_spam(e):
     n = e.data_match.group(1).decode("utf-8")
-    await e.answer(f"Wait {n} seconds..", alert=True)
+    await e.answer(f"⏳ Please wait {n} seconds...", alert=True)
 
 
 @callback(re.compile("trzia(.*)"), owner=True)
@@ -202,22 +207,27 @@ async def choose_cata(event):
             buttons = list(zip(btt[::2], btt[1::2]))
             if len(btt) % 2 == 1:
                 buttons.append((btt[-1],))
-            buttons.append([Button.inline("Cancel ❌", "delit")])
+            buttons.append([Button.inline("❌ Cᴀɴᴄᴇʟ", "delit")])
             TR_BTS.update({"category": buttons})
         text = get_string("games_2")
     elif match[0] == "d":
         cat = match[1:]
-        buttons = [[Button.inline(i, f"trziac{cat}_{i}") for i in DIFI_KEYS]]
+        buttons = [
+            [
+                Button.inline(RAW_DIFI_KEYS[idx], f"trziac{cat}_{RAW_DIFI_KEYS[idx]}")
+                for idx in range(len(RAW_DIFI_KEYS))
+            ]
+        ]
         buttons.append(get_back_button("trzia"))
         text = get_string("games_3")
     elif match[0] == "c":
         m = match[1:]
-        buttons = [[Button.inline(str(i), f"trziat{m}_{i}") for i in range(10, 70, 20)]]
+        buttons = [[Button.inline(f"🔢 {i}", f"trziat{m}_{i}") for i in range(10, 70, 20)]]
         text = get_string("games_4")
     elif match[0] == "t":
         m_ = match[1:]
         buttons = [
-            [Button.inline(str(i), f"trzias{m_}_{i}") for i in [10, 30, 60, 120]]
+            [Button.inline(f"⏱ {i}s", f"trzias{m_}_{i}") for i in [10, 30, 60, 120]]
         ]
         text = get_string("games_5")
     elif match[0] == "s":
@@ -225,18 +235,18 @@ async def choose_cata(event):
         cat, le, nu, in_ = match[2:].split("_")
         msg = await event.edit(get_string("games_6").format(le, nu))
         for i in reversed(range(5)):
-            msg = await msg.edit(buttons=Button.inline(f"{i} ⏰", f"ctdown{i}"))
+            msg = await msg.edit(buttons=Button.inline(f"⏰ {i}s", f"ctdown{i}"))
             await asyncio.sleep(1)
         await msg.edit(
-            msg.text + "\n\n• Send /cancel to stop the Quiz...", buttons=None
+            msg.text + "\n\n• Send `/cancel` to stop the Quiz...", buttons=None
         )
         qsss = await async_searcher(
             f"https://opentdb.com/api.php?amount={nu}&category={cat}&difficulty={le.lower()}",
             re_json=True,
         )
-        qs = qsss["results"]
+        qs = qsss.get("results", [])
         if not qs:
-            await event.respond("Sorry, No Question Found for the given Criteria..")
+            await event.respond("❌ **Sorry, no questions found for the given criteria.**")
             await event.delete()
             return
         TRIVIA_CHATS.update({chat: {}})
@@ -245,18 +255,16 @@ async def choose_cata(event):
                 break
             ansi = str(uuid.uuid1()).split("-")[0].encode()
             opts = [PollAnswer(TextWithEntities(unescape(q["correct_answer"]), entities=[]), ansi)]
-            [
+            for a in q["incorrect_answers"]:
                 opts.append(
                     PollAnswer(TextWithEntities(unescape(a), entities=[]), str(uuid.uuid1()).split("-")[0].encode())
                 )
-                for a in q["incorrect_answers"]
-            ]
             shuffle(opts)
             poll = InputMediaPoll(
                 Poll(
                     0,
                     TextWithEntities(
-                        f"[{copper+1}].  " + unescape(q["question"]),
+                        f"[{copper + 1}].  " + unescape(q["question"]),
                         entities=[]
                     ),
                     answers=opts,
@@ -273,14 +281,14 @@ async def choose_cata(event):
             await asyncio.sleep(int(in_))
         if not TRIVIA_CHATS[chat]:
             await event.respond(
-                "No-One Got Any Score in the Quiz!\nBetter Luck Next Time!"
+                "😔 **No one scored any points in the quiz!**\nBetter luck next time!"
             )
         else:
             try:
                 await event.respond(file=choice(CONGO_STICKER))
             except ChatSendStickersForbiddenError:
                 pass
-            LBD = "🎯 **Scoreboard of the Quiz.**\n\n"
+            LBD = "🏆 **Sᴄᴏʀᴇʙᴏᴀʀᴅ ᴏғ ᴛʜᴇ Qᴜɪᴢ**\n\n"
             TRC = TRIVIA_CHATS[chat]
             if "cancel" in TRC.keys():
                 del TRC["cancel"]
@@ -288,7 +296,7 @@ async def choose_cata(event):
                 sorted(TRC.items(), key=operator.itemgetter(1), reverse=True)
             ).items():
                 user = inline_mention(await event.client.get_entity(userid))
-                LBD += f"••• {user} - {user_score}\n"
+                LBD += f"• {user} ➔ `{user_score}` pts\n"
             await event.respond(LBD)
         del TRIVIA_CHATS[chat]
         list_ = list(POLLS.copy().keys())
@@ -306,7 +314,6 @@ async def pollish(eve: UpdateMessagePollVote):
     if POLLS.get(eve.poll_id)["chat"] not in TRIVIA_CHATS.keys():
         return
     if not eve.options:
-        # Consider as correct answer if no options selected
         chat = POLLS.get(eve.poll_id)["chat"]
         user = eve.peer.user_id
         if not TRIVIA_CHATS.get(chat, {}).get(user):
@@ -328,4 +335,4 @@ async def pollish(eve: UpdateMessagePollVote):
 async def cancelish(event):
     chat = TRIVIA_CHATS.get(event.chat_id)
     chat.update({"cancel": True})
-    await event.respond("Cancelled!")
+    await event.respond("❌ **Tʀɪᴠɪᴀ Qᴜɪᴢ Cᴀɴᴄᴇʟʟᴇᴅ!**")
