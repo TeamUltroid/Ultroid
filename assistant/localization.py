@@ -20,28 +20,42 @@ from . import (
 
 @callback("lang", owner=True)
 async def setlang(event):
-    languages = get_languages()
-    tultd = [
+    languages = get_languages() or {}
+    lang_buttons = [
         Button.inline(
-            f"{languages[ult]['natively']} [{ult.lower()}]",
-            data=f"set_{ult}",
+            f"{info['natively']} [{code.lower()}]",
+            data=f"set_{code}",
         )
-        for ult in languages
+        for code, info in languages.items()
     ]
-    buttons = list(zip(tultd[::2], tultd[1::2]))
-    if len(tultd) % 2 == 1:
-        buttons.append((tultd[-1],))
-    buttons.append([Button.inline("« Back", data="mainmenu")])
+    
+    buttons = [
+        lang_buttons[i : i + 2]
+        for i in range(0, len(lang_buttons), 2)
+    ]
+    buttons.append([Button.inline("« Bᴀᴄᴋ Mᴇɴᴜ", data="mainmenu")])
+    
     await event.edit(get_string("ast_4"), buttons=buttons)
 
 
 @callback(re.compile(b"set_(.*)"), owner=True)
 async def settt(event):
-    lang = event.data_match.group(1).decode("UTF-8")
-    languages = get_languages()
+    lang = event.data_match.group(1).decode("utf-8")
+    languages = get_languages() or {}
+    native_name = languages.get(lang, {}).get("natively", lang)
+    
     ULTConfig.lang = lang
-    udB.del_key("language") if lang == "en" else udB.set_key("language", lang)
+    if lang == "en":
+        udB.del_key("language")
+    else:
+        udB.set_key("language", lang)
+
+    text = (
+        "🌐 **Lᴀɴɢᴜᴀɢᴇ Sᴜᴄᴄᴇssғᴜʟʟʏ Sᴇᴛ!**\n\n"
+        f"• **Sᴇʟᴇᴄᴛᴇᴅ Lᴀɴɢᴜᴀɢᴇ:** `{native_name}` `[{lang.upper()}]`"
+    )
+    
     await event.edit(
-        f"Your language has been set to {languages[lang]['natively']} [{lang}].",
+        text,
         buttons=get_back_button("lang"),
     )
