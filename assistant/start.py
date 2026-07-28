@@ -24,10 +24,6 @@ from strings import get_string
 
 from . import *
 
-# ------------------------------------------------------------------
-#  Owner Info Configuration
-# ------------------------------------------------------------------
-
 Owner_info_msg = udB.get_key("BOT_INFO_START")
 custom_info = bool(Owner_info_msg)
 
@@ -40,10 +36,6 @@ if not Owner_info_msg:
 
 ⚡ **Uʟᴛʀᴏɪᴅ** [`v{ultroid_version}`](https://github.com/TeamUltroid/Ultroid) | **Pᴏᴡᴇʀᴇᴅ ʙʏ @TeamUltroid**
 """
-
-# ------------------------------------------------------------------
-#  Button Layouts (Callbacks are strictly preserved)
-# ------------------------------------------------------------------
 
 _settings = [
     [
@@ -72,11 +64,6 @@ _start = [
     ],
     [Button.inline("🌎 TɪᴍᴇZᴏɴᴇ", data="tz")],
 ]
-
-
-# ------------------------------------------------------------------
-#  Callback & Command Handlers
-# ------------------------------------------------------------------
 
 @callback("ownerinfo")
 async def own(event):
@@ -111,7 +98,6 @@ async def ultroid(event):
     args = event.pattern_match.group(1).strip()
     keym = KeyManager("BOT_USERS", cast=list)
 
-    # Log new visitors safely
     if not keym.contains(event.sender_id) and event.sender_id not in owner_and_sudos():
         keym.add(event.sender_id)
         if not udB.get_key("OFF_START_LOG"):
@@ -133,7 +119,6 @@ async def ultroid(event):
                     log_channel, log_msg, buttons=buttons
                 )
 
-    # Regular User Handler
     if event.sender_id not in SUDO_M.fullsudos:
         me = inline_mention(ultroid_bot.me)
         mention = inline_mention(event.sender)
@@ -166,7 +151,6 @@ async def ultroid(event):
             buttons=[info_btn] if info_btn else None,
         )
 
-    # Sudo / Owner User Handler
     else:
         name = get_display_name(event.sender)
         if args == "set":
@@ -241,9 +225,9 @@ async def bdcast(event):
                 try:
                     await asst.send_message(int(user_id), response)
                     success += 1
-                    await asyncio.sleep(0.05)  # Telegram API limit korumasi
+                    await asyncio.sleep(0.05) 
                 except FloodWaitError as fw:
-                    await asyncio.sleep(fw.seconds + 2)  # Otomatik FloodWait beklemesi
+                    await asyncio.sleep(fw.seconds + 2) 
                     try:
                         await asst.send_message(int(user_id), response)
                         success += 1
