@@ -69,15 +69,13 @@ _start = [
 async def own(event):
     try:
         msg = Owner_info_msg.format(
-            mention=event.sender.mention,
+            mention=inline_mention(event.sender),
             me=inline_mention(ultroid_bot.me),
         )
     except (KeyError, IndexError, ValueError):
         msg = Owner_info_msg
-
     if custom_info:
         msg += "\n\n• **Pᴏᴡᴇʀᴇᴅ ʙʏ @TeamUltroid**"
-
     await event.edit(
         msg,
         buttons=[Button.inline("❌ Cʟᴏsᴇ", data="closeit")],
