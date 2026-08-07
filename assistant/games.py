@@ -17,7 +17,7 @@ import asyncio
 import re, uuid, operator
 from random import choice, shuffle
 
-from akipy.async_akipy import Akinator
+from akipy.async_akinator import Akinator
 from telethon.errors.rpcerrorlist import BotMethodInvalidError
 from telethon.events import Raw
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
