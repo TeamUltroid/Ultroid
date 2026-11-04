@@ -5,6 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
+import ast
 import json
 import math
 import os
@@ -94,7 +95,8 @@ def json_parser(data, indent=None, ascii=False):
             if indent:
                 parsed = json.dumps(data, indent=indent, ensure_ascii=ascii)
     except JSONDecodeError:
-        parsed = eval(data)
+        # data can be a remote API response; never execute it
+        parsed = ast.literal_eval(data)
     return parsed
 
 
