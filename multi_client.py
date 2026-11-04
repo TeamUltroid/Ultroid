@@ -1,9 +1,8 @@
-import asyncio
 import os
 import subprocess
 import sys
 
-vars = ["API_ID", "API_HASH", "SESSION"]
+vars = ["API_ID", "API_HASH", "SESSION", "REDIS_URI", "REDIS_PASSWORD"]
 
 def _check(z):
     new = []
@@ -14,26 +13,17 @@ def _check(z):
         new.append(ent)
     return True, new
 
+procs = []
 for z in range(5):
     n = str(z + 1)
     if z == 0:
         z = ""
     fine, out = _check(str(z))
     if fine:
-        subprocess.Popen(
-            [sys.executable, "-m", "pyUltroid", out[0], out[1], out[2], out[3], out[4], n],
-            stdin=None,
-            stderr=None,
-            stdout=None,
-            cwd=None,
-        )
+        procs.append(subprocess.Popen([sys.executable, "-m", "pyUltroid", *out, n]))
 
-loop = asyncio.get_event_loop()
+if not procs:
+    sys.exit(f"No client configured: set {', '.join(vars)} (suffix 1-4 for extra clients).")
 
-try:
-    loop.run_forever()
-except Exception as er:
-    print(er)
-finally:
-    loop.close()
-
+for proc in procs:
+    proc.wait()
