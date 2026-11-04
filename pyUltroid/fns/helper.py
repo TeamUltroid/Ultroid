@@ -473,7 +473,8 @@ def mediainfo(media):
                 i = str(media.document.attributes[0])
                 if "supports_streaming=True" in i:
                     m = "video"
-                m = "video as doc"
+                else:
+                    m = "video as doc"
             else:
                 m = "video"
         elif "audio" in mim:
