@@ -6,6 +6,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
+import asyncio
 import os
 from time import sleep
 
@@ -93,7 +94,7 @@ def telethon_session():
                 return
             except UserIsBotError:
                 print("You are trying to Generate Session for your Bot's Account?")
-                print("Here is That!\n{ultroid.session.save()}\n\n")
+                print(f"Here is That!\n{ultroid.session.save()}\n\n")
                 print("NOTE: You can't use that as User Session..")
     except ApiIdInvalidError:
         print(
@@ -146,6 +147,8 @@ def pyro_session():
 
 
 def main():
+    # Python 3.14 no longer creates a loop on demand; pyrogram needs one at import.
+    asyncio.set_event_loop(asyncio.new_event_loop())
     clear_screen()
     print(ULTROID)
     try:
