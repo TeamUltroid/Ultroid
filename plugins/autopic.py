@@ -149,7 +149,7 @@ if search := udB.get_key("AUTOPIC"):
     try:
         from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-        schedule = AsyncIOScheduler()
+        schedule = AsyncIOScheduler(event_loop=ultroid_bot.loop)
         schedule.add_job(autopic_func, "interval", seconds=sleep)
         schedule.start()
     except ModuleNotFoundError as er:
