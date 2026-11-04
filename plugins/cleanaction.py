@@ -12,7 +12,7 @@ __doc__ = get_help("help_cleanaction")
 
 from telethon.utils import get_display_name
 
-from . import get_string, udB, ultroid_cmd
+from . import eod, get_string, udB, ultroid_cmd
 
 
 @ultroid_cmd(pattern="addclean$", admins_only=True)
