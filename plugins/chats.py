@@ -139,10 +139,9 @@ async def _(e):
                     title=group_name,
                 ),
             )
-            created_chat_id = r.chats[0].id
             result = await e.client(
                 ExportChatInviteRequest(
-                    peer=created_chat_id,
+                    peer=r.updates.chats[0],
                 ),
             )
             await xx.edit(
