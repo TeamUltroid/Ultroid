@@ -316,10 +316,17 @@ async def updater():
         repo.create_head("main", origin.refs.main)
         repo.heads.main.set_tracking_branch(origin.refs.main)
         repo.heads.main.checkout(True)
+    if repo.head.is_detached:
+        LOGS.info("HEAD is detached, skipping the update check.")
+        return False
     ac_br = repo.active_branch.name
     repo.create_remote("upstream", off_repo) if "upstream" not in repo.remotes else None
     ups_rem = repo.remote("upstream")
-    ups_rem.fetch(ac_br)
+    try:
+        ups_rem.fetch(ac_br)
+    except GitCommandError as er:  # offline, or a branch upstream doesn't have
+        LOGS.info(f"Update check failed: {er}")
+        return False
     changelog, tl_chnglog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     return bool(changelog)
 

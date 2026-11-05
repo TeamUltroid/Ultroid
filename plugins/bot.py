@@ -338,7 +338,7 @@ async def _(e):
         os.execl(sys.executable, "python3", "-m", "pyUltroid")
         # return
     m = await updater()
-    branch = (Repo.init()).active_branch
+    branch = branch_link()[0]
     if m:
         x = await asst.send_file(
             udB.get_key("LOG_CHANNEL"),
