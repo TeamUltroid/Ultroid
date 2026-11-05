@@ -13,9 +13,11 @@ import asyncio
 import io
 
 from telethon.errors.rpcerrorlist import FloodWaitError
+from telethon.tl.types import MessageMediaDocument, MessageMediaPhoto
 from telethon.utils import get_display_name, get_peer_id
 
 from pyUltroid.dB.base import KeyManager
+from pyUltroid.fns.tools import get_chat_and_msgid
 
 from . import LOGS, asst, eor, events, get_string, udB, ultroid_bot, ultroid_cmd
 
@@ -47,8 +49,15 @@ async def autopost_func(e):
 @ultroid_cmd(pattern="shift (.*)")
 async def _(e):
     x = e.pattern_match.group(1).strip()
+    media_only = x.startswith("-m ")
+    if media_only:
+        x = x[3:]
     z = await e.eor(get_string("com_1"))
-    a, b = x.split("|")
+    a, b = [s.strip() for s in x.split("|")]
+    start = 0
+    chat, msg_id = get_chat_and_msgid(a.strip())
+    if chat:  # a message link: start from that post
+        a, start = str(chat), msg_id - 1
     try:
         c = await e.client.parse_id(a)
     except Exception:
@@ -60,7 +69,9 @@ async def _(e):
         LOGS.exception(er)
         await z.edit(get_string("cha_1"))
         return
-    async for msg in e.client.iter_messages(int(c), reverse=True, limit=None):
+    async for msg in e.client.iter_messages(int(c), reverse=True, limit=None, min_id=start):
+        if media_only and not isinstance(msg.media, (MessageMediaPhoto, MessageMediaDocument)):
+            continue
         try:
             await asyncio.sleep(2)
             await e.client.send_message(int(d), msg)
