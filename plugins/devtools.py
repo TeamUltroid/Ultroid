@@ -326,6 +326,7 @@ def _stringify(text=None, *args, **kwargs):
 async def aexec(code, event):
     # Create a dedicated namespace for execution
     exec_globals = {
+        **globals(),  # asst, udB, ultroid_bot, ... like before the 3.13 rework
         'print': _stringify,
         'p': _stringify,
         'message': event,
