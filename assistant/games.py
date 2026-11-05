@@ -17,7 +17,7 @@ import asyncio
 import re, uuid, operator
 from random import choice, shuffle
 
-from akipy.async_akipy import Akinator
+from akipy.async_akinator import Akinator
 from telethon.errors.rpcerrorlist import BotMethodInvalidError
 from telethon.events import Raw
 from telethon.tl.types import InputMediaPoll, Poll, PollAnswer, UpdateMessagePollVote
@@ -260,11 +260,12 @@ async def choose_cata(event):
                         entities=[]
                     ),
                     answers=opts,
+                    hash=0,
                     public_voters=True,
                     quiz=True,
                     close_period=int(in_),
                 ),
-                correct_answers=[ansi],
+                correct_answers=[next(i for i, o in enumerate(opts) if o.option == ansi)],
                 solution="Join @TeamUltroid",
                 solution_entities=[],
             )

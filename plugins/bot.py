@@ -68,6 +68,17 @@ def ULTPIC():
     return inline_pic() or choice(ULTROID_IMAGES)
 
 
+def branch_link():
+    """Branch (or short commit when HEAD is detached) and its GitHub link."""
+    try:
+        repo = Repo()
+        ref = repo.head.commit.hexsha[:7] if repo.head.is_detached else repo.active_branch.name
+        url = repo.remotes[0].config_reader.get("url").removesuffix(".git").rstrip("/")
+    except Exception:  # no .git, e.g. builds deployed from a source archive
+        return "main", "https://github.com/TeamUltroid/Ultroid"
+    return ref, f"{url}/tree/{ref}"
+
+
 buttons = [
     [
         Button.url(get_string("bot_3"), "https://github.com/TeamUltroid/Ultroid"),
@@ -113,9 +124,7 @@ async def lol(ult):
         pic = choice(pic)
     uptime = time_formatter((time.time() - start_time) * 1000)
     header = udB.get_key("ALIVE_TEXT") or get_string("bot_1")
-    y = Repo().active_branch
-    xx = Repo().remotes[0].config_reader.get("url")
-    rep = xx.replace(".git", f"/tree/{y}")
+    y, rep = branch_link()
     kk = f" `[{y}]({rep})` "
     if inline:
         kk = f"<a href={rep}>{y}</a>"
@@ -272,9 +281,7 @@ async def inline_alive(ult):
         pic = choice(pic)
     uptime = time_formatter((time.time() - start_time) * 1000)
     header = udB.get_key("ALIVE_TEXT") or get_string("bot_1")
-    y = Repo().active_branch
-    xx = Repo().remotes[0].config_reader.get("url")
-    rep = xx.replace(".git", f"/tree/{y}")
+    y, rep = branch_link()
     kk = f"<a href={rep}>{y}</a>"
     als = in_alive.format(
         header, f"{ultroid_version} [{HOSTED_ON}]", UltVer, pyver(), uptime, kk
@@ -331,7 +338,7 @@ async def _(e):
         os.execl(sys.executable, "python3", "-m", "pyUltroid")
         # return
     m = await updater()
-    branch = (Repo.init()).active_branch
+    branch = branch_link()[0]
     if m:
         x = await asst.send_file(
             udB.get_key("LOG_CHANNEL"),

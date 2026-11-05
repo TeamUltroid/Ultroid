@@ -68,9 +68,7 @@ async def an(e):
             txt, btn = get_msg_button(wt.text)
         add_snip(wrd, txt, None, btn)
     await e.eor(f"Done : snip `${wrd}` Saved.")
-    if not udB.get_key("SNIP"):
-        udB.set_key("SNIP", True)
-        ultroid_bot.add_handler(add_snips, events.NewMessage())
+    ultroid_bot.add_handler(add_snips, events.NewMessage())  # no-op if already added
 
 
 @ultroid_cmd(pattern="remsnip( (.*)|$)")

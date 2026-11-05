@@ -23,7 +23,7 @@ from datetime import timedelta
 import aiohttp
 import pytz
 
-from . import async_searcher, get_string, udB, ultroid_cmd
+from . import LOGS, async_searcher, get_string, udB, ultroid_cmd
 
 
 async def get_timezone(offset_seconds, use_utc=False):

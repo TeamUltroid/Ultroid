@@ -19,7 +19,12 @@ class ULTConfig:
 
 
 if run_as_module:
+    import asyncio
     import time
+
+    # Python 3.14 no longer creates a loop on demand, and older Telethon
+    # releases expect one to exist when a client is built.
+    asyncio.set_event_loop(asyncio.new_event_loop())
 
     from .configs import Var
     from .startup import *

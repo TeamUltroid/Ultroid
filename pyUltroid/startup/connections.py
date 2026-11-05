@@ -10,6 +10,7 @@ import ipaddress
 import struct
 import sys
 
+from telethon.errors import AuthKeyNotFound
 from telethon.errors.rpcerrorlist import AuthKeyDuplicatedError
 from telethon.sessions.string import _STRUCT_PREFORMAT, CURRENT_VERSION, StringSession
 
@@ -85,7 +86,7 @@ def vc_connection(udB, ultroid_bot):
                 log_attempt=False,
                 exit_on_error=False,
             )
-        except (AuthKeyDuplicatedError, EOFError):
+        except (AuthKeyDuplicatedError, AuthKeyNotFound, EOFError):
             LOGS.info(get_string("py_c3"))
             udB.del_key("VC_SESSION")
         except Exception as er:

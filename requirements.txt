@@ -1,5 +1,6 @@
 # Important Requirements here.
-telethon>=1.44.0
+# telethon-patch still imports button types that telethon 1.45 removed
+telethon>=1.44.0,<1.45
 gitpython>=3.1.52
 https://github.com/New-dev0/Telethon-Patch/archive/main.zip
 python-decouple>=3.8

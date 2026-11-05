@@ -386,12 +386,8 @@ async def _(e):
     with open(ok, "r") as hmm:
         _, data = await get_paste(hmm.read())
     if not data.get("link"):
-        return await e.answer(key[:30], alert=True)
-    if not key.startswith("http"):
-        link, raw = data["link"], data["raw"]
-    else:
-        link = key
-        raw = f"{key}/raw"
+        return await e.answer((data.get("error") or "Paste failed")[:200], alert=True)
+    link, raw = data["link"], data["raw"]
     if ok.startswith("addons"):
         key = "Addons"
     elif ok.startswith("vcbot"):

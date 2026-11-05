@@ -18,6 +18,7 @@ from telethon.errors import (
     AccessTokenInvalidError,
     ApiIdInvalidError,
     AuthKeyDuplicatedError,
+    AuthKeyNotFound,
 )
 
 from ..configs import Var
@@ -69,11 +70,12 @@ class UltroidClient(TelegramClient):
             self.logger.critical("API ID and API_HASH combination does not match!")
 
             sys.exit()
-        except (AuthKeyDuplicatedError, EOFError) as er:
+        except (AuthKeyDuplicatedError, AuthKeyNotFound, EOFError):
             if self._handle_error:
                 self.logger.critical("String session expired. Create new!")
                 return sys.exit()
             self.logger.critical("String session expired.")
+            raise
         except (AccessTokenExpiredError, AccessTokenInvalidError):
             # AccessTokenError can only occur for Bot account
             # And at Early Process, Its saved in DB.

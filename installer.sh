@@ -50,16 +50,19 @@ check_dependencies() {
     fi
     if [ -x "$(command -v apt-get)" ]; then
         echo -e "Installing dependencies..."
-        # check if any of ffmpeg, mediainfo, neofetch, git is not installed via dpkg
-        if dpkg -l | grep -q ffmpeg || dpkg -l | grep -q mediainfo || dpkg -l | grep -q neofetch || dpkg -l | grep -q git; then
+        # install if any of them is missing
+        if ! command -v ffmpeg &>/dev/null || ! command -v mediainfo &>/dev/null || ! command -v git &>/dev/null || ! command -v pip3 &>/dev/null; then
             sudo apt-get -qq -o=Dpkg::Use-Pty=0 update
-            sudo apt-get install -qq -o=Dpkg::Use-Pty=0 python3 python3-pip ffmpeg mediainfo neofetch git -y
+            sudo apt-get install -qq -o=Dpkg::Use-Pty=0 python3 python3-pip ffmpeg mediainfo git -y
         fi
+        # only .sysinfo needs neofetch, and newer Debian/Ubuntu releases dropped it
+        command -v neofetch &>/dev/null || sudo apt-get install -qq -o=Dpkg::Use-Pty=0 neofetch -y || true
     elif [ -x "$(command -v pacman)" ]; then
         echo -e "Installing dependencies..."
-        if pacman -Q | grep -q ffmpeg || pacman -Q | grep -q mediainfo || pacman -Q | grep -q neofetch || pacman -Q | grep -q git; then
-            sudo pacman -Sy python python-pip git ffmpeg mediainfo neofetch --noconfirm
+        if ! command -v ffmpeg &>/dev/null || ! command -v mediainfo &>/dev/null || ! command -v git &>/dev/null || ! command -v pip3 &>/dev/null; then
+            sudo pacman -Sy python python-pip git ffmpeg mediainfo --noconfirm
         fi
+        command -v neofetch &>/dev/null || sudo pacman -S neofetch --noconfirm || true
     else
         echo -e "Unknown OS. Checking if dependecies are installed" >&2
         if ! [ -x "$(command -v python3)" ] || ! [ -x "$(command -v python)" ]; then

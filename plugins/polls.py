@@ -44,7 +44,7 @@ async def uri_poll(e):
         ptype = match.split(" | ")[1]
         option = match.split("|")[0].split(";")[1::]
         if "_" in ptype:
-            karzo = [str(int(ptype.split("_")[1]) - 1).encode()]
+            karzo = [int(ptype.split("_")[1]) - 1]  # 0-based index into the options
             ptype = ptype.split("_")[0]
         if ptype not in ["public", "quiz", "multiple"]:
             return await e.eor("`Invalid Poll Type...`", time=5)
@@ -60,7 +60,7 @@ async def uri_poll(e):
     OUT = [PollAnswer(TextWithEntities(option[on], entities=[]), str(on).encode()) for on in range(len(option))]
     await e.respond(
         file=InputMediaPoll(
-            Poll(20, TextWithEntities(ques, entities=[]), OUT, multiple_choice=mpp, public_voters=publ, quiz=quizo),
+            Poll(20, TextWithEntities(ques, entities=[]), OUT, hash=0, multiple_choice=mpp, public_voters=publ, quiz=quizo),
             correct_answers=karzo,
         ),
     )

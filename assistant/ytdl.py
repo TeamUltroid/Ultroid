@@ -6,6 +6,7 @@
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
 
+import asyncio
 import os
 import re
 
@@ -25,15 +26,9 @@ from pyUltroid.fns.helper import (
     numerize,
     time_formatter,
 )
-from pyUltroid.fns.ytdl import dler, get_buttons, get_formats
+from pyUltroid.fns.ytdl import dler, get_buttons, get_formats, yt_search
 
 from . import LOGS, asst, callback, in_pattern, udB
-
-try:
-    from youtubesearchpython import VideosSearch
-except ImportError:
-    LOGS.info("'youtubesearchpython' not installed!")
-    VideosSearch = None
 
 
 ytt = "https://graph.org/file/afd04510c13914a06dd03.jpg"
@@ -59,30 +54,22 @@ async def _(event):
         await event.answer([fuk])
         return
     results = []
-    search = VideosSearch(string, limit=50)
-    nub = search.result()
-    nibba = nub["result"]
-    for v in nibba:
+    for v in await asyncio.to_thread(yt_search, string, 20):
         ids = v["id"]
         link = _yt_base_url + ids
-        title = v["title"]
-        duration = v["duration"]
-        views = v["viewCount"]["short"]
-        publisher = v["channel"]["name"]
-        published_on = v["publishedTime"]
-        description = (
-            v["descriptionSnippet"][0]["text"]
-            if v.get("descriptionSnippet")
-            and len(v["descriptionSnippet"][0]["text"]) < 500
-            else "None"
-        )
+        title = v.get("title")
+        duration = time_formatter(v["duration"] * 1000) if v.get("duration") else "Live"
+        views = numerize(v["view_count"]) if v.get("view_count") else "None"
+        publisher = v.get("channel") or v.get("uploader") or "None"
+        description = v.get("description") or "None"
+        if len(description) >= 500:
+            description = "None"
         thumb = f"https://i.ytimg.com/vi/{ids}/hqdefault.jpg"
         text = f"**Title: [{title}]({link})**\n\n"
         text += f"`Description: {description}\n\n"
         text += f"「 Duration: {duration} 」\n"
         text += f"「 Views: {views} 」\n"
-        text += f"「 Publisher: {publisher} 」\n"
-        text += f"「 Published on: {published_on} 」`"
+        text += f"「 Publisher: {publisher} 」`"
         desc = f"{title}\n{duration}"
         file = wb(thumb, 0, "image/jpeg", [])
         buttons = [

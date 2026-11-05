@@ -42,12 +42,15 @@ async def ytdl_progress(k, start_time, event):
                 LOGS.error(f"ytdl_progress: {ex}")
 
 
+def yt_search(query, limit=1):
+    """Flat YouTube search through yt-dlp (youtube-search-python broke on httpx 0.28)."""
+    with YoutubeDL({"quiet": True, "skip_download": True, "extract_flat": True}) as ydl:
+        return ydl.extract_info(f"ytsearch{limit}:{query}", download=False).get("entries") or []
+
+
 def get_yt_link(query):
-    search = VideosSearch(query, limit=1).result()
-    try:
-        return search["result"][0]["link"]
-    except IndexError:
-        return
+    results = yt_search(query)
+    return f"https://www.youtube.com/watch?v={results[0]['id']}" if results else None
 
 
 async def download_yt(event, link, ytd):
