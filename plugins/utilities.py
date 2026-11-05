@@ -87,6 +87,7 @@ from telethon.tl.types import (
     InputMediaPoll,
     Poll,
     PollAnswer,
+    TextWithEntities,
     TLObject,
     User,
     UserStatusOffline,
@@ -593,8 +594,12 @@ async def sugg(event):
             file=InputMediaPoll(
                 poll=Poll(
                     id=12345,
-                    question=text,
-                    answers=[PollAnswer("Yes", b"1"), PollAnswer("No", b"2")],
+                    question=TextWithEntities(text, entities=[]),
+                    answers=[
+                        PollAnswer(TextWithEntities("Yes", entities=[]), b"1"),
+                        PollAnswer(TextWithEntities("No", entities=[]), b"2"),
+                    ],
+                    hash=0,
                 ),
             ),
             reply_to=reply_to,

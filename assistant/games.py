@@ -260,11 +260,12 @@ async def choose_cata(event):
                         entities=[]
                     ),
                     answers=opts,
+                    hash=0,
                     public_voters=True,
                     quiz=True,
                     close_period=int(in_),
                 ),
-                correct_answers=[ansi],
+                correct_answers=[next(i for i, o in enumerate(opts) if o.option == ansi)],
                 solution="Join @TeamUltroid",
                 solution_entities=[],
             )
