@@ -76,8 +76,7 @@ async def zipp(event):
         caption=f"`{n_file.name}`",
         reply_to=reply,
     )
-    os.remove(inp)
-    os.remove(file)
+    os.remove(file)  # fast_uploader already removed the zip (to_delete=True)
     await xx.delete()
 
 
