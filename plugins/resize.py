@@ -29,8 +29,8 @@ async def size(e):
         img = await e.client.download_media(r, thumb=-1)
     else:
         img = await r.download_media()
-    im = Image.open(img)
-    x, y = im.size
+    with Image.open(img) as im:  # close the file before removing it
+        x, y = im.size
     await k.edit(f"Dimension Of This Image Is\n`{x} x {y}`")
     os.remove(img)
 
