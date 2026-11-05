@@ -50,6 +50,9 @@ async def _(e):
         return await xx.edit(f"Error: `{y}`")
     with open("neo.txt", "r", encoding="utf-8") as neo:
         p = (neo.read()).replace("\n\n", "")
+    if not p.strip():  # e.g. Windows, where the shell's not-found message differs
+        remove("neo.txt")
+        return await xx.edit("`neofetch` is not installed or printed nothing.")
     haa = await Carbon(code=p, file_name="neofetch", backgroundColor=choice(ATRA_COL))
     if isinstance(haa, dict):
         await xx.edit(f"`{haa}`")
