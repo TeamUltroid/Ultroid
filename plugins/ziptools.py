@@ -24,6 +24,7 @@
 """
 import os
 import time
+import zipfile
 
 from . import (
     HNDLR,
@@ -60,8 +61,9 @@ async def zipp(event):
         await bash(
             f"zip -r --password {event.pattern_match.group(1).strip()} {inp} {file}"
         )
-    else:
-        await bash(f"zip -r {inp} {file}")
+    else:  # stdlib, so no `zip` binary is needed; zipfile can't write passwords
+        with zipfile.ZipFile(inp, "w", zipfile.ZIP_DEFLATED) as zf:
+            zf.write(file, os.path.basename(file))
     k = time.time()
     n_file, _ = await event.client.fast_uploader(
         inp, show_progress=True, event=event, message="Uploading...", to_delete=True
