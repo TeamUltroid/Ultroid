@@ -20,7 +20,15 @@ import os
 from htmlwebshot import WebShot
 from PIL import Image, ImageDraw, ImageFont
 
-from . import async_searcher, eod, get_string, text_set, ultroid_cmd
+from . import (
+    async_searcher,
+    draw_text,
+    eod,
+    get_string,
+    needs_shaping,
+    text_set,
+    ultroid_cmd,
+)
 
 
 @ultroid_cmd(pattern="gethtml( (.*)|$)")
@@ -77,8 +85,13 @@ async def writer(e):
     bbox = font.getbbox("hg")
     line_height = bbox[3] - bbox[1]
     for line in lines:
-        draw.text((x, y), line, fill=(1, 22, 55), font=font)
-        y = y + line_height - 5
+        # Arabic lines start from the page's right margin, each on its own.
+        for part in line.split("\n") if needs_shaping(line) else [line]:
+            if needs_shaping(part):
+                draw_text(img, (img.width - x, y), part, font, (1, 22, 55), anchor="ra")
+            else:
+                draw.text((x, y), part, fill=(1, 22, 55), font=font)
+            y = y + line_height - 5
     file = "ult.jpg"
     img.save(file)
     await e.reply(file=file)

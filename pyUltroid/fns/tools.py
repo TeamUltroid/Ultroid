@@ -35,6 +35,11 @@ except ImportError:
     Image, ImageDraw, ImageFont = None, None, None
     LOGS.info("PIL not installed!")
 
+try:
+    import khatt
+except ImportError:
+    khatt = None
+
 from urllib.parse import quote, unquote
 
 from telethon import Button
@@ -42,6 +47,60 @@ from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo
 
 if run_as_module:
     from ..dB.filestore_db import get_stored_msg, store_msg
+
+# Arabic script, including the presentation forms.
+_ARABIC = re.compile(
+    "[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\ufb50-\ufdff\ufe70-\ufeff]"
+)
+# For letters the chosen font lacks: none of resources/fonts has Arabic.
+ARABIC_FALLBACK_FONT = "noto-naskh"
+
+
+def needs_shaping(text):
+    """Whether ``text`` has Arabic letters for khatt to join and order.
+
+    Pillow only joins Arabic letters and puts them right to left when it was
+    built with Raqm, which most installs aren't.
+    """
+    return khatt is not None and bool(_ARABIC.search(text))
+
+
+def text_width(text, font):
+    """Width of ``text`` in ``font`` (an ``ImageFont.truetype`` font), as drawn."""
+    if needs_shaping(text):
+        left, _, right, _ = khatt.text_bbox(
+            text,
+            font=font.path,
+            size_px=font.size,
+            fallback_fonts=ARABIC_FALLBACK_FONT,
+        )
+        return right - left
+    return ImageDraw.Draw(Image.new("RGB", (1, 1))).textlength(text, font)
+
+
+def draw_text(image, xy, text, font, fill, **kwargs):
+    """``ImageDraw.text``, with Arabic text shaped by khatt when it is installed.
+
+    Returns ``image``, which may be a converted copy when khatt has to draw
+    on an image that isn't RGB or RGBA.
+    """
+    if not needs_shaping(text):
+        ImageDraw.Draw(image).text(xy, text, fill=fill, font=font, **kwargs)
+        return image
+    if image.mode not in ("RGB", "RGBA"):
+        image = image.convert("RGBA" if "A" in image.mode else "RGB")
+    khatt.draw_text(
+        image,
+        xy,
+        text,
+        font=font.path,
+        size_px=font.size,
+        fill=fill,
+        fallback_fonts=ARABIC_FALLBACK_FONT,
+        **kwargs,
+    )
+    return image
+
 
 try:
     import numpy as np
@@ -339,9 +398,7 @@ def text_set(text):
 class LogoHelper:
     @staticmethod
     def get_text_size(text, image, font):
-        im = Image.new("RGB", (image.width, image.height))
-        draw = ImageDraw.Draw(im)
-        return draw.textlength(text, font)
+        return text_width(text, font)
 
     @staticmethod
     def find_font_size(text, font, image, target_width_ratio):
@@ -368,12 +425,20 @@ class LogoHelper:
         if img.height < 1000:
             img = img.resize((1020, 1020))
         width, height = img.size
-        draw = ImageDraw.Draw(img)
         font_size = LogoHelper.find_font_size(text, funt, img, width_ratio)
         font = ImageFont.truetype(funt, font_size)
-        l, t, r, b = font.getbbox(text)
+        if needs_shaping(text):
+            l, t, r, b = khatt.text_bbox(
+                text,
+                font=funt,
+                size_px=font_size,
+                fallback_fonts=ARABIC_FALLBACK_FONT,
+            )
+        else:
+            l, t, r, b = font.getbbox(text)
         w, h = r - l, (b - t) * 1.5
-        draw.text(
+        img = draw_text(
+            img,
             ((width - w) / 2, ((height - h) / 2)),
             text,
             font=font,
