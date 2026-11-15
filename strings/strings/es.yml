@@ -494,7 +494,7 @@ fsh_4: "**No hay archivos almacenados!**"
 
 # assisant
 ast_1: "Elija qué API desea configurar."
-ast_2: "**remove.bg API**\nIngrese su clave API de remove.bg.\nUsa /cancel para terminar la operación."
+ast_2: "**Leonardo.Ai API**\nIngrese su clave API de Leonardo.Ai.\nUsa /cancel para terminar la operación."
 ast_3: "Hola {}. Porfavor navegue por las opciones"
 
 # inlinestuff

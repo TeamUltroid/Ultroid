@@ -163,23 +163,62 @@ async def allcmds(event, telegraph):
     await eor(event, f"All Ultroid Cmds : [Click Here]({t['url']})", link_preview=False)
 
 
+# remove.bg's API moved to Leonardo.Ai on December 1, 2026.
+# https://docs.leonardo.ai/docs/migrate-from-the-removebg-api-to-leonardoai
+
+
+def _leonardo_error(data, status):
+    # Keep the remove.bg error shape ({"errors": [{"title", "detail"}]}) for callers.
+    errors = data.get("errors") if isinstance(data, dict) else None
+    if isinstance(errors, list) and errors and isinstance(errors[0], dict):
+        error = errors[0]
+        code = (error.get("extensions") or {}).get("code", "")
+        title = error.get("message", "Unknown error")
+        return {"errors": [{"title": title, "detail": code}]}
+    if isinstance(data, dict) and data.get("results") == []:
+        title, detail = "No image returned", "blocked by moderation"
+        return {"errors": [{"title": title, "detail": detail}]}
+    title = (data.get("error") if isinstance(data, dict) else None) or f"HTTP {status}"
+    return {"errors": [{"title": str(title), "detail": ""}]}
+
+
 async def ReTrieveFile(input_file_name):
     if not aiohttp:
         raise DependencyMissingError("This function needs 'aiohttp' to be installed.")
-    RMBG_API = udB.get_key("RMBG_API")
-    headers = {"X-API-Key": RMBG_API}
-    files = {"image_file": open(input_file_name, "rb").read()}
+    LEONARDO_API_KEY = udB.get_key("LEONARDO_API_KEY")
+    headers = {"Authorization": f"Bearer {LEONARDO_API_KEY}"}
+    with open(input_file_name, "rb") as file:
+        image_b64 = base64.b64encode(file.read()).decode()
+    payload = {
+        "model": "remove-bg",
+        "ephemeral": True,
+        "parameters": {
+            "format": "png",
+            "guidances": {
+                "image_reference": [{"image": {"type": "BASE64", "data": image_b64}}]
+            },
+        },
+    }
     async with aiohttp.ClientSession() as ses:
         async with ses.post(
-            "https://api.remove.bg/v1.0/removebg", headers=headers, data=files
+            "https://cloud.leonardo.ai/api/rest/v2/generationssync",
+            headers=headers,
+            json=payload,
         ) as out:
-            contentType = out.headers.get("content-type")
-            if "image" not in contentType:
-                return False, (await out.json())
-
+            try:
+                data = await out.json(content_type=None)
+            except ValueError:
+                data = None
+            status = out.status
+        results = data.get("results") if isinstance(data, dict) else None
+        if not results or not results[0].get("url"):
+            return False, _leonardo_error(data, status)
+        async with ses.get(results[0]["url"]) as image:
+            if image.status != 200:
+                return False, _leonardo_error(None, image.status)
             name = check_filename("ult-rmbg.png")
             with open(name, "wb") as file:
-                file.write(await out.read())
+                file.write(await image.read())
             return True, name
 
 

@@ -430,10 +430,11 @@ async def _(ult):
     pattern="rmbg($| (.*))",
 )
 async def abs_rmbg(event):
-    RMBG_API = udB.get_key("RMBG_API")
-    if not RMBG_API:
+    if not udB.get_key("LEONARDO_API_KEY"):
         return await event.eor(
-            "Get your API key from [here](https://www.remove.bg/) for this plugin to work.",
+            "Get your Leonardo.Ai API key from [here](https://app.leonardo.ai/api-access) "
+            "and set it as `LEONARDO_API_KEY` for this plugin to work. "
+            "remove.bg keys no longer work since its API moved to Leonardo.Ai.",
         )
     match = event.pattern_match.group(1).strip()
     reply = await event.get_reply_message()
@@ -456,7 +457,7 @@ async def abs_rmbg(event):
         Image.open(dl).save(file)
         os.remove(dl)
         dl = file
-    xx = await event.eor("`Sending to remove.bg`")
+    xx = await event.eor("`Sending to Leonardo.Ai`")
     dn, out = await ReTrieveFile(dl)
     os.remove(dl)
     if not dn:

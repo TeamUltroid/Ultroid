@@ -521,7 +521,7 @@ th_2: "`Replied file has no thumbnail.`"
 # ------------------------- assistant --------------------------#
 
 ast_1: "Choose which API you want to set."
-ast_2: "**remove.bg API**\nEnter your API key from remove.bg.\n\nUse /cancel to terminate the operation."
+ast_2: "**Leonardo.Ai API**\nEnter your API key from Leonardo.Ai.\n\nUse /cancel to terminate the operation."
 ast_3: "Hey {}. Please browse through the options"
 ast_4: "List Of Available Languages."
 

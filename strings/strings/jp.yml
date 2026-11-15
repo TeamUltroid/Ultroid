@@ -491,7 +491,7 @@ fsh_4: "**ファイルが保存されていません！**"
 # ------------------------- assistant --------------------------#
 
 ast_1: "「設定するAPIを選択してください。」"
-ast_2: "** remove.bg API ** \ remove.bgからAPIキーを入力してください。\n \n / cancelを使用して操作を終了してください。"
+ast_2: "** Leonardo.Ai API ** \ Leonardo.AiからAPIキーを入力してください。\n \n / cancelを使用して操作を終了してください。"
 ast_3: "「ねえ{}。オプションを参照してください」"
 
 # inlinestuff

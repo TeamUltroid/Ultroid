@@ -174,7 +174,7 @@ _buttons = {
     "apiset": {
         "text": get_string("ast_1"),
         "buttons": [
-            [Button.inline("Remove.bg API", data="abs_rmbg")],
+            [Button.inline("Leonardo.Ai API", data="abs_rmbg")],
             [Button.inline("DEEP API", data="abs_dapi")],
             [Button.inline("OCR API", data="abs_oapi")],
             [Button.inline("« Back", data="setter")],
@@ -184,8 +184,8 @@ _buttons = {
 
 _convo = {
     "rmbg": {
-        "var": "RMBG_API",
-        "name": "Remove.bg API Key",
+        "var": "LEONARDO_API_KEY",
+        "name": "Leonardo.Ai API Key",
         "text": get_string("ast_2"),
         "back": "cbs_apiset",
     },
