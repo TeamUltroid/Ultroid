@@ -186,7 +186,7 @@ wrd_3: "**Word** - `{}`\n\n**Antonyms** - \n"
 
 # assisant
 ast_1: "Scegli quale API desideri impostare."
-ast_2: "**remove.bg API**\nInserisci la tua chiave API da remove.bg.\n\nUsa /cancel per terminare l'operazione."
+ast_2: "**Leonardo.Ai API**\nInserisci la tua chiave API da Leonardo.Ai.\n\nUsa /cancel per terminare l'operazione."
 ast_3: "Ciao {}. Si prega di sfogliare le opzioni"
 
 

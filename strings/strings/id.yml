@@ -499,7 +499,7 @@ fsh_4: "**Tidak ada file yang disimpan!**"
 
 # assisant
 ast_1: "Pilih API yang ingin Anda setel."
-ast_2: "**remove.bg API**\nMasukkan API key Anda dari remove.bg.\n\nGunakan /cancel untuk membatalkan."
+ast_2: "**Leonardo.Ai API**\nMasukkan API key Anda dari Leonardo.Ai.\n\nGunakan /cancel untuk membatalkan."
 ast_3: "Haloo {}. Silakan telusuri opsi"
 
 # inlinestuff

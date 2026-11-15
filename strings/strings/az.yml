@@ -473,7 +473,7 @@ zip_3: "`Yalnız zip faylı yanıtla.`"
 # ------------------------- assistant --------------------------#
 
 ast_1: "Api tapa bilmədim."
-ast_2: "**remove.bg API**\nApi key əlavə et\n\n /cancel edərək prosesi dayandır."
+ast_2: "**Leonardo.Ai API**\nApi key əlavə et\n\n /cancel edərək prosesi dayandır."
 ast_3: "Hey {}. Zəhmət olmasa seçimləri nəzərdən keçirin"
 
 # inlinestuff
