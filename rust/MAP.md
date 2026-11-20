@@ -78,7 +78,7 @@ dynamic code).
 | `strings/` | language file loading and `get_string` lookup with English fallback | harness | open |
 | command patterns (`pyUltroid/_misc/_decorators.py`) | `compile_pattern` and what `re.match` makes of the result, in `ultroid-core`: a matcher that follows Python's `re` (ADR-017), checked on every pattern the code registers | harness | done: `command-rs`, gate passed, 9301/9301 cases; 4.68x across the bridge, nearly all of it compiling the pattern |
 | session strings (`pyUltroid/startup/connections.py`) | `validate_session` with its Pyrogram conversion, and Telethon's `StringSession`, in `ultroid-core` | harness | done: `session-rs`, gate passed, 1382/1382 cases; 1.57x across the bridge |
-| `multi_client.py` | which clients to start, from the environment | app cases | open |
+| `multi_client.py` | which clients the script starts for an environment, in `ultroid-core` | harness, running the script itself | done: `launch-rs`, gate passed, 1714/1714 cases; starting and waiting is left to a launcher |
 
 ### Blocked
 

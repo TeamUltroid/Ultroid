@@ -7,6 +7,7 @@ data and give data. A plain library: no Python, no Telegram, no network.
 | --- | --- | --- |
 | `session` | What a `SESSION` string is: Telethon's `StringSession`, and `validate_session` with its Pyrogram conversion | `rust/session-rs` |
 | `command` | How a command is recognised: `compile_pattern`, and Python's `re.match` on the result | `rust/command-rs` |
+| `launch` | Which clients `multi_client.py` starts for an environment | `rust/launch-rs` |
 
 ## Session strings
 
@@ -115,11 +116,52 @@ would have to go round more than 100,000 times without taking a character is dec
 
 Proof: `rust/command-rs`, 9,301 recorded cases, gate passed.
 
+## Launching several clients
+
+```rust
+use ultroid_core::launch::{clients, nothing_configured};
+
+let found = clients(|name| std::env::var_os(name));
+if found.is_empty() {
+    eprintln!("{}", nothing_configured());
+    std::process::exit(1);
+}
+for client in &found {
+    // python3 -m pyUltroid <API_ID> <API_HASH> <SESSION> <REDIS_URI> <REDIS_PASSWORD> <number>
+    std::process::Command::new("python3").args(client.arguments()).spawn()?;
+}
+```
+
+`multi_client.py` runs up to five clients from one environment: `python3 -m pyUltroid` once
+for each, with the client's five values and its number as arguments. `clients` says which, in
+the order the script starts them.
+
+What the original does that one would not guess, all of it kept (ADR-003):
+
+- **The suffix is one less than the number.** The first client reads `API_ID`, the second
+  `API_ID1`, the fifth `API_ID4`. `API_ID5` is never read.
+- **A client needs all five variables, and none may be empty**: `API_ID`, `API_HASH`,
+  `SESSION`, `REDIS_URI` and `REDIS_PASSWORD`. A Redis without a password cannot be configured
+  this way, and neither can another database.
+- **A client that is not configured is skipped, not an error.** The third runs without the
+  second. Only when none is configured does the script leave, with a message on the error
+  output and status 1.
+- **The script reads the environment of its process, not `.env`.** The clients read `.env`
+  themselves, for everything but these five values. What they take from the environment
+  besides (`BOT_TOKEN`, `LOG_CHANNEL`) is therefore the same for every client.
+- **The session and the Redis password go on the command line**, where every user of the
+  machine can read them in the process list.
+- **Nothing is checked.** An `API_ID` that is no number is passed on, and the client fails on
+  it. When the clients have ended the script ends with status 0, however they ended.
+
+Proof: `rust/launch-rs`, 1,714 recorded runs of the script, gate passed.
+
 ## Checks
 
 ```sh
 cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test
-rust-anything gate ../session-rs && rust-anything gate ../command-rs
+for unit in session command launch; do rust-anything gate ../$unit-rs; done
 python3 ../harness/fuzz_session.py 1 60
 python3 -W ignore ../harness/fuzz_command.py 1 60
+python3 ../harness/fuzz_launch.py 1 20
 ```

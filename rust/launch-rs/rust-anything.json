@@ -1,0 +1,30 @@
+{
+  "schema": "rust-anything/bridge@1",
+  "root": "../..",
+  "unit": "rust/harness/launch.py",
+  "language": "python",
+  "kind": "pyo3",
+  "crate_name": "launch-rs",
+  "exports": [
+    {
+      "name": "plan",
+      "file": "rust/harness/launch.py",
+      "line": 30,
+      "params": [
+        {
+          "name": "environment",
+          "ts_type": "dict",
+          "optional": false,
+          "rest": false
+        }
+      ],
+      "returns": "unknown[]",
+      "is_async": false,
+      "is_generator": false,
+      "type_params": [],
+      "uses_instanceof": false
+    }
+  ],
+  "classes": [],
+  "js_only": []
+}
