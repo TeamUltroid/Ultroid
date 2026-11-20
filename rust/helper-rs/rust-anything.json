@@ -1,0 +1,163 @@
+{
+  "schema": "rust-anything/bridge@1",
+  "root": "../..",
+  "unit": "pyUltroid/fns/helper.py",
+  "language": "python",
+  "kind": "pyo3",
+  "crate_name": "helper-rs",
+  "exports": [
+    {
+      "name": "time_formatter",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 501,
+      "params": [
+        {
+          "name": "milliseconds",
+          "ts_type": "number",
+          "optional": false,
+          "rest": false
+        }
+      ],
+      "returns": "unknown",
+      "is_async": false,
+      "is_generator": false,
+      "type_params": [],
+      "uses_instanceof": false
+    },
+    {
+      "name": "humanbytes",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 521,
+      "params": [
+        {
+          "name": "size",
+          "ts_type": "number",
+          "optional": false,
+          "rest": false
+        }
+      ],
+      "returns": "unknown",
+      "is_async": false,
+      "is_generator": false,
+      "type_params": [],
+      "uses_instanceof": false
+    },
+    {
+      "name": "numerize",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 535,
+      "params": [
+        {
+          "name": "number",
+          "ts_type": "number",
+          "optional": false,
+          "rest": false
+        }
+      ],
+      "returns": "unknown",
+      "is_async": false,
+      "is_generator": false,
+      "type_params": [],
+      "uses_instanceof": false
+    }
+  ],
+  "classes": [],
+  "js_only": [
+    {
+      "name": "run_async",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 68,
+      "reason": "decorator, takes a callable"
+    },
+    {
+      "name": "make_mention",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 100,
+      "reason": "takes a Telethon user object"
+    },
+    {
+      "name": "inline_mention",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 106,
+      "reason": "takes a Telethon user or channel object"
+    },
+    {
+      "name": "un_plug",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 122,
+      "reason": "unloads a plugin from the running bot"
+    },
+    {
+      "name": "bash",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 273,
+      "reason": "runs a shell command"
+    },
+    {
+      "name": "updater",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 294,
+      "reason": "runs git against the checkout"
+    },
+    {
+      "name": "uploader",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 338,
+      "reason": "uploads to Telegram"
+    },
+    {
+      "name": "downloader",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 357,
+      "reason": "downloads from Telegram"
+    },
+    {
+      "name": "async_searcher",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 380,
+      "reason": "takes `**kwargs`"
+    },
+    {
+      "name": "download_file",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 423,
+      "reason": "downloads from the network"
+    },
+    {
+      "name": "fast_download",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 436,
+      "reason": "calls its parameter `progress_callback`: a callable"
+    },
+    {
+      "name": "mediainfo",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 462,
+      "reason": "takes a Telethon media object"
+    },
+    {
+      "name": "progress",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 553,
+      "reason": "edits a Telegram message"
+    },
+    {
+      "name": "restart",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 595,
+      "reason": "restarts the process"
+    },
+    {
+      "name": "shutdown",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 628,
+      "reason": "stops the process"
+    },
+    {
+      "name": "KEEP_SAFE",
+      "file": "pyUltroid/fns/helper.py",
+      "line": 82,
+      "reason": "class: public class attribute `All`"
+    }
+  ]
+}

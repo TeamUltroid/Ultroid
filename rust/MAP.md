@@ -7,7 +7,8 @@ cases, last diff) is generated into `PORT_MAP.md` by `rust-anything map --write`
 - `PLAN.md`: rust-anything's own plan (`analyze --whole-app`), unedited.
 - `DECISIONS.md`: the decisions (ADRs). Taken by default with the owner away; all open to review.
 - `GLOSSARY.md`: Ultroid's terms and their names in Rust.
-- `harness/`: the Python used to record the original (see ADR-007).
+- `harness/`: the Python used to record the original (ADR-007) and to check the shadow
+  drop-ins (ADR-012).
 - `research/`: what is known about each dependency, with sources.
 
 ## Goal
@@ -38,10 +39,11 @@ this port runs in. So the port is split in two (ADR-001):
 | 005 | Telegram library | **open** |
 | 006 | Plugins and runtime code loading stay in Python | default |
 | 007 | Recording without a running bot (`harness/`) | default |
-| 008 | Where Rust is wired into the running app | default |
+| 008 | Where Rust is wired into the running app | superseded by 012 |
 | 009 | Dependencies are chosen when a unit needs them | default |
 | 010 | Targets: Linux x86_64, Rust 1.97, CPython 3.9+ | default |
 | 011 | No blocking checkpoints; no cutover on this branch | default |
+| 012 | The Python app is not modified on this branch | default |
 
 "default" means taken without the owner, from the facts; see `DECISIONS.md`.
 
@@ -59,7 +61,7 @@ dynamic code).
 
 | Unit | What is ported | Recorded | State |
 | --- | --- | --- | --- |
-| `pyUltroid/fns/helper.py` | `time_formatter`, `humanbytes`, `numerize` | directly | open |
+| `pyUltroid/fns/helper.py` | `time_formatter`, `humanbytes`, `numerize` | directly | done: `helper-rs`, gate passed, 213/213 cases |
 | `pyUltroid/fns/tools.py` | `get_msg_button`, `text_set`, `stdr`, `cmd_regex_replace`, `get_chat_and_msgid` | directly | open |
 | database value format (`pyUltroid/startup/_database.py`) | what `set_key` stores and `get_key` reads back | harness | open |
 | `pyUltroid/dB/` | the 93 accessor functions, over an in-memory store | harness | open |
