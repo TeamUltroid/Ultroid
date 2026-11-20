@@ -4,6 +4,7 @@ This file carries the port between sessions: the goal, the decisions, every unit
 and what is out of scope. It is the plan and the claims. The measured state (functions in Rust,
 cases, last diff) is generated into `PORT_MAP.md` by `rust-anything map --write`.
 
+- `HANDOFF.md`: where the port stands, how to check it, what comes next.
 - `PLAN.md`: rust-anything's own plan (`analyze --whole-app`), unedited.
 - `DECISIONS.md`: the decisions (ADRs). Taken by default with the owner away; all open to review.
 - `GLOSSARY.md`: Ultroid's terms and their names in Rust.
