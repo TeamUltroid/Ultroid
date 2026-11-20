@@ -256,3 +256,19 @@ file are behind the `Store` trait and not ported; what each returns for a write,
 fails, is not recorded (`research/dependencies-core.md` lists what is known). A function is
 proven together with the functions around it, so a recorded scenario that fails names a step,
 not a function.
+
+## ADR-016: Start-up logic is a second library, `ultroid-core`
+
+Status: accepted by default (2026-11-20, owner away)
+
+Context: After the database, the logic that can be proven offline is spread over the start-up
+path: what a session string is, how a command is recognised, which clients to start. None of it
+belongs in the database crate, and each piece is too small to be a crate of its own.
+
+Decision: It goes into `rust/ultroid-core`, a plain library like `ultroid-db` (ADR-014), one
+module per piece, each proven by its own bridge crate over a harness module. Where the original
+raises an exception that is no built-in (`struct.error`, `binascii.Error`), the harness reports
+the outcome as data, because the bridge can only raise built-in exceptions.
+
+Consequences: `ultroid-core` and `ultroid-db` are what a Rust application would be built from.
+Neither has Telegram, a network or Python in it.
