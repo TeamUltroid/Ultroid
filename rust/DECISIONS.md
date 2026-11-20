@@ -190,3 +190,40 @@ is left as a one-line change for the owner to make when a unit is worth switchin
 
 Consequences: The pull request is purely additive and cannot change how Ultroid behaves. The
 ported units are proven but not in use.
+
+## ADR-013: The order a set prints in is not part of the stored format
+
+Status: accepted by default (2026-11-20, owner away)
+
+Context: `set_key` stores `str(value)`. For a set, CPython lists the members in the order of its
+hash table. For text members that order depends on the hash seed the process started with, so the
+same bot writes the same set differently after a restart. Nothing in `pyUltroid/` stores a set
+today; one gets in when a user stores text that reads as one (`{1, 2}`) or a plugin passes one.
+
+Decision: The Rust side keeps and prints set members in insertion order. Recorded cases with a
+set of more than one member compare with the members sorted on both sides, in the harness and in
+the port.
+
+Consequences: The stored text of a set can differ between Python and Rust, and between two runs
+of Python. Either side reads the other's text back as the same set, so no data is lost. Code that
+depends on the order a stored set comes back in was already unreliable.
+
+## ADR-014: The database layer is a library, proven through thin bridge crates
+
+Status: accepted by default (2026-11-20, owner away)
+
+Context: rust-anything bridges one unit to one crate and checks the port's size against the
+unit's Python lines. The database layer does not fit that shape. `pyUltroid/dB/` cannot be
+bridged as a directory (ten of its modules define `get_stuff`), its modules refuse to load outside
+a running bot (ADR-007), and the value format underneath them is fifteen lines of Python
+(`_get_data` and `set_key`) resting on `ast.literal_eval` and `str()`, which are C code inside
+CPython. A Rust Ultroid also needs this layer as ordinary Rust, with no Python in the build.
+
+Decision: `rust/ultroid-db` is a plain library crate with no bridge. Each part of it is proven by
+a bridge crate whose `port.rs` only converts arguments and calls the library, recorded against a
+harness module that does the same for the original (`dbvalue-rs` over `harness/dbvalue.py`).
+
+Consequences: The gate's size check measures only the thin layer, so it says nothing about the
+library. The library's README carries the real line counts, and says where the Rust has no
+Python lines to be compared with. `ultroid-db` is the first crate a Rust app can depend on
+directly.
