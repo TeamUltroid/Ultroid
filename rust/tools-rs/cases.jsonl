@@ -1,0 +1,789 @@
+{"fn": "get_msg_button", "args": ["key_name-1"], "ok": {"$tuple": ["key_name-1", []]}}
+{"fn": "get_msg_button", "args": ["HELLO"], "ok": {"$tuple": ["HELLO", []]}}
+{"fn": "get_msg_button", "args": ["HELLOhello"], "ok": {"$tuple": ["HELLOhello", []]}}
+{"fn": "get_msg_button", "args": ["a😀b😀c"], "ok": {"$tuple": ["a😀b😀c", []]}}
+{"fn": "get_msg_button", "args": [":ΣΊΣΥΦΟΣ"], "ok": {"$tuple": [":ΣΊΣΥΦΟΣ", []]}}
+{"fn": "get_msg_button", "args": ["a"], "ok": {"$tuple": ["a", []]}}
+{"fn": "get_msg_button", "args": ["hello world"], "ok": {"$tuple": ["hello world", []]}}
+{"fn": "get_msg_button", "args": ["{name} has {count} items"], "ok": {"$tuple": ["{name} has {count} items", []]}}
+{"fn": "get_msg_button", "args": ["tab\tseparated"], "ok": {"$tuple": ["tab\tseparated", []]}}
+{"fn": "get_msg_button", "args": ["tab\tseparatedkey_name-1"], "ok": {"$tuple": ["tab\tseparatedkey_name-1", []]}}
+{"fn": "get_msg_button", "args": ["key_name-1hello world"], "ok": {"$tuple": ["key_name-1hello world", []]}}
+{"fn": "get_msg_button", "args": [":"], "ok": {"$tuple": [":", []]}}
+{"fn": "get_msg_button", "args": ["hello worldHELLO"], "ok": {"$tuple": ["hello worldHELLO", []]}}
+{"fn": "get_msg_button", "args": ["abcé"], "ok": {"$tuple": ["abcé", []]}}
+{"fn": "get_msg_button", "args": ["ab"], "ok": {"$tuple": ["ab", []]}}
+{"fn": "get_msg_button", "args": ["{name} has {count} itemsHello World"], "ok": {"$tuple": ["{name} has {count} itemsHello World", []]}}
+{"fn": "get_msg_button", "args": ["ünïcödé"], "ok": {"$tuple": ["ünïcödé", []]}}
+{"fn": "get_msg_button", "args": ["straße"], "ok": {"$tuple": ["straße", []]}}
+{"fn": "get_msg_button", "args": [""], "ok": {"$tuple": ["", []]}}
+{"fn": "get_msg_button", "args": ["ns:key.patha:b:c"], "ok": {"$tuple": ["ns:key.patha:b:c", []]}}
+{"fn": "get_msg_button", "args": ["./x/**/*.json﻿bom"], "ok": {"$tuple": ["./x/**/*.json﻿bom", []]}}
+{"fn": "get_msg_button", "args": ["trailing."], "ok": {"$tuple": ["trailing.", []]}}
+{"fn": "get_msg_button", "args": ["Hello Worldhello world"], "ok": {"$tuple": ["Hello Worldhello world", []]}}
+{"fn": "get_msg_button", "args": ["éünïcödé"], "ok": {"$tuple": ["éünïcödé", []]}}
+{"fn": "get_msg_button", "args": ["ns:key.path"], "ok": {"$tuple": ["ns:key.path", []]}}
+{"fn": "get_msg_button", "args": ["é"], "ok": {"$tuple": ["é", []]}}
+{"fn": "get_msg_button", "args": ["a:b:c"], "ok": {"$tuple": ["a:b:c", []]}}
+{"fn": "get_msg_button", "args": ["😀"], "ok": {"$tuple": ["😀", []]}}
+{"fn": "get_msg_button", "args": ["line1\nline2"], "ok": {"$tuple": ["line1\nline2", []]}}
+{"fn": "get_msg_button", "args": ["日本語のテキスト"], "ok": {"$tuple": ["日本語のテキスト", []]}}
+{"fn": "get_msg_button", "args": ["  padded  "], "ok": {"$tuple": ["padded", []]}}
+{"fn": "get_msg_button", "args": ["Hello World"], "ok": {"$tuple": ["Hello World", []]}}
+{"fn": "get_msg_button", "args": ["﻿bom"], "ok": {"$tuple": ["﻿bom", []]}}
+{"fn": "get_msg_button", "args": ["a😀b😀c:"], "ok": {"$tuple": ["a😀b😀c:", []]}}
+{"fn": "get_msg_button", "args": ["hello"], "ok": {"$tuple": ["hello", []]}}
+{"fn": "get_msg_button", "args": ["HELLOa.b.c"], "ok": {"$tuple": ["HELLOa.b.c", []]}}
+{"fn": "get_msg_button", "args": ["./x/**/*.json"], "ok": {"$tuple": ["./x/**/*.json", []]}}
+{"fn": "get_msg_button", "args": ["ΣΊΣΥΦΟΣ"], "ok": {"$tuple": ["ΣΊΣΥΦΟΣ", []]}}
+{"fn": "get_msg_button", "args": ["a.b.c"], "ok": {"$tuple": ["a.b.c", []]}}
+{"fn": "get_msg_button", "args": ["trailing.😀"], "ok": {"$tuple": ["trailing.😀", []]}}
+{"fn": "get_msg_button", "args": ["emoji 👍🏽 mix"], "ok": {"$tuple": ["emoji 👍🏽 mix", []]}}
+{"fn": "get_msg_button", "args": ["line1\nline2ünïcödé"], "ok": {"$tuple": ["line1\nline2ünïcödé", []]}}
+{"fn": "get_msg_button", "args": ["trailing.line1\nline2"], "ok": {"$tuple": ["trailing.line1\nline2", []]}}
+{"fn": "get_msg_button", "args": ["a..b"], "ok": {"$tuple": ["a..b", []]}}
+{"fn": "get_msg_button", "args": ["ns:key.pathkey_name-1"], "ok": {"$tuple": ["ns:key.pathkey_name-1", []]}}
+{"fn": "get_msg_button", "args": [":  padded  "], "ok": {"$tuple": [":  padded", []]}}
+{"fn": "get_msg_button", "args": ["Hello Worldline1\nline2"], "ok": {"$tuple": ["Hello Worldline1\nline2", []]}}
+{"fn": "get_msg_button", "args": ["tab\tseparatedhello world"], "ok": {"$tuple": ["tab\tseparatedhello world", []]}}
+{"fn": "get_msg_button", "args": ["straße😀"], "ok": {"$tuple": ["straße😀", []]}}
+{"fn": "get_msg_button", "args": ["İstanbul"], "ok": {"$tuple": ["İstanbul", []]}}
+{"fn": "get_msg_button", "args": ["{name} has {count} itemsabc"], "ok": {"$tuple": ["{name} has {count} itemsabc", []]}}
+{"fn": "get_msg_button", "args": [".leading"], "ok": {"$tuple": [".leading", []]}}
+{"fn": "get_msg_button", "args": ["😀straße"], "ok": {"$tuple": ["😀straße", []]}}
+{"fn": "get_msg_button", "args": ["src/a/b.ts"], "ok": {"$tuple": ["src/a/b.ts", []]}}
+{"fn": "get_msg_button", "args": ["hello﻿bom"], "ok": {"$tuple": ["hello﻿bom", []]}}
+{"fn": "get_msg_button", "args": ["abc"], "ok": {"$tuple": ["abc", []]}}
+{"fn": "get_msg_button", "args": ["a..bab"], "ok": {"$tuple": ["a..bab", []]}}
+{"fn": "get_msg_button", "args": ["éhello"], "ok": {"$tuple": ["éhello", []]}}
+{"fn": "get_msg_button", "args": ["日本語のテキストa.b.c"], "ok": {"$tuple": ["日本語のテキストa.b.c", []]}}
+{"fn": "get_msg_button", "args": ["{name} has {count} itemsa.b.c"], "ok": {"$tuple": ["{name} has {count} itemsa.b.c", []]}}
+{"fn": "get_msg_button", "args": ["src/a/b.tssrc/a/b.ts"], "ok": {"$tuple": ["src/a/b.tssrc/a/b.ts", []]}}
+{"fn": "get_msg_button", "args": ["HELLOHELLO"], "ok": {"$tuple": ["HELLOHELLO", []]}}
+{"fn": "get_msg_button", "args": ["Hello Worlda.b.c"], "ok": {"$tuple": ["Hello Worlda.b.c", []]}}
+{"fn": "get_msg_button", "args": ["a:b:ctrailing."], "ok": {"$tuple": ["a:b:ctrailing.", []]}}
+{"fn": "get_msg_button", "args": ["a.b.cline1\nline2"], "ok": {"$tuple": ["a.b.cline1\nline2", []]}}
+{"fn": "get_msg_button", "args": ["tab\tseparatedünïcödé"], "ok": {"$tuple": ["tab\tseparatedünïcödé", []]}}
+{"fn": "get_msg_button", "args": ["HELLO﻿bom"], "ok": {"$tuple": ["HELLO﻿bom", []]}}
+{"fn": "get_msg_button", "args": ["ünïcödéünïcödé"], "ok": {"$tuple": ["ünïcödéünïcödé", []]}}
+{"fn": "get_msg_button", "args": ["abctab\tseparated"], "ok": {"$tuple": ["abctab\tseparated", []]}}
+{"fn": "get_msg_button", "args": ["hello worlda"], "ok": {"$tuple": ["hello worlda", []]}}
+{"fn": "get_msg_button", "args": ["a:"], "ok": {"$tuple": ["a:", []]}}
+{"fn": "get_msg_button", "args": ["ab:"], "ok": {"$tuple": ["ab:", []]}}
+{"fn": "get_msg_button", "args": ["aba😀b😀c"], "ok": {"$tuple": ["aba😀b😀c", []]}}
+{"fn": "get_msg_button", "args": ["a.b.cünïcödé"], "ok": {"$tuple": ["a.b.cünïcödé", []]}}
+{"fn": "get_msg_button", "args": ["straßeline1\nline2"], "ok": {"$tuple": ["straßeline1\nline2", []]}}
+{"fn": "get_msg_button", "args": ["étrailing."], "ok": {"$tuple": ["étrailing.", []]}}
+{"fn": "get_msg_button", "args": ["ns:key.pathemoji 👍🏽 mix"], "ok": {"$tuple": ["ns:key.pathemoji 👍🏽 mix", []]}}
+{"fn": "get_msg_button", "args": ["helloa..b"], "ok": {"$tuple": ["helloa..b", []]}}
+{"fn": "get_msg_button", "args": ["trailing.İstanbul"], "ok": {"$tuple": ["trailing.İstanbul", []]}}
+{"fn": "get_msg_button", "args": ["a..bemoji 👍🏽 mix"], "ok": {"$tuple": ["a..bemoji 👍🏽 mix", []]}}
+{"fn": "get_msg_button", "args": [".leading./x/**/*.json"], "ok": {"$tuple": [".leading./x/**/*.json", []]}}
+{"fn": "get_msg_button", "args": ["é./x/**/*.json"], "ok": {"$tuple": ["é./x/**/*.json", []]}}
+{"fn": "get_msg_button", "args": ["emoji 👍🏽 mixa..b"], "ok": {"$tuple": ["emoji 👍🏽 mixa..b", []]}}
+{"fn": "get_msg_button", "args": ["aab"], "ok": {"$tuple": ["aab", []]}}
+{"fn": "get_msg_button", "args": ["a..bkey_name-1"], "ok": {"$tuple": ["a..bkey_name-1", []]}}
+{"fn": "get_msg_button", "args": ["emoji 👍🏽 mixhello"], "ok": {"$tuple": ["emoji 👍🏽 mixhello", []]}}
+{"fn": "get_msg_button", "args": ["a..bhello"], "ok": {"$tuple": ["a..bhello", []]}}
+{"fn": "get_msg_button", "args": ["﻿bom  padded  "], "ok": {"$tuple": ["﻿bom  padded", []]}}
+{"fn": "get_msg_button", "args": ["./x/**/*.jsona"], "ok": {"$tuple": ["./x/**/*.jsona", []]}}
+{"fn": "get_msg_button", "args": ["helloemoji 👍🏽 mix"], "ok": {"$tuple": ["helloemoji 👍🏽 mix", []]}}
+{"fn": "get_msg_button", "args": ["src/a/b.tsstraße"], "ok": {"$tuple": ["src/a/b.tsstraße", []]}}
+{"fn": "get_msg_button", "args": ["src/a/b.tsabc"], "ok": {"$tuple": ["src/a/b.tsabc", []]}}
+{"fn": "get_msg_button", "args": ["straßeé"], "ok": {"$tuple": ["straßeé", []]}}
+{"fn": "get_msg_button", "args": ["{name} has {count} itemskey_name-1"], "ok": {"$tuple": ["{name} has {count} itemskey_name-1", []]}}
+{"fn": "get_msg_button", "args": ["abcab"], "ok": {"$tuple": ["abcab", []]}}
+{"fn": "get_msg_button", "args": ["line1\nline2a😀b😀c"], "ok": {"$tuple": ["line1\nline2a😀b😀c", []]}}
+{"fn": "get_msg_button", "args": ["日本語のテキスト  padded  "], "ok": {"$tuple": ["日本語のテキスト  padded", []]}}
+{"fn": "get_msg_button", "args": ["line1\nline2Hello World"], "ok": {"$tuple": ["line1\nline2Hello World", []]}}
+{"fn": "get_msg_button", "args": ["{name} has {count} itemsa:b:c"], "ok": {"$tuple": ["{name} has {count} itemsa:b:c", []]}}
+{"fn": "get_msg_button", "args": ["  padded  :"], "ok": {"$tuple": ["padded  :", []]}}
+{"fn": "get_msg_button", "args": ["line1\nline2日本語のテキスト"], "ok": {"$tuple": ["line1\nline2日本語のテキスト", []]}}
+{"fn": "get_msg_button", "args": ["日本語のテキストΣΊΣΥΦΟΣ"], "ok": {"$tuple": ["日本語のテキストΣΊΣΥΦΟΣ", []]}}
+{"fn": "get_msg_button", "args": ["key_name-1src/a/b.ts"], "ok": {"$tuple": ["key_name-1src/a/b.ts", []]}}
+{"fn": "get_msg_button", "args": ["HELLOns:key.path"], "ok": {"$tuple": ["HELLOns:key.path", []]}}
+{"fn": "get_msg_button", "args": ["src/a/b.tsHello World"], "ok": {"$tuple": ["src/a/b.tsHello World", []]}}
+{"fn": "get_msg_button", "args": ["key_name-1hello"], "ok": {"$tuple": ["key_name-1hello", []]}}
+{"fn": "get_msg_button", "args": ["İstanbul.leading"], "ok": {"$tuple": ["İstanbul.leading", []]}}
+{"fn": "get_msg_button", "args": ["tab\tseparateda.b.c"], "ok": {"$tuple": ["tab\tseparateda.b.c", []]}}
+{"fn": "get_msg_button", "args": ["{name} has {count} itemsa..b"], "ok": {"$tuple": ["{name} has {count} itemsa..b", []]}}
+{"fn": "get_msg_button", "args": ["aünïcödé"], "ok": {"$tuple": ["aünïcödé", []]}}
+{"fn": "get_msg_button", "args": ["﻿bom日本語のテキスト"], "ok": {"$tuple": ["﻿bom日本語のテキスト", []]}}
+{"fn": "get_msg_button", "args": ["a😀b😀cΣΊΣΥΦΟΣ"], "ok": {"$tuple": ["a😀b😀cΣΊΣΥΦΟΣ", []]}}
+{"fn": "get_msg_button", "args": ["aa:b:c"], "ok": {"$tuple": ["aa:b:c", []]}}
+{"fn": "get_msg_button", "args": ["abc😀"], "ok": {"$tuple": ["abc😀", []]}}
+{"fn": "get_msg_button", "args": ["hellotab\tseparated"], "ok": {"$tuple": ["hellotab\tseparated", []]}}
+{"fn": "get_msg_button", "args": ["a:b:ca😀b😀c"], "ok": {"$tuple": ["a:b:ca😀b😀c", []]}}
+{"fn": "get_msg_button", "args": ["ahello world"], "ok": {"$tuple": ["ahello world", []]}}
+{"fn": "get_msg_button", "args": ["helloünïcödé"], "ok": {"$tuple": ["helloünïcödé", []]}}
+{"fn": "get_msg_button", "args": ["::"], "ok": {"$tuple": ["::", []]}}
+{"fn": "get_msg_button", "args": ["ns:key.path﻿bom"], "ok": {"$tuple": ["ns:key.path﻿bom", []]}}
+{"fn": "get_msg_button", "args": ["tab\tseparatedΣΊΣΥΦΟΣ"], "ok": {"$tuple": ["tab\tseparatedΣΊΣΥΦΟΣ", []]}}
+{"fn": "get_msg_button", "args": ["a😀b😀c{name} has {count} items"], "ok": {"$tuple": ["a😀b😀c{name} has {count} items", []]}}
+{"fn": "get_msg_button", "args": ["  padded  é"], "ok": {"$tuple": ["padded  é", []]}}
+{"fn": "get_msg_button", "args": ["a😀b😀ca😀b😀c"], "ok": {"$tuple": ["a😀b😀ca😀b😀c", []]}}
+{"fn": "get_msg_button", "args": ["İstanbula"], "ok": {"$tuple": ["İstanbula", []]}}
+{"fn": "get_msg_button", "args": ["ünïcödé:"], "ok": {"$tuple": ["ünïcödé:", []]}}
+{"fn": "get_msg_button", "args": ["key_name-1line1\nline2"], "ok": {"$tuple": ["key_name-1line1\nline2", []]}}
+{"fn": "get_msg_button", "args": ["a😀b😀c😀"], "ok": {"$tuple": ["a😀b😀c😀", []]}}
+{"fn": "get_msg_button", "args": ["İstanbulünïcödé"], "ok": {"$tuple": ["İstanbulünïcödé", []]}}
+{"fn": "get_msg_button", "args": ["{name} has {count} items{name} has {count} items"], "ok": {"$tuple": ["{name} has {count} items{name} has {count} items", []]}}
+{"fn": "get_msg_button", "args": ["a.b.ca😀b😀c"], "ok": {"$tuple": ["a.b.ca😀b😀c", []]}}
+{"fn": "get_msg_button", "args": ["trailing.hello"], "ok": {"$tuple": ["trailing.hello", []]}}
+{"fn": "get_msg_button", "args": ["tab\tseparated  padded  "], "ok": {"$tuple": ["tab\tseparated  padded", []]}}
+{"fn": "get_msg_button", "args": ["./x/**/*.jsonsrc/a/b.ts"], "ok": {"$tuple": ["./x/**/*.jsonsrc/a/b.ts", []]}}
+{"fn": "get_msg_button", "args": ["é  padded  "], "ok": {"$tuple": ["é  padded", []]}}
+{"fn": "get_msg_button", "args": ["a😀b😀cünïcödé"], "ok": {"$tuple": ["a😀b😀cünïcödé", []]}}
+{"fn": "get_msg_button", "args": ["éa"], "ok": {"$tuple": ["éa", []]}}
+{"fn": "get_msg_button", "args": ["ns:key.pathΣΊΣΥΦΟΣ"], "ok": {"$tuple": ["ns:key.pathΣΊΣΥΦΟΣ", []]}}
+{"fn": "get_msg_button", "args": ["abctrailing."], "ok": {"$tuple": ["abctrailing.", []]}}
+{"fn": "get_msg_button", "args": ["ns:key.path日本語のテキスト"], "ok": {"$tuple": ["ns:key.path日本語のテキスト", []]}}
+{"fn": "get_msg_button", "args": ["trailing.é"], "ok": {"$tuple": ["trailing.é", []]}}
+{"fn": "get_msg_button", "args": ["a.b.ca.b.c"], "ok": {"$tuple": ["a.b.ca.b.c", []]}}
+{"fn": "get_msg_button", "args": ["atrailing."], "ok": {"$tuple": ["atrailing.", []]}}
+{"fn": "get_msg_button", "args": ["a😀b😀cline1\nline2"], "ok": {"$tuple": ["a😀b😀cline1\nline2", []]}}
+{"fn": "get_msg_button", "args": ["hellohello"], "ok": {"$tuple": ["hellohello", []]}}
+{"fn": "get_msg_button", "args": [":tab\tseparated"], "ok": {"$tuple": [":tab\tseparated", []]}}
+{"fn": "get_msg_button", "args": ["key_name-1a.b.c"], "ok": {"$tuple": ["key_name-1a.b.c", []]}}
+{"fn": "get_msg_button", "args": ["trailing.a😀b😀c"], "ok": {"$tuple": ["trailing.a😀b😀c", []]}}
+{"fn": "get_msg_button", "args": ["src/a/b.tsünïcödé"], "ok": {"$tuple": ["src/a/b.tsünïcödé", []]}}
+{"fn": "get_msg_button", "args": ["ünïcödéİstanbul"], "ok": {"$tuple": ["ünïcödéİstanbul", []]}}
+{"fn": "get_msg_button", "args": ["ünïcödé😀"], "ok": {"$tuple": ["ünïcödé😀", []]}}
+{"fn": "get_msg_button", "args": ["abé"], "ok": {"$tuple": ["abé", []]}}
+{"fn": "get_msg_button", "args": ["trailing.a..b"], "ok": {"$tuple": ["trailing.a..b", []]}}
+{"fn": "get_msg_button", "args": ["key_name-1日本語のテキスト"], "ok": {"$tuple": ["key_name-1日本語のテキスト", []]}}
+{"fn": "get_msg_button", "args": ["ΣΊΣΥΦΟΣHELLO"], "ok": {"$tuple": ["ΣΊΣΥΦΟΣHELLO", []]}}
+{"fn": "get_msg_button", "args": ["aemoji 👍🏽 mix"], "ok": {"$tuple": ["aemoji 👍🏽 mix", []]}}
+{"fn": "get_msg_button", "args": ["a😀b😀c  padded  "], "ok": {"$tuple": ["a😀b😀c  padded", []]}}
+{"fn": "get_msg_button", "args": ["{name} has {count} itemshello"], "ok": {"$tuple": ["{name} has {count} itemshello", []]}}
+{"fn": "get_msg_button", "args": ["abcİstanbul"], "ok": {"$tuple": ["abcİstanbul", []]}}
+{"fn": "get_msg_button", "args": ["abHELLO"], "ok": {"$tuple": ["abHELLO", []]}}
+{"fn": "get_msg_button", "args": ["😀ünïcödé"], "ok": {"$tuple": ["😀ünïcödé", []]}}
+{"fn": "get_msg_button", "args": ["ns:key.path  padded  "], "ok": {"$tuple": ["ns:key.path  padded", []]}}
+{"fn": "get_msg_button", "args": ["line1\nline2﻿bom"], "ok": {"$tuple": ["line1\nline2﻿bom", []]}}
+{"fn": "get_msg_button", "args": ["a:b:cé"], "ok": {"$tuple": ["a:b:cé", []]}}
+{"fn": "get_msg_button", "args": ["src/a/b.ts.leading"], "ok": {"$tuple": ["src/a/b.ts.leading", []]}}
+{"fn": "get_msg_button", "args": ["  padded  a..b"], "ok": {"$tuple": ["padded  a..b", []]}}
+{"fn": "get_msg_button", "args": ["  padded  line1\nline2"], "ok": {"$tuple": ["padded  line1\nline2", []]}}
+{"fn": "get_msg_button", "args": [".leadinga..b"], "ok": {"$tuple": [".leadinga..b", []]}}
+{"fn": "get_msg_button", "args": ["a..bstraße"], "ok": {"$tuple": ["a..bstraße", []]}}
+{"fn": "get_msg_button", "args": ["日本語のテキストabc"], "ok": {"$tuple": ["日本語のテキストabc", []]}}
+{"fn": "get_msg_button", "args": ["abc.leading"], "ok": {"$tuple": ["abc.leading", []]}}
+{"fn": "get_msg_button", "args": ["{name} has {count} itemsns:key.path"], "ok": {"$tuple": ["{name} has {count} itemsns:key.path", []]}}
+{"fn": "get_msg_button", "args": ["./x/**/*.jsonhello"], "ok": {"$tuple": ["./x/**/*.jsonhello", []]}}
+{"fn": "get_msg_button", "args": ["a😀b😀c.leading"], "ok": {"$tuple": ["a😀b😀c.leading", []]}}
+{"fn": "get_msg_button", "args": ["./x/**/*.jsonline1\nline2"], "ok": {"$tuple": ["./x/**/*.jsonline1\nline2", []]}}
+{"fn": "get_msg_button", "args": ["straßea.b.c"], "ok": {"$tuple": ["straßea.b.c", []]}}
+{"fn": "get_msg_button", "args": ["İstanbulabc"], "ok": {"$tuple": ["İstanbulabc", []]}}
+{"fn": "get_msg_button", "args": ["ΣΊΣΥΦΟΣ﻿bom"], "ok": {"$tuple": ["ΣΊΣΥΦΟΣ﻿bom", []]}}
+{"fn": "get_msg_button", "args": ["﻿bomtab\tseparated"], "ok": {"$tuple": ["﻿bomtab\tseparated", []]}}
+{"fn": "get_msg_button", "args": ["a😀b😀ckey_name-1"], "ok": {"$tuple": ["a😀b😀ckey_name-1", []]}}
+{"fn": "get_msg_button", "args": ["İstanbultab\tseparated"], "ok": {"$tuple": ["İstanbultab\tseparated", []]}}
+{"fn": "get_msg_button", "args": ["HELLO  padded  "], "ok": {"$tuple": ["HELLO  padded", []]}}
+{"fn": "get_msg_button", "args": ["İstanbul😀"], "ok": {"$tuple": ["İstanbul😀", []]}}
+{"fn": "get_msg_button", "args": ["éstraße"], "ok": {"$tuple": ["éstraße", []]}}
+{"fn": "get_msg_button", "args": [":😀"], "ok": {"$tuple": [":😀", []]}}
+{"fn": "get_msg_button", "args": ["Hello Worldtrailing."], "ok": {"$tuple": ["Hello Worldtrailing.", []]}}
+{"fn": "get_msg_button", "args": ["İstanbul./x/**/*.json"], "ok": {"$tuple": ["İstanbul./x/**/*.json", []]}}
+{"fn": "get_msg_button", "args": ["ünïcödétrailing."], "ok": {"$tuple": ["ünïcödétrailing.", []]}}
+{"fn": "get_msg_button", "args": ["abemoji 👍🏽 mix"], "ok": {"$tuple": ["abemoji 👍🏽 mix", []]}}
+{"fn": "get_msg_button", "args": ["a:b:chello"], "ok": {"$tuple": ["a:b:chello", []]}}
+{"fn": "get_msg_button", "args": ["aHello World"], "ok": {"$tuple": ["aHello World", []]}}
+{"fn": "get_msg_button", "args": ["a😀b😀cé"], "ok": {"$tuple": ["a😀b😀cé", []]}}
+{"fn": "get_msg_button", "args": ["emoji 👍🏽 mixa"], "ok": {"$tuple": ["emoji 👍🏽 mixa", []]}}
+{"fn": "get_msg_button", "args": ["😀./x/**/*.json"], "ok": {"$tuple": ["😀./x/**/*.json", []]}}
+{"fn": "get_msg_button", "args": ["  padded  ab"], "ok": {"$tuple": ["padded  ab", []]}}
+{"fn": "get_msg_button", "args": [".leadinga:b:c"], "ok": {"$tuple": [".leadinga:b:c", []]}}
+{"fn": "get_msg_button", "args": ["😀ab"], "ok": {"$tuple": ["😀ab", []]}}
+{"fn": "get_msg_button", "args": ["abab"], "ok": {"$tuple": ["abab", []]}}
+{"fn": "get_msg_button", "args": ["😀a😀b😀c"], "ok": {"$tuple": ["😀a😀b😀c", []]}}
+{"fn": "get_msg_button", "args": ["a😀b😀cstraße"], "ok": {"$tuple": ["a😀b😀cstraße", []]}}
+{"fn": "get_msg_button", "args": ["héllo wörld"], "ok": {"$tuple": ["héllo wörld", []]}}
+{"fn": "get_msg_button", "args": ["👍🏽 thumbs"], "ok": {"$tuple": ["👍🏽 thumbs", []]}}
+{"fn": "get_msg_button", "args": ["日本語"], "ok": {"$tuple": ["日本語", []]}}
+{"fn": "get_msg_button", "args": ["ılık ırmak"], "ok": {"$tuple": ["ılık ırmak", []]}}
+{"fn": "get_msg_button", "args": ["👨‍👩‍👧 family"], "ok": {"$tuple": ["👨‍👩‍👧 family", []]}}
+{"fn": "get_msg_button", "args": ["a b"], "ok": {"$tuple": ["a b", []]}}
+{"fn": "get_msg_button", "args": ["a😀b"], "ok": {"$tuple": ["a😀b", []]}}
+{"fn": "get_msg_button", "args": ["a²b x½ y①"], "ok": {"$tuple": ["a²b x½ y①", []]}}
+{"fn": "get_msg_button", "args": ["aⅠb Ⅻ"], "ok": {"$tuple": ["aⅠb Ⅻ", []]}}
+{"fn": "get_msg_button", "args": ["a𐐀b 𝐀bc"], "ok": {"$tuple": ["a𐐀b 𝐀bc", []]}}
+{"fn": "get_msg_button", "args": ["कि ٣٤"], "ok": {"$tuple": ["कि ٣٤", []]}}
+{"fn": "text_set", "args": [0], "error": "TypeError: object of type 'int' has no len()"}
+{"fn": "text_set", "args": [["a", 1]], "ok": [["a", 1]]}
+{"fn": "text_set", "args": [{}], "ok": [{}]}
+{"fn": "text_set", "args": [{"a": "b"}], "ok": [{"a": "b"}]}
+{"fn": "text_set", "args": [[]], "ok": [[]]}
+{"fn": "text_set", "args": ["x"], "ok": ["x"]}
+{"fn": "text_set", "args": [null], "error": "TypeError: object of type 'NoneType' has no len()"}
+{"fn": "text_set", "args": [true], "error": "TypeError: object of type 'bool' has no len()"}
+{"fn": "text_set", "args": [{"a": {"b": "c"}}], "ok": [{"a": {"b": "c"}}]}
+{"fn": "text_set", "args": [{"zebra": 1, "apple": 2, "10": 3, "2": 4, "é": 5, "Apple": 6}], "ok": [{"zebra": 1, "apple": 2, "10": 3, "2": 4, "é": 5, "Apple": 6}]}
+{"fn": "text_set", "args": [{"n": 9007199254740993, "f": 1e+21, "t": 0.1, "neg": -7}], "ok": [{"n": {"$int": "9007199254740993"}, "f": {"$float": "1e+21"}, "t": 0.1, "neg": -7}]}
+{"fn": "text_set", "args": [[3, 1, 2]], "ok": [[3, 1, 2]]}
+{"fn": "stdr", "args": [42.0], "ok": "00:00:42.0"}
+{"fn": "stdr", "args": [-1.0], "ok": "-1.0:59.0:59.0"}
+{"fn": "stdr", "args": [1.0], "ok": "00:00:1.0"}
+{"fn": "stdr", "args": [3], "ok": "00:00:03"}
+{"fn": "stdr", "args": [0.5], "ok": "00:00:0.5"}
+{"fn": "stdr", "args": [10.0], "ok": "00:00:10.0"}
+{"fn": "stdr", "args": [9007199254740992.0], "ok": "2501999792983.0:36.0:32.0"}
+{"fn": "stdr", "args": [1000000], "ok": "277:46:40"}
+{"fn": "stdr", "args": [{"$num": "NaN"}], "ok": "nan:nan:nan"}
+{"fn": "stdr", "args": [{"$num": "Infinity"}], "ok": "nan:nan:nan"}
+{"fn": "stdr", "args": [2147483648.0], "ok": "596523.0:14.0:8.0"}
+{"fn": "stdr", "args": [2], "ok": "00:00:02"}
+{"fn": "stdr", "args": [{"$num": "-Infinity"}], "ok": "nan:nan:nan"}
+{"fn": "stdr", "args": [100.0], "ok": "00:1.0:40.0"}
+{"fn": "stdr", "args": [{"$num": "-0"}], "ok": "00:00:"}
+{"fn": "stdr", "args": [-2.5], "ok": "-1.0:59.0:57.5"}
+{"fn": "stdr", "args": [1000.0], "ok": "00:16.0:40.0"}
+{"fn": "stdr", "args": [0.0], "ok": "00:00:"}
+{"fn": "stdr", "args": [-7.5], "ok": "-1.0:59.0:52.5"}
+{"fn": "stdr", "args": [0.1], "ok": "00:00:0.1"}
+{"fn": "stdr", "args": [0.30000000000000004], "ok": "00:00:0.30000000000000004"}
+{"fn": "stdr", "args": [1e+21], "ok": "2.7777777777777776e+17:24.0:40.0"}
+{"fn": "stdr", "args": [1e-07], "ok": "00:00:1e-07"}
+{"fn": "stdr", "args": [5e-324], "ok": "00:00:5e-324"}
+{"fn": "stdr", "args": [1.7976931348623157e+308], "ok": "4.993592041284211e+304:56.0:8.0"}
+{"fn": "cmd_regex_replace", "args": [true], "error": "AttributeError: 'bool' object has no attribute 'replace'"}
+{"fn": "cmd_regex_replace", "args": ["x"], "ok": "x"}
+{"fn": "cmd_regex_replace", "args": [{"a": {"b": "c"}}], "error": "AttributeError: 'dict' object has no attribute 'replace'"}
+{"fn": "cmd_regex_replace", "args": [null], "error": "AttributeError: 'NoneType' object has no attribute 'replace'"}
+{"fn": "cmd_regex_replace", "args": [[]], "error": "AttributeError: 'list' object has no attribute 'replace'"}
+{"fn": "cmd_regex_replace", "args": [0], "error": "AttributeError: 'int' object has no attribute 'replace'"}
+{"fn": "cmd_regex_replace", "args": [["a", 1]], "error": "AttributeError: 'list' object has no attribute 'replace'"}
+{"fn": "cmd_regex_replace", "args": [{}], "error": "AttributeError: 'dict' object has no attribute 'replace'"}
+{"fn": "cmd_regex_replace", "args": [{"a": "b"}], "error": "AttributeError: 'dict' object has no attribute 'replace'"}
+{"fn": "cmd_regex_replace", "args": [{"zebra": 1, "apple": 2, "10": 3, "2": 4, "é": 5, "Apple": 6}], "error": "AttributeError: 'dict' object has no attribute 'replace'"}
+{"fn": "cmd_regex_replace", "args": [{"n": 9007199254740993, "f": 1e+21, "t": 0.1, "neg": -7}], "error": "AttributeError: 'dict' object has no attribute 'replace'"}
+{"fn": "cmd_regex_replace", "args": [[3, 1, 2]], "error": "AttributeError: 'list' object has no attribute 'replace'"}
+{"fn": "get_chat_and_msgid", "args": [["a", 1]], "error": "TypeError: expected string or bytes-like object, got 'list'"}
+{"fn": "get_chat_and_msgid", "args": [{}], "error": "TypeError: expected string or bytes-like object, got 'dict'"}
+{"fn": "get_chat_and_msgid", "args": [{"a": {"b": "c"}}], "error": "TypeError: expected string or bytes-like object, got 'dict'"}
+{"fn": "get_chat_and_msgid", "args": ["x"], "ok": {"$tuple": [null, null]}}
+{"fn": "get_chat_and_msgid", "args": [null], "error": "TypeError: expected string or bytes-like object, got 'NoneType'"}
+{"fn": "get_chat_and_msgid", "args": [0], "error": "TypeError: expected string or bytes-like object, got 'int'"}
+{"fn": "get_chat_and_msgid", "args": [true], "error": "TypeError: expected string or bytes-like object, got 'bool'"}
+{"fn": "get_chat_and_msgid", "args": [[]], "error": "TypeError: expected string or bytes-like object, got 'list'"}
+{"fn": "get_chat_and_msgid", "args": [{"a": "b"}], "error": "TypeError: expected string or bytes-like object, got 'dict'"}
+{"fn": "get_chat_and_msgid", "args": [{"zebra": 1, "apple": 2, "10": 3, "2": 4, "é": 5, "Apple": 6}], "error": "TypeError: expected string or bytes-like object, got 'dict'"}
+{"fn": "get_chat_and_msgid", "args": [{"n": 9007199254740993, "f": 1e+21, "t": 0.1, "neg": -7}], "error": "TypeError: expected string or bytes-like object, got 'dict'"}
+{"fn": "get_chat_and_msgid", "args": [[3, 1, 2]], "error": "TypeError: expected string or bytes-like object, got 'list'"}
+{"fn": "cmd_regex_replace", "args": ["akinator"], "ok": "akinator"}
+{"fn": "cmd_regex_replace", "args": ["d(kick|ban)"], "ok": "dkick|ban"}
+{"fn": "cmd_regex_replace", "args": ["help( (.*)|$)"], "ok": "help"}
+{"fn": "cmd_regex_replace", "args": ["repo$"], "ok": "repo"}
+{"fn": "cmd_regex_replace", "args": ["ultroid$"], "ok": "ultroid"}
+{"fn": "cmd_regex_replace", "args": ["wspr( (.*)|$)"], "ok": "wspr"}
+{"fn": "cmd_regex_replace", "args": ["promote( (.*)|$)"], "ok": "promote"}
+{"fn": "cmd_regex_replace", "args": ["demote( (.*)|$)"], "ok": "demote"}
+{"fn": "cmd_regex_replace", "args": ["ban( (.*)|$)"], "ok": "ban"}
+{"fn": "cmd_regex_replace", "args": ["unban( (.*)|$)"], "ok": "unban"}
+{"fn": "cmd_regex_replace", "args": ["kick( (.*)|$)"], "ok": "kick"}
+{"fn": "cmd_regex_replace", "args": ["tban( (.*)|$)"], "ok": "tban"}
+{"fn": "cmd_regex_replace", "args": ["pin$"], "ok": "pin"}
+{"fn": "cmd_regex_replace", "args": ["unpin($| (.*))"], "ok": "unpin"}
+{"fn": "cmd_regex_replace", "args": ["tpin( (.*)|$)"], "ok": "tpin"}
+{"fn": "cmd_regex_replace", "args": ["purge( (.*)|$)"], "ok": "purge"}
+{"fn": "cmd_regex_replace", "args": ["purgeme( (.*)|$)"], "ok": "purgeme"}
+{"fn": "cmd_regex_replace", "args": ["purgeall$"], "ok": "purgeall"}
+{"fn": "cmd_regex_replace", "args": ["pinned"], "ok": "pinned"}
+{"fn": "cmd_regex_replace", "args": ["listpinned$"], "ok": "listpinned"}
+{"fn": "cmd_regex_replace", "args": ["autodelete( (.*)|$)"], "ok": "autodelete"}
+{"fn": "cmd_regex_replace", "args": ["kickall( (.*)|$)"], "ok": "kickall"}
+{"fn": "cmd_regex_replace", "args": ["afk( (.*)|$)"], "ok": "afk"}
+{"fn": "cmd_regex_replace", "args": ["gemini( (.*)|$)"], "ok": "gemini"}
+{"fn": "cmd_regex_replace", "args": ["antr( (.*)|$)"], "ok": "antr"}
+{"fn": "cmd_regex_replace", "args": ["gpt( (.*)|$)"], "ok": "gpt"}
+{"fn": "cmd_regex_replace", "args": ["deepseek( (.*)|$)"], "ok": "deepseek"}
+{"fn": "cmd_regex_replace", "args": ["setflood ?(\\d+)"], "ok": "setflood ?\\d+"}
+{"fn": "cmd_regex_replace", "args": ["remflood$"], "ok": "remflood"}
+{"fn": "cmd_regex_replace", "args": ["getflood$"], "ok": "getflood"}
+{"fn": "cmd_regex_replace", "args": ["addcmd( (.*)|$)"], "ok": "addcmd"}
+{"fn": "cmd_regex_replace", "args": ["remcmd( (.*)|$)"], "ok": "remcmd"}
+{"fn": "cmd_regex_replace", "args": ["listcmd$"], "ok": "listcmd"}
+{"fn": "cmd_regex_replace", "args": ["makevoice$"], "ok": "makevoice"}
+{"fn": "cmd_regex_replace", "args": ["atrim( (.*)|$)"], "ok": "atrim"}
+{"fn": "cmd_regex_replace", "args": ["extractaudio$"], "ok": "extractaudio"}
+{"fn": "cmd_regex_replace", "args": ["autokick (on|off)$"], "ok": "autokick on|off"}
+{"fn": "cmd_regex_replace", "args": ["autopic( (.*)|$)"], "ok": "autopic"}
+{"fn": "cmd_regex_replace", "args": ["(rc|c)arbon"], "ok": "rc|carbon"}
+{"fn": "cmd_regex_replace", "args": ["ccarbon( (.*)|$)"], "ok": "ccarbon"}
+{"fn": "cmd_regex_replace", "args": ["rayso"], "ok": "rayso"}
+{"fn": "cmd_regex_replace", "args": ["blacklist( (.*)|$)"], "ok": "blacklist"}
+{"fn": "cmd_regex_replace", "args": ["remblacklist( (.*)|$)"], "ok": "remblacklist"}
+{"fn": "cmd_regex_replace", "args": ["listblacklist$"], "ok": "listblacklist"}
+{"fn": "cmd_regex_replace", "args": ["alive( (.*)|$)"], "ok": "alive"}
+{"fn": "cmd_regex_replace", "args": ["ping$"], "ok": "ping"}
+{"fn": "cmd_regex_replace", "args": ["cmds$"], "ok": "cmds"}
+{"fn": "cmd_regex_replace", "args": ["restart$"], "ok": "restart"}
+{"fn": "cmd_regex_replace", "args": ["shutdown$"], "ok": "shutdown"}
+{"fn": "cmd_regex_replace", "args": ["logs( (.*)|$)"], "ok": "logs"}
+{"fn": "cmd_regex_replace", "args": ["update( (.*)|$)"], "ok": "update"}
+{"fn": "cmd_regex_replace", "args": ["addblacklist( (.*)|$)"], "ok": "addblacklist"}
+{"fn": "cmd_regex_replace", "args": ["addch( (.*)|$)"], "ok": "addch"}
+{"fn": "cmd_regex_replace", "args": ["remch( (.*)|$)"], "ok": "remch"}
+{"fn": "cmd_regex_replace", "args": ["listchannels$"], "ok": "listchannels"}
+{"fn": "cmd_regex_replace", "args": ["forward$"], "ok": "forward"}
+{"fn": "cmd_regex_replace", "args": ["broadcast( (.*)|$)"], "ok": "broadcast"}
+{"fn": "cmd_regex_replace", "args": ["button"], "ok": "button"}
+{"fn": "cmd_regex_replace", "args": ["calc"], "ok": "calc"}
+{"fn": "cmd_regex_replace", "args": ["shift (.*)"], "ok": "shift "}
+{"fn": "cmd_regex_replace", "args": ["asource (.*)"], "ok": "asource "}
+{"fn": "cmd_regex_replace", "args": ["dsource( (.*)|$)"], "ok": "dsource"}
+{"fn": "cmd_regex_replace", "args": ["listsource"], "ok": "listsource"}
+{"fn": "cmd_regex_replace", "args": ["adest (.*)"], "ok": "adest "}
+{"fn": "cmd_regex_replace", "args": ["ddest( (.*)|$)"], "ok": "ddest"}
+{"fn": "cmd_regex_replace", "args": ["listdest"], "ok": "listdest"}
+{"fn": "cmd_regex_replace", "args": ["repai"], "ok": "repai"}
+{"fn": "cmd_regex_replace", "args": ["addai"], "ok": "addai"}
+{"fn": "cmd_regex_replace", "args": ["remai"], "ok": "remai"}
+{"fn": "cmd_regex_replace", "args": ["listai"], "ok": "listai"}
+{"fn": "cmd_regex_replace", "args": ["delchat"], "ok": "delchat"}
+{"fn": "cmd_regex_replace", "args": ["getlink( (.*)|$)"], "ok": "getlink"}
+{"fn": "cmd_regex_replace", "args": ["create (b|g|c)(?: |$)(.*)"], "ok": "create b|g|c"}
+{"fn": "cmd_regex_replace", "args": ["setgpic( (.*)|$)"], "ok": "setgpic"}
+{"fn": "cmd_regex_replace", "args": ["delgpic( (.*)|$)"], "ok": "delgpic"}
+{"fn": "cmd_regex_replace", "args": ["unbanall$"], "ok": "unbanall"}
+{"fn": "cmd_regex_replace", "args": ["rmusers( (.*)|$)"], "ok": "rmusers"}
+{"fn": "cmd_regex_replace", "args": ["addclean$"], "ok": "addclean"}
+{"fn": "cmd_regex_replace", "args": ["remclean$"], "ok": "remclean"}
+{"fn": "cmd_regex_replace", "args": ["listclean$"], "ok": "listclean"}
+{"fn": "cmd_regex_replace", "args": ["compress( (.*)|$)"], "ok": "compress"}
+{"fn": "cmd_regex_replace", "args": ["thumbnail$"], "ok": "thumbnail"}
+{"fn": "cmd_regex_replace", "args": ["rename( (.*)|$)"], "ok": "rename"}
+{"fn": "cmd_regex_replace", "args": ["convert( (.*)|$)"], "ok": "convert"}
+{"fn": "cmd_regex_replace", "args": ["doc( (.*)|$)"], "ok": "doc"}
+{"fn": "cmd_regex_replace", "args": ["open( (.*)|$)"], "ok": "open"}
+{"fn": "cmd_regex_replace", "args": ["install"], "ok": "install"}
+{"fn": "cmd_regex_replace", "args": ["unload( (.*)|$)"], "ok": "unload"}
+{"fn": "cmd_regex_replace", "args": ["uninstall( (.*)|$)"], "ok": "uninstall"}
+{"fn": "cmd_regex_replace", "args": ["load( (.*)|$)"], "ok": "load"}
+{"fn": "cmd_regex_replace", "args": ["getaddons( (.*)|$)"], "ok": "getaddons"}
+{"fn": "cmd_regex_replace", "args": ["setdb( (.*)|$)"], "ok": "setdb"}
+{"fn": "cmd_regex_replace", "args": ["deldb( (.*)|$)"], "ok": "deldb"}
+{"fn": "cmd_regex_replace", "args": ["rendb( (.*)|$)"], "ok": "rendb"}
+{"fn": "cmd_regex_replace", "args": ["delayspam( (.*)|$)"], "ok": "delayspam"}
+{"fn": "cmd_regex_replace", "args": ["stopspam$"], "ok": "stopspam"}
+{"fn": "cmd_regex_replace", "args": ["sysinfo$"], "ok": "sysinfo"}
+{"fn": "cmd_regex_replace", "args": ["bash"], "ok": "bash"}
+{"fn": "cmd_regex_replace", "args": ["eval"], "ok": "eval"}
+{"fn": "cmd_regex_replace", "args": ["cpp"], "ok": "cpp"}
+{"fn": "cmd_regex_replace", "args": ["download( (.*)|$)"], "ok": "download"}
+{"fn": "cmd_regex_replace", "args": ["dl( (.*)|$)"], "ok": "dl"}
+{"fn": "cmd_regex_replace", "args": ["ul( (.*)|$)"], "ok": "ul"}
+{"fn": "cmd_regex_replace", "args": ["addecho( (.*)|$)"], "ok": "addecho"}
+{"fn": "cmd_regex_replace", "args": ["remecho( (.*)|$)"], "ok": "remecho"}
+{"fn": "cmd_regex_replace", "args": ["listecho$"], "ok": "listecho"}
+{"fn": "cmd_regex_replace", "args": ["del$"], "ok": "del"}
+{"fn": "cmd_regex_replace", "args": ["copy$"], "ok": "copy"}
+{"fn": "cmd_regex_replace", "args": ["edit"], "ok": "edit"}
+{"fn": "cmd_regex_replace", "args": ["reply$"], "ok": "reply"}
+{"fn": "cmd_regex_replace", "args": ["f(typing|audio|contact|document|game|location|sticker|photo|round|video)( (.*)|$)"], "ok": "ftyping|audio|contact|document|game|location|sticker|photo|round|video"}
+{"fn": "cmd_regex_replace", "args": ["store$"], "ok": "store"}
+{"fn": "cmd_regex_replace", "args": ["delstored ?(.*)"], "ok": "delstored "}
+{"fn": "cmd_regex_replace", "args": ["liststored$"], "ok": "liststored"}
+{"fn": "cmd_regex_replace", "args": ["addfilter( (.*)|$)"], "ok": "addfilter"}
+{"fn": "cmd_regex_replace", "args": ["remfilter( (.*)|$)"], "ok": "remfilter"}
+{"fn": "cmd_regex_replace", "args": ["listfilter$"], "ok": "listfilter"}
+{"fn": "cmd_regex_replace", "args": ["font( (.*)|$)"], "ok": "font"}
+{"fn": "cmd_regex_replace", "args": ["fsub( (.*)|$)"], "ok": "fsub"}
+{"fn": "cmd_regex_replace", "args": ["remfsub$"], "ok": "remfsub"}
+{"fn": "cmd_regex_replace", "args": ["checkfsub$"], "ok": "checkfsub"}
+{"fn": "cmd_regex_replace", "args": ["gdown( (.*)|$)"], "ok": "gdown"}
+{"fn": "cmd_regex_replace", "args": ["gdlist$"], "ok": "gdlist"}
+{"fn": "cmd_regex_replace", "args": ["gdul( (.*)|$)"], "ok": "gdul"}
+{"fn": "cmd_regex_replace", "args": ["gdsearch( (.*)|$)"], "ok": "gdsearch"}
+{"fn": "cmd_regex_replace", "args": ["gdfolder$"], "ok": "gdfolder"}
+{"fn": "cmd_regex_replace", "args": ["(bw|invert)gif$"], "ok": "bw|invertgif"}
+{"fn": "cmd_regex_replace", "args": ["rvgif$"], "ok": "rvgif"}
+{"fn": "cmd_regex_replace", "args": ["gif( (.*)|$)"], "ok": "gif"}
+{"fn": "cmd_regex_replace", "args": ["vtog$"], "ok": "vtog"}
+{"fn": "cmd_regex_replace", "args": ["glitch$"], "ok": "glitch"}
+{"fn": "cmd_regex_replace", "args": ["gpromote( (.*)|$)"], "ok": "gpromote"}
+{"fn": "cmd_regex_replace", "args": ["gdemote( (.*)|$)"], "ok": "gdemote"}
+{"fn": "cmd_regex_replace", "args": ["ungban( (.*)|$)"], "ok": "ungban"}
+{"fn": "cmd_regex_replace", "args": ["gban( (.*)|$)"], "ok": "gban"}
+{"fn": "cmd_regex_replace", "args": ["g(admin|)cast( (.*)|$)"], "ok": "gadmin|cast"}
+{"fn": "cmd_regex_replace", "args": ["gucast( (.*)|$)"], "ok": "gucast"}
+{"fn": "cmd_regex_replace", "args": ["gkick( (.*)|$)"], "ok": "gkick"}
+{"fn": "cmd_regex_replace", "args": ["gmute( (.*)|$)"], "ok": "gmute"}
+{"fn": "cmd_regex_replace", "args": ["ungmute( (.*)|$)"], "ok": "ungmute"}
+{"fn": "cmd_regex_replace", "args": ["listgban$"], "ok": "listgban"}
+{"fn": "cmd_regex_replace", "args": ["gstat( (.*)|$)"], "ok": "gstat"}
+{"fn": "cmd_regex_replace", "args": ["gblacklist$"], "ok": "gblacklist"}
+{"fn": "cmd_regex_replace", "args": ["ungblacklist$"], "ok": "ungblacklist"}
+{"fn": "cmd_regex_replace", "args": ["setwelcome"], "ok": "setwelcome"}
+{"fn": "cmd_regex_replace", "args": ["clearwelcome$"], "ok": "clearwelcome"}
+{"fn": "cmd_regex_replace", "args": ["getwelcome$"], "ok": "getwelcome"}
+{"fn": "cmd_regex_replace", "args": ["setgoodbye"], "ok": "setgoodbye"}
+{"fn": "cmd_regex_replace", "args": ["cleargoodbye$"], "ok": "cleargoodbye"}
+{"fn": "cmd_regex_replace", "args": ["getgoodbye$"], "ok": "getgoodbye"}
+{"fn": "cmd_regex_replace", "args": ["thankmembers (on|off)"], "ok": "thankmembers on|off"}
+{"fn": "cmd_regex_replace", "args": ["color$"], "ok": "color"}
+{"fn": "cmd_regex_replace", "args": ["(grey|blur|negative|danger|mirror|quad|sketch|flip|toon)$"], "ok": "grey|blur|negative|danger|mirror|quad|sketch|flip|toon"}
+{"fn": "cmd_regex_replace", "args": ["csample (.*)"], "ok": "csample "}
+{"fn": "cmd_regex_replace", "args": ["blue$"], "ok": "blue"}
+{"fn": "cmd_regex_replace", "args": ["border( (.*)|$)"], "ok": "border"}
+{"fn": "cmd_regex_replace", "args": ["pixelator( (.*)|$)"], "ok": "pixelator"}
+{"fn": "cmd_regex_replace", "args": ["(un|)lock( (.*)|$)"], "ok": "un|lock"}
+{"fn": "cmd_regex_replace", "args": ["logo( (.*)|$)"], "ok": "logo"}
+{"fn": "cmd_regex_replace", "args": ["mediainfo( (.*)|$)"], "ok": "mediainfo"}
+{"fn": "cmd_regex_replace", "args": ["rotate( (.*)|$)"], "ok": "rotate"}
+{"fn": "cmd_regex_replace", "args": ["eod$"], "ok": "eod"}
+{"fn": "cmd_regex_replace", "args": ["pntrst( (.*)|$)"], "ok": "pntrst"}
+{"fn": "cmd_regex_replace", "args": ["gadget( (.*)|$)"], "ok": "gadget"}
+{"fn": "cmd_regex_replace", "args": ["randomuser"], "ok": "randomuser"}
+{"fn": "cmd_regex_replace", "args": ["ascii( (.*)|$)"], "ok": "ascii"}
+{"fn": "cmd_regex_replace", "args": ["dmute( (.*)|$)"], "ok": "dmute"}
+{"fn": "cmd_regex_replace", "args": ["undmute( (.*)|$)"], "ok": "undmute"}
+{"fn": "cmd_regex_replace", "args": ["tmute"], "ok": "tmute"}
+{"fn": "cmd_regex_replace", "args": ["unmute( (.*)|$)"], "ok": "unmute"}
+{"fn": "cmd_regex_replace", "args": ["mute( (.*)|$)"], "ok": "mute"}
+{"fn": "cmd_regex_replace", "args": ["nmtime( (.*)|$)"], "ok": "nmtime"}
+{"fn": "cmd_regex_replace", "args": ["addnm( (.*)|$)"], "ok": "addnm"}
+{"fn": "cmd_regex_replace", "args": ["remnm( (.*)|$)"], "ok": "remnm"}
+{"fn": "cmd_regex_replace", "args": ["listnm$"], "ok": "listnm"}
+{"fn": "cmd_regex_replace", "args": ["addnote( (.*)|$)"], "ok": "addnote"}
+{"fn": "cmd_regex_replace", "args": ["remnote( (.*)|$)"], "ok": "remnote"}
+{"fn": "cmd_regex_replace", "args": ["listnote$"], "ok": "listnote"}
+{"fn": "cmd_regex_replace", "args": ["addnsfw( (.*)|$)"], "ok": "addnsfw"}
+{"fn": "cmd_regex_replace", "args": ["remnsfw"], "ok": "remnsfw"}
+{"fn": "cmd_regex_replace", "args": ["(send|dm)( (.*)|$)"], "ok": "send|dm"}
+{"fn": "cmd_regex_replace", "args": ["fwdreply( (.*)|$)"], "ok": "fwdreply"}
+{"fn": "cmd_regex_replace", "args": ["(f|)save$"], "ok": "f|save"}
+{"fn": "cmd_regex_replace", "args": ["pdf( (.*)|$)"], "ok": "pdf"}
+{"fn": "cmd_regex_replace", "args": ["pdtext( (.*)|$)"], "ok": "pdtext"}
+{"fn": "cmd_regex_replace", "args": ["pdscan( (.*)|$)"], "ok": "pdscan"}
+{"fn": "cmd_regex_replace", "args": ["pdsave( (.*)|$)"], "ok": "pdsave"}
+{"fn": "cmd_regex_replace", "args": ["pdsend( (.*)|$)"], "ok": "pdsend"}
+{"fn": "cmd_regex_replace", "args": ["pmpermit( (.*)|$)"], "ok": "pmpermit"}
+{"fn": "cmd_regex_replace", "args": ["(start|stop|clear)archive$"], "ok": "start|stop|cleararchive"}
+{"fn": "cmd_regex_replace", "args": ["(a|approve)(?: |$)"], "ok": "a|approve"}
+{"fn": "cmd_regex_replace", "args": ["(da|disapprove)(?: |$)"], "ok": "da|disapprove"}
+{"fn": "cmd_regex_replace", "args": ["block( (.*)|$)"], "ok": "block"}
+{"fn": "cmd_regex_replace", "args": ["unblock( (.*)|$)"], "ok": "unblock"}
+{"fn": "cmd_regex_replace", "args": ["listapproved$"], "ok": "listapproved"}
+{"fn": "cmd_regex_replace", "args": ["logpm$"], "ok": "logpm"}
+{"fn": "cmd_regex_replace", "args": ["nologpm$"], "ok": "nologpm"}
+{"fn": "cmd_regex_replace", "args": ["poll( (.*)|$)"], "ok": "poll"}
+{"fn": "cmd_regex_replace", "args": ["(add|rem)profanity$"], "ok": "add|remprofanity"}
+{"fn": "cmd_regex_replace", "args": ["setbio( (.*)|$)"], "ok": "setbio"}
+{"fn": "cmd_regex_replace", "args": ["setname ?((.|//)*)"], "ok": "setname "}
+{"fn": "cmd_regex_replace", "args": ["setpic$"], "ok": "setpic"}
+{"fn": "cmd_regex_replace", "args": ["delpfp( (.*)|$)"], "ok": "delpfp"}
+{"fn": "cmd_regex_replace", "args": ["poto( (.*)|$)"], "ok": "poto"}
+{"fn": "cmd_regex_replace", "args": ["qrcode( (.*)|$)"], "ok": "qrcode"}
+{"fn": "cmd_regex_replace", "args": ["addqr( (.*)|$)"], "ok": "addqr"}
+{"fn": "cmd_regex_replace", "args": ["qrdecode$"], "ok": "qrdecode"}
+{"fn": "cmd_regex_replace", "args": ["size$"], "ok": "size"}
+{"fn": "cmd_regex_replace", "args": ["resize( (.*)|$)"], "ok": "resize"}
+{"fn": "cmd_regex_replace", "args": ["schedule( (.*)|$)"], "ok": "schedule"}
+{"fn": "cmd_regex_replace", "args": ["github (.*)"], "ok": "github "}
+{"fn": "cmd_regex_replace", "args": ["google( (.*)|$)"], "ok": "google"}
+{"fn": "cmd_regex_replace", "args": ["img( (.*)|$)"], "ok": "img"}
+{"fn": "cmd_regex_replace", "args": ["reverse$"], "ok": "reverse"}
+{"fn": "cmd_regex_replace", "args": ["saavn( (.*)|$)"], "ok": "saavn"}
+{"fn": "cmd_regex_replace", "args": ["addsnip( (.*)|$)"], "ok": "addsnip"}
+{"fn": "cmd_regex_replace", "args": ["remsnip( (.*)|$)"], "ok": "remsnip"}
+{"fn": "cmd_regex_replace", "args": ["listsnip"], "ok": "listsnip"}
+{"fn": "cmd_regex_replace", "args": ["getaudio$"], "ok": "getaudio"}
+{"fn": "cmd_regex_replace", "args": ["addaudio$"], "ok": "addaudio"}
+{"fn": "cmd_regex_replace", "args": ["dob( (.*)|$)"], "ok": "dob"}
+{"fn": "cmd_regex_replace", "args": ["sticker( (.*)|$)"], "ok": "sticker"}
+{"fn": "cmd_regex_replace", "args": ["wall( (.*)|$)"], "ok": "wall"}
+{"fn": "cmd_regex_replace", "args": ["q( (.*)|$)"], "ok": "q"}
+{"fn": "cmd_regex_replace", "args": ["packkang"], "ok": "packkang"}
+{"fn": "cmd_regex_replace", "args": ["kang"], "ok": "kang"}
+{"fn": "cmd_regex_replace", "args": ["round$"], "ok": "round"}
+{"fn": "cmd_regex_replace", "args": ["destroy$"], "ok": "destroy"}
+{"fn": "cmd_regex_replace", "args": ["tiny$"], "ok": "tiny"}
+{"fn": "cmd_regex_replace", "args": ["setstory"], "ok": "setstory"}
+{"fn": "cmd_regex_replace", "args": ["storydl"], "ok": "storydl"}
+{"fn": "cmd_regex_replace", "args": ["addsudo( (.*)|$)"], "ok": "addsudo"}
+{"fn": "cmd_regex_replace", "args": ["delsudo( (.*)|$)"], "ok": "delsudo"}
+{"fn": "cmd_regex_replace", "args": ["listsudo$"], "ok": "listsudo"}
+{"fn": "cmd_regex_replace", "args": ["tag(on|off|all|bots|rec|admins|owner)( (.*)|$)"], "ok": "tagon|off|all|bots|rec|admins|owner"}
+{"fn": "cmd_regex_replace", "args": ["tr( (.*)|$)"], "ok": "tr"}
+{"fn": "cmd_regex_replace", "args": ["id( (.*)|$)"], "ok": "id"}
+{"fn": "cmd_regex_replace", "args": ["bots( (.*)|$)"], "ok": "bots"}
+{"fn": "cmd_regex_replace", "args": ["hl( (.*)|$)"], "ok": "hl"}
+{"fn": "cmd_regex_replace", "args": ["circle$"], "ok": "circle"}
+{"fn": "cmd_regex_replace", "args": ["ls( (.*)|$)"], "ok": "ls"}
+{"fn": "cmd_regex_replace", "args": ["sg(|u)(?:\\s|$)([\\s\\S]*)"], "ok": "sg|u?:\\s|[\\s\\S]*"}
+{"fn": "cmd_regex_replace", "args": ["webshot( (.*)|$)"], "ok": "webshot"}
+{"fn": "cmd_regex_replace", "args": ["tw( (.*)|$)"], "ok": "tw"}
+{"fn": "cmd_regex_replace", "args": ["twdetail( (.*)|$)"], "ok": "twdetail"}
+{"fn": "cmd_regex_replace", "args": ["twuser( (.*)|$)"], "ok": "twuser"}
+{"fn": "cmd_regex_replace", "args": ["twl( (.*)|$)"], "ok": "twl"}
+{"fn": "cmd_regex_replace", "args": ["unsplash( (.*)|$)"], "ok": "unsplash"}
+{"fn": "cmd_regex_replace", "args": ["usage"], "ok": "usage"}
+{"fn": "cmd_regex_replace", "args": ["kickme$"], "ok": "kickme"}
+{"fn": "cmd_regex_replace", "args": ["date$"], "ok": "date"}
+{"fn": "cmd_regex_replace", "args": ["listreserved$"], "ok": "listreserved"}
+{"fn": "cmd_regex_replace", "args": ["stats$"], "ok": "stats"}
+{"fn": "cmd_regex_replace", "args": ["paste( (.*)|$)"], "ok": "paste"}
+{"fn": "cmd_regex_replace", "args": ["info( (.*)|$)"], "ok": "info"}
+{"fn": "cmd_regex_replace", "args": ["invite( (.*)|$)"], "ok": "invite"}
+{"fn": "cmd_regex_replace", "args": ["rmbg($| (.*))"], "ok": "rmbg"}
+{"fn": "cmd_regex_replace", "args": ["telegraph( (.*)|$)"], "ok": "telegraph"}
+{"fn": "cmd_regex_replace", "args": ["json( (.*)|$)"], "ok": "json"}
+{"fn": "cmd_regex_replace", "args": ["suggest( (.*)|$)"], "ok": "suggest"}
+{"fn": "cmd_regex_replace", "args": ["ipinfo( (.*)|$)"], "ok": "ipinfo"}
+{"fn": "cmd_regex_replace", "args": ["cpy$"], "ok": "cpy"}
+{"fn": "cmd_regex_replace", "args": ["pst$"], "ok": "pst"}
+{"fn": "cmd_regex_replace", "args": ["thumb$"], "ok": "thumb"}
+{"fn": "cmd_regex_replace", "args": ["getmsg( ?(.*)|$)"], "ok": "getmsg"}
+{"fn": "cmd_regex_replace", "args": ["get($| (.*))"], "ok": "get"}
+{"fn": "cmd_regex_replace", "args": ["stopvc$"], "ok": "stopvc"}
+{"fn": "cmd_regex_replace", "args": ["vcinvite$"], "ok": "vcinvite"}
+{"fn": "cmd_regex_replace", "args": ["startvc$"], "ok": "startvc"}
+{"fn": "cmd_regex_replace", "args": ["vctitle(?: |$)(.*)"], "ok": "vctitle"}
+{"fn": "cmd_regex_replace", "args": ["sample( (.*)|$)"], "ok": "sample"}
+{"fn": "cmd_regex_replace", "args": ["vshots( (.*)|$)"], "ok": "vshots"}
+{"fn": "cmd_regex_replace", "args": ["vtrim( (.*)|$)"], "ok": "vtrim"}
+{"fn": "cmd_regex_replace", "args": ["warn( (.*)|$)"], "ok": "warn"}
+{"fn": "cmd_regex_replace", "args": ["resetwarn( (.*)|$)"], "ok": "resetwarn"}
+{"fn": "cmd_regex_replace", "args": ["warns( (.*)|$)"], "ok": "warns"}
+{"fn": "cmd_regex_replace", "args": ["setwarn( (.*)|$)"], "ok": "setwarn"}
+{"fn": "cmd_regex_replace", "args": ["weather ?(.*)"], "ok": "weather "}
+{"fn": "cmd_regex_replace", "args": ["air ?(.*)"], "ok": "air "}
+{"fn": "cmd_regex_replace", "args": ["webupload( (.*)|$)"], "ok": "webupload"}
+{"fn": "cmd_regex_replace", "args": ["meaning( (.*)|$)"], "ok": "meaning"}
+{"fn": "cmd_regex_replace", "args": ["(syno|anto)nym"], "ok": "syno|antonym"}
+{"fn": "cmd_regex_replace", "args": ["ud (.*)"], "ok": "ud "}
+{"fn": "cmd_regex_replace", "args": ["gethtml( (.*)|$)"], "ok": "gethtml"}
+{"fn": "cmd_regex_replace", "args": ["image( (.*)|$)"], "ok": "image"}
+{"fn": "cmd_regex_replace", "args": ["write( (.*)|$)"], "ok": "write"}
+{"fn": "cmd_regex_replace", "args": ["yt(a|v|sa|sv) ?(.*)"], "ok": "yta|v|sa|sv "}
+{"fn": "cmd_regex_replace", "args": ["zip( (.*)|$)"], "ok": "zip"}
+{"fn": "cmd_regex_replace", "args": ["unzip( (.*)|$)"], "ok": "unzip"}
+{"fn": "cmd_regex_replace", "args": ["addzip$"], "ok": "addzip"}
+{"fn": "cmd_regex_replace", "args": ["dozip( (.*)|$)"], "ok": "dozip"}
+{"fn": "cmd_regex_replace", "args": [""], "ok": ""}
+{"fn": "cmd_regex_replace", "args": ["$"], "ok": ""}
+{"fn": "cmd_regex_replace", "args": ["ping$"], "ok": "ping"}
+{"fn": "cmd_regex_replace", "args": ["(.*)"], "ok": ""}
+{"fn": "cmd_regex_replace", "args": ["?(.*)"], "ok": ""}
+{"fn": "cmd_regex_replace", "args": ["a?(.*)b(.*)c"], "ok": "abc"}
+{"fn": "cmd_regex_replace", "args": ["x(?: |)y"], "ok": "xy"}
+{"fn": "cmd_regex_replace", "args": ["a| b"], "ok": "ab"}
+{"fn": "cmd_regex_replace", "args": ["( |)"], "ok": ""}
+{"fn": "cmd_regex_replace", "args": ["?((.|//)*)"], "ok": ""}
+{"fn": "cmd_regex_replace", "args": ["install ?P<shortname>\\w+"], "ok": "install "}
+{"fn": "cmd_regex_replace", "args": ["(?P<shortname>\\w+)"], "ok": ""}
+{"fn": "cmd_regex_replace", "args": ["?(\\d+)"], "ok": "?\\d+"}
+{"fn": "cmd_regex_replace", "args": ["purge ?(\\d+)"], "ok": "purge ?\\d+"}
+{"fn": "cmd_regex_replace", "args": ["(("], "ok": ""}
+{"fn": "cmd_regex_replace", "args": ["))"], "ok": ""}
+{"fn": "cmd_regex_replace", "args": ["$$$"], "ok": ""}
+{"fn": "cmd_regex_replace", "args": ["été ?(.*)"], "ok": "été "}
+{"fn": "cmd_regex_replace", "args": ["| | |"], "ok": "|"}
+{"fn": "cmd_regex_replace", "args": ["a(?: |)(?: |)b"], "ok": "ab"}
+{"fn": "cmd_regex_replace", "args": ["(.*)(.*)"], "ok": ""}
+{"fn": "cmd_regex_replace", "args": ["?(.*)?(.*)"], "ok": ""}
+{"fn": "cmd_regex_replace", "args": ["ＡＢ ?(.*)"], "ok": "ＡＢ "}
+{"fn": "cmd_regex_replace", "args": ["x\ny(.*)"], "ok": "x\ny"}
+{"fn": "get_chat_and_msgid", "args": ["https://t.me/c/1234567890/42"], "ok": {"$tuple": [-1001234567890, 42]}}
+{"fn": "get_chat_and_msgid", "args": ["https://t.me/TeamUltroid/123"], "ok": {"$tuple": ["TeamUltroid", 123]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/1234567890/42?single"], "ok": {"$tuple": [-1001234567890, 42]}}
+{"fn": "get_chat_and_msgid", "args": ["https://t.me/c/1234567890/42/77"], "ok": {"$tuple": [-1001234567890, 42]}}
+{"fn": "get_chat_and_msgid", "args": ["http://t.me/username/5?comment=9"], "ok": {"$tuple": ["username", 5]}}
+{"fn": "get_chat_and_msgid", "args": ["https://t.me/UltroidSupportChat/100000"], "ok": {"$tuple": ["UltroidSupportChat", 100000]}}
+{"fn": "get_chat_and_msgid", "args": ["tg://openmessage?user_id=777000&message_id=456"], "ok": {"$tuple": [777000, 456]}}
+{"fn": "get_chat_and_msgid", "args": ["tg://openmessage?user_id=1&message_id=2&x=3"], "ok": {"$tuple": [1, 2]}}
+{"fn": "get_chat_and_msgid", "args": ["see https://t.me/c/111/2 and https://t.me/c/333/4"], "ok": {"$tuple": [-100111, 2]}}
+{"fn": "get_chat_and_msgid", "args": ["https://t.me/c/abc/5"], "error": "ValueError: invalid literal for int() with base 10: '-100abc'"}
+{"fn": "get_chat_and_msgid", "args": ["https://t.me/joinchat/AAAAAE"], "ok": {"$tuple": [null, null]}}
+{"fn": "get_chat_and_msgid", "args": ["https://t.me/username"], "ok": {"$tuple": [null, null]}}
+{"fn": "get_chat_and_msgid", "args": ["https://telegram.me/username/12"], "ok": {"$tuple": [null, null]}}
+{"fn": "get_chat_and_msgid", "args": [""], "ok": {"$tuple": [null, null]}}
+{"fn": "get_chat_and_msgid", "args": ["no link here"], "ok": {"$tuple": [null, null]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me//5"], "ok": {"$tuple": [null, null]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c//5"], "ok": {"$tuple": [null, null]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/123"], "ok": {"$tuple": ["c", 123]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/123/"], "ok": {"$tuple": ["c", 123]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/123/x"], "ok": {"$tuple": ["c", 123]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/007/08"], "ok": {"$tuple": [-100007, 8]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/+5/1"], "error": "ValueError: invalid literal for int() with base 10: '-100+5'"}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/-5/1"], "error": "ValueError: invalid literal for int() with base 10: '-100-5'"}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/12_3/4"], "ok": {"$tuple": [-100123, 4]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/1__2/4"], "error": "ValueError: invalid literal for int() with base 10: '-1001__2'"}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/_12/4"], "ok": {"$tuple": [-10012, 4]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/12_/4"], "error": "ValueError: invalid literal for int() with base 10: '-10012_'"}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/ 123/4"], "error": "ValueError: invalid literal for int() with base 10: '-100 123'"}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/123 /4"], "ok": {"$tuple": [-100123, 4]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/123\t/4"], "ok": {"$tuple": [-100123, 4]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/12 3/4"], "error": "ValueError: invalid literal for int() with base 10: '-10012 3'"}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/1.5/4"], "error": "ValueError: invalid literal for int() with base 10: '-1001.5'"}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/١٢٣/٤٥٦"], "ok": {"$tuple": [-100123, 456]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/１２３/４５"], "ok": {"$tuple": [-100123, 45]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/user/٤٥٦"], "ok": {"$tuple": ["user", 456]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/१२३/7"], "ok": {"$tuple": [-100123, 7]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/1²/3"], "error": "ValueError: invalid literal for int() with base 10: '-1001²'"}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/123/4²"], "ok": {"$tuple": [-100123, 4]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/99999999999999999999999999/1"], "ok": {"$tuple": [{"$int": "-10099999999999999999999999999"}, 1]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/x/99999999999999999999999999"], "ok": {"$tuple": ["x", {"$int": "99999999999999999999999999"}]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/9223372036854775807/9223372036854775808"], "ok": {"$tuple": [{"$int": "-1009223372036854775807"}, {"$int": "9223372036854775808"}]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/1\n2/3"], "error": "ValueError: invalid literal for int() with base 10: '-1001\\n2'"}
+{"fn": "get_chat_and_msgid", "args": ["T.ME/c/1/2"], "ok": {"$tuple": [null, null]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/C/1/2"], "ok": {"$tuple": ["C", 1]}}
+{"fn": "get_chat_and_msgid", "args": ["xt.me/a/1"], "ok": {"$tuple": ["a", 1]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/a/1/b/2"], "ok": {"$tuple": ["a", 1]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/c/1/2"], "error": "ValueError: invalid literal for int() with base 10: '-100c'"}
+{"fn": "get_chat_and_msgid", "args": ["user_id=12&message_id=34"], "ok": {"$tuple": [12, 34]}}
+{"fn": "get_chat_and_msgid", "args": ["user_id=١٢&message_id=٣٤"], "ok": {"$tuple": [12, 34]}}
+{"fn": "get_chat_and_msgid", "args": ["user_id=&message_id=1"], "ok": {"$tuple": [null, null]}}
+{"fn": "get_chat_and_msgid", "args": ["user_id=1&message_id="], "ok": {"$tuple": [null, null]}}
+{"fn": "get_chat_and_msgid", "args": ["user_id=99999999999999999999&message_id=18446744073709551616"], "ok": {"$tuple": [{"$int": "99999999999999999999"}, {"$int": "18446744073709551616"}]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/é/5"], "ok": {"$tuple": ["é", 5]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/a b/5"], "ok": {"$tuple": ["a b", 5]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/12345/678 trailing text"], "ok": {"$tuple": [-10012345, 678]}}
+{"fn": "get_chat_and_msgid", "args": ["https://t.me/c/1234567890/42\n"], "ok": {"$tuple": [-1001234567890, 42]}}
+{"fn": "get_chat_and_msgid", "args": ["  https://t.me/c/1234567890/42  "], "ok": {"$tuple": [-1001234567890, 42]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/0/0"], "ok": {"$tuple": [-1000, 0]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/00/00"], "ok": {"$tuple": [-10000, 0]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/12 /5"], "ok": {"$tuple": [-10012, 5]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/12 /5"], "ok": {"$tuple": [-10012, 5]}}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/12\u001f/5"], "error": "ValueError: invalid literal for int() with base 10: '-10012\\x1f'"}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/12\u000b/5"], "ok": {"$tuple": [-10012, 5]}}
+{"fn": "text_set", "args": [""], "ok": [""]}
+{"fn": "text_set", "args": ["hello"], "ok": ["hello"]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"], "ok": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"], "ok": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"], "ok": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "a"]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"], "ok": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", ""]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"], "ok": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "a"]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"], "ok": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", ""]}
+{"fn": "text_set", "args": ["line one\nline two"], "ok": ["line one\nline two"]}
+{"fn": "text_set", "args": ["short\nbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\nend"], "ok": ["short", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "bbbbb", "end"]}
+{"fn": "text_set", "args": ["\n"], "ok": ["\n"]}
+{"fn": "text_set", "args": ["\n\n\n"], "ok": ["\n\n\n"]}
+{"fn": "text_set", "args": ["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n"], "ok": ["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "x", ""]}
+{"fn": "text_set", "args": ["\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"], "ok": ["", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "x"]}
+{"fn": "text_set", "args": ["éééééééééééééééééééééééééééééééééééééééééééééééééééééééé"], "ok": ["ééééééééééééééééééééééééééééééééééééééééééééééééééééééé", "é"]}
+{"fn": "text_set", "args": ["😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀"], "ok": ["😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀", "😀"]}
+{"fn": "text_set", "args": ["éééééééééééééééééééééééééééééé"], "ok": ["ééééééééééééééééééééééééééée", "́éé"]}
+{"fn": "text_set", "args": ["日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト"], "ok": ["日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキス", "ト日本語のテキスト日本語のテキスト日本語のテキスト"]}
+{"fn": "text_set", "args": ["a\r\nbcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"], "ok": ["a\r", "bcccccccccccccccccccccccccccccccccccccccccccccccccccccc", "cccccc"]}
+{"fn": "text_set", "args": ["0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n38\n39"], "ok": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"]}
+{"fn": "text_set", "args": ["wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"], "ok": ["wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", "wwwww", "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", "wwwww", "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", "wwwww", "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", "wwwww", "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", "wwwww", "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", "wwwww", "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", "wwwww", "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", "wwwww", "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", "wwwww", "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", "wwwww", "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", "wwwww", "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", "wwwww", "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"]}
+{"fn": "text_set", "args": ["word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word "], "ok": ["word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word ", "word word word word word word word word word word word "]}
+{"fn": "text_set", "args": ["                                                            "], "ok": ["                                                       ", "     "]}
+{"fn": "text_set", "args": ["tab\tseparated\ttab\tseparated\ttab\tseparated\ttab\tseparated\ttab\tseparated\ttab\tseparated\ttab\tseparated\ttab\tseparated\ttab\tseparated\ttab\tseparated\t"], "ok": ["tab\tseparated\ttab\tseparated\ttab\tseparated\ttab\tseparated", "\ttab\tseparated\ttab\tseparated\ttab\tseparated\ttab\tseparate", "d\ttab\tseparated\ttab\tseparated\t"]}
+{"fn": "text_set", "args": ["The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. "], "ok": ["The quick brown fox jumps over the lazy dog. The quick ", "brown fox jumps over the lazy dog. The quick brown fox ", "jumps over the lazy dog. "]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"], "ok": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"], "ok": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"], "ok": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]}
+{"fn": "text_set", "args": ["pppppppppppppppppppppppppppppp pppppppppppppppppppppppppppppp pppppppppppppppppppppppppppppp"], "ok": ["pppppppppppppppppppppppppppppp pppppppppppppppppppppppp", "pppppp pppppppppppppppppppppppppppppp"]}
+{"fn": "text_set", "args": ["mixed 😀 emoji and ascii mixed 😀 emoji and ascii mixed 😀 emoji and ascii mixed 😀 emoji and ascii "], "ok": ["mixed 😀 emoji and ascii mixed 😀 emoji and ascii mixed 😀", " emoji and ascii mixed 😀 emoji and ascii "]}
+{"fn": "text_set", "args": [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59]], "error": "AttributeError: 'list' object has no attribute 'split'"}
+{"fn": "text_set", "args": [{"k0": 0, "k1": 1, "k2": 2, "k3": 3, "k4": 4, "k5": 5, "k6": 6, "k7": 7, "k8": 8, "k9": 9, "k10": 10, "k11": 11, "k12": 12, "k13": 13, "k14": 14, "k15": 15, "k16": 16, "k17": 17, "k18": 18, "k19": 19, "k20": 20, "k21": 21, "k22": 22, "k23": 23, "k24": 24, "k25": 25, "k26": 26, "k27": 27, "k28": 28, "k29": 29, "k30": 30, "k31": 31, "k32": 32, "k33": 33, "k34": 34, "k35": 35, "k36": 36, "k37": 37, "k38": 38, "k39": 39, "k40": 40, "k41": 41, "k42": 42, "k43": 43, "k44": 44, "k45": 45, "k46": 46, "k47": 47, "k48": 48, "k49": 49, "k50": 50, "k51": 51, "k52": 52, "k53": 53, "k54": 54, "k55": 55}], "error": "AttributeError: 'dict' object has no attribute 'split'"}
+{"fn": "stdr", "args": [0], "ok": "00:00:00"}
+{"fn": "stdr", "args": [1], "ok": "00:00:01"}
+{"fn": "stdr", "args": [5], "ok": "00:00:05"}
+{"fn": "stdr", "args": [9], "ok": "00:00:09"}
+{"fn": "stdr", "args": [10], "ok": "00:00:10"}
+{"fn": "stdr", "args": [59], "ok": "00:00:59"}
+{"fn": "stdr", "args": [60], "ok": "00:01:00"}
+{"fn": "stdr", "args": [61], "ok": "00:01:01"}
+{"fn": "stdr", "args": [599], "ok": "00:09:59"}
+{"fn": "stdr", "args": [600], "ok": "00:10:00"}
+{"fn": "stdr", "args": [601], "ok": "00:10:01"}
+{"fn": "stdr", "args": [3599], "ok": "00:59:59"}
+{"fn": "stdr", "args": [3600], "ok": "01:00:00"}
+{"fn": "stdr", "args": [3601], "ok": "01:00:01"}
+{"fn": "stdr", "args": [3661], "ok": "01:01:01"}
+{"fn": "stdr", "args": [35999], "ok": "09:59:59"}
+{"fn": "stdr", "args": [36000], "ok": "10:00:00"}
+{"fn": "stdr", "args": [36001], "ok": "10:00:01"}
+{"fn": "stdr", "args": [86399], "ok": "23:59:59"}
+{"fn": "stdr", "args": [86400], "ok": "24:00:00"}
+{"fn": "stdr", "args": [359999], "ok": "99:59:59"}
+{"fn": "stdr", "args": [360000], "ok": "100:00:00"}
+{"fn": "stdr", "args": [12345678], "ok": "3429:21:18"}
+{"fn": "stdr", "args": [-1], "ok": "-1:59:59"}
+{"fn": "stdr", "args": [-9], "ok": "-1:59:51"}
+{"fn": "stdr", "args": [-10], "ok": "-1:59:50"}
+{"fn": "stdr", "args": [-59], "ok": "-1:59:01"}
+{"fn": "stdr", "args": [-60], "ok": "-1:59:00"}
+{"fn": "stdr", "args": [-61], "ok": "-1:58:59"}
+{"fn": "stdr", "args": [-3600], "ok": "-1:00:00"}
+{"fn": "stdr", "args": [-3601], "ok": "-2:59:59"}
+{"fn": "stdr", "args": [9223372036854775807], "ok": "2562047788015215:30:07"}
+{"fn": "stdr", "args": [-9223372036854775808], "ok": "-2562047788015216:29:52"}
+{"fn": "stdr", "args": [0.0], "ok": "00:00:"}
+{"fn": "stdr", "args": [0.5], "ok": "00:00:0.5"}
+{"fn": "stdr", "args": [5.5], "ok": "00:00:5.5"}
+{"fn": "stdr", "args": [9.99], "ok": "00:00:9.99"}
+{"fn": "stdr", "args": [59.9], "ok": "00:00:59.9"}
+{"fn": "stdr", "args": [60.0], "ok": "00:1.0:"}
+{"fn": "stdr", "args": [61.5], "ok": "00:1.0:1.5"}
+{"fn": "stdr", "args": [600.0], "ok": "00:10.0:"}
+{"fn": "stdr", "args": [3600.0], "ok": "1.0:00:"}
+{"fn": "stdr", "args": [3661.5], "ok": "1.0:1.0:1.5"}
+{"fn": "stdr", "args": [123456.789], "ok": "34.0:17.0:36.78900000000431"}
+{"fn": "stdr", "args": [1e+16], "ok": "2777777777777.0:46.0:40.0"}
+{"fn": "stdr", "args": [1e+17], "ok": "27777777777777.0:46.0:40.0"}
+{"fn": "stdr", "args": [1.5e+22], "ok": "4.1666666666666665e+18:40.0:"}
+{"fn": "stdr", "args": [1e-05], "ok": "00:00:1e-05"}
+{"fn": "stdr", "args": [0.0001], "ok": "00:00:0.0001"}
+{"fn": "stdr", "args": [0.0001], "ok": "00:00:0.0001"}
+{"fn": "stdr", "args": [1.2345678901234568e+17], "ok": "34293552503429.0:21.0:20.0"}
+{"fn": "stdr", "args": [-0.5], "ok": "-1.0:59.0:59.5"}
+{"fn": "stdr", "args": [-60.0], "ok": "-1.0:59.0:"}
+{"fn": "stdr", "args": [-61.5], "ok": "-1.0:58.0:58.5"}
+{"fn": "stdr", "args": [7.0], "ok": "00:00:7.0"}
+{"fn": "stdr", "args": [3725.25], "ok": "1.0:2.0:5.25"}
+{"fn": "stdr", "args": [true], "ok": "00:00:01"}
+{"fn": "stdr", "args": [false], "ok": "00:00:00"}
+{"fn": "stdr", "args": [null], "error": "TypeError: unsupported operand type(s) for divmod(): 'NoneType' and 'int'"}
+{"fn": "stdr", "args": ["60"], "error": "TypeError: unsupported operand type(s) for divmod(): 'str' and 'int'"}
+{"fn": "get_msg_button", "args": ["Hello [Google|https://google.com]"], "ok": {"$tuple": ["Hello", [[["Google", "https://google.com"]]]]}}
+{"fn": "get_msg_button", "args": ["[A|a.com][B|b.com|same]"], "ok": {"$tuple": ["", [[["A", "a.com"], ["B", "b.com"]]]]}}
+{"fn": "get_msg_button", "args": ["[A|a.com]\n[B|b.com]"], "ok": {"$tuple": ["", [[["A", "a.com"]], [["B", "b.com"]]]]}}
+{"fn": "get_msg_button", "args": ["[A|a.com|same]"], "error": "IndexError: list index out of range"}
+{"fn": "get_msg_button", "args": ["text [A|a.com] middle [B|b.com|same] end"], "ok": {"$tuple": ["text  middle  end", [[["A", "a.com"], ["B", "b.com"]]]]}}
+{"fn": "get_msg_button", "args": ["[A|a.com][B|b.com|same][C|c.com|same]"], "ok": {"$tuple": ["", [[["A", "a.com"], ["B", "b.com"], ["C", "c.com"]]]]}}
+{"fn": "get_msg_button", "args": ["[a|b|c|same]"], "error": "IndexError: list index out of range"}
+{"fn": "get_msg_button", "args": ["[|]"], "ok": {"$tuple": ["[|]", [[["", ""]]]]}}
+{"fn": "get_msg_button", "args": ["[x|]"], "ok": {"$tuple": ["[x|]", [[["x", ""]]]]}}
+{"fn": "get_msg_button", "args": ["[|y]"], "ok": {"$tuple": ["[|y]", [[["", "y"]]]]}}
+{"fn": "get_msg_button", "args": ["[[x|y]]"], "ok": {"$tuple": ["]", [[["[x", "y"]]]]}}
+{"fn": "get_msg_button", "args": ["[x|y]]"], "ok": {"$tuple": ["]", [[["x", "y"]]]]}}
+{"fn": "get_msg_button", "args": ["no buttons here"], "ok": {"$tuple": ["no buttons here", []]}}
+{"fn": "get_msg_button", "args": [""], "ok": {"$tuple": ["", []]}}
+{"fn": "get_msg_button", "args": ["   spaced   "], "ok": {"$tuple": ["spaced", []]}}
+{"fn": "get_msg_button", "args": ["[Join|t.me/TheUltroid] [Join|t.me/TheUltroid]"], "ok": {"$tuple": ["", [[["Join", "t.me/TheUltroid"]], [["Join", "t.me/TheUltroid"]]]]}}
+{"fn": "get_msg_button", "args": ["dup [a|b] text [a|b] more"], "ok": {"$tuple": ["dup  text  more", [[["a", "b"]], [["a", "b"]]]]}}
+{"fn": "get_msg_button", "args": ["[a|b] [a|b|same]"], "ok": {"$tuple": ["", [[["a", "b"], ["a", "b"]]]]}}
+{"fn": "get_msg_button", "args": ["[multi\nline|x.com]"], "ok": {"$tuple": ["[multi\nline|x.com]", []]}}
+{"fn": "get_msg_button", "args": ["[x|multi\nline]"], "ok": {"$tuple": ["[x|multi\nline]", []]}}
+{"fn": "get_msg_button", "args": ["[ Spaces | https://x.com ]"], "ok": {"$tuple": ["", [[[" Spaces ", " https://x.com "]]]]}}
+{"fn": "get_msg_button", "args": ["[Ünï|https://é.com/ü]"], "ok": {"$tuple": ["", [[["Ünï", "https://é.com/ü"]]]]}}
+{"fn": "get_msg_button", "args": ["[😀|https://emoji.com]"], "ok": {"$tuple": ["", [[["😀", "https://emoji.com"]]]]}}
+{"fn": "get_msg_button", "args": ["**bold** [Docs|ultroid.tech] `code`"], "ok": {"$tuple": ["**bold**  `code`", [[["Docs", "ultroid.tech"]]]]}}
+{"fn": "get_msg_button", "args": ["[a|b][c|d]\n[e|f|same]\ntail"], "ok": {"$tuple": ["tail", [[["a", "b"]], [["c", "d"], ["e", "f"]]]]}}
+{"fn": "get_msg_button", "args": ["\u001ftext [a|b]\u001c"], "ok": {"$tuple": ["text", [[["a", "b"]]]]}}
+{"fn": "get_msg_button", "args": ["  nbsp [a|b] 　"], "ok": {"$tuple": ["nbsp", [[["a", "b"]]]]}}
+{"fn": "get_msg_button", "args": ["[a|b]|c]"], "ok": {"$tuple": ["|c]", [[["a", "b"]]]]}}
+{"fn": "get_msg_button", "args": ["[a]|[b|c]"], "error": "IndexError: list index out of range"}
+{"fn": "get_msg_button", "args": ["a|b"], "ok": {"$tuple": ["a|b", []]}}
+{"fn": "get_msg_button", "args": ["[a|b"], "ok": {"$tuple": ["[a|b", []]}}
+{"fn": "get_msg_button", "args": ["a|b]"], "ok": {"$tuple": ["a|b]", []]}}
+{"fn": "get_msg_button", "args": ["[one|1][two|2|same][three|3]\n[four|4|same]"], "ok": {"$tuple": ["", [[["one", "1"], ["two", "2"]], [["three", "3"], ["four", "4"]]]]}}
+{"fn": "get_msg_button", "args": ["[a|b|same|same]"], "error": "IndexError: list index out of range"}
+{"fn": "get_msg_button", "args": ["x[y|z]x[y|z]x"], "ok": {"$tuple": ["xxx", [[["y", "z"]], [["y", "z"]]]]}}
+{"fn": "get_msg_button", "args": ["[.+?|.+?]"], "ok": {"$tuple": ["", [[[".+?", ".+?"]]]]}}
+{"fn": "get_msg_button", "args": ["[a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b]"], "ok": {"$tuple": ["", [[["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]], [["a", "b"]]]]}}
+{"fn": "get_msg_button", "args": ["[Help|https://t.me/UltroidSupportChat]\n[Channel|https://t.me/TheUltroid|same]"], "ok": {"$tuple": ["", [[["Help", "https://t.me/UltroidSupportChat"], ["Channel", "https://t.me/TheUltroid"]]]]}}
+{"fn": "text_set", "args": [{"$tuple": ["a", "b"]}], "ok": [{"$tuple": ["a", "b"]}]}
+{"fn": "text_set", "args": [{"$tuple": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}], "error": "AttributeError: 'tuple' object has no attribute 'split'"}
+{"fn": "text_set", "args": [{"$set": [1, 2]}], "ok": [{"$set": [1, 2]}]}
+{"fn": "text_set", "args": [{"$bytes": [104, 105]}], "ok": [{"$bytes": [104, 105]}]}
+{"fn": "text_set", "args": [{"$bytes": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}], "error": "TypeError: a bytes-like object is required, not 'str'"}
+{"fn": "text_set", "args": [{"$dict": [[1, "a"]]}], "ok": [{"$dict": [[1, "a"]]}]}
+{"fn": "text_set", "args": [{"$num": "NaN"}], "error": "TypeError: object of type 'float' has no len()"}
+{"fn": "text_set", "args": [{"$int": "99999999999999999999"}], "error": "TypeError: object of type 'int' has no len()"}
+{"fn": "text_set", "args": [3.5], "error": "TypeError: object of type 'float' has no len()"}

@@ -1,12 +1,13 @@
 # Port map: Ultroid
 
-1 of 13 units have a Rust port; no original changed since it was recorded.
+2 of 14 units have a Rust port; no original changed since it was recorded.
 
 ## Ports
 
 | Unit | Crate | In Rust | Kept in the original | Cases | Last diff | Original |
 | --- | --- | --- | --- | ---: | ---: | --- |
 | `pyUltroid/fns/helper.py` | `rust/helper-rs` | `time_formatter`, `humanbytes`, `numerize` | `run_async`, `make_mention`, `inline_mention`, `un_plug`, `bash`, `updater`, `uploader`, `downloader`, `async_searcher`, `download_file`, `fast_download`, `mediainfo`, `progress`, `restart`, `shutdown`, `KEEP_SAFE` | 213 | 213/213 | unchanged |
+| `pyUltroid/fns/tools.py` | `rust/tools-rs` | `get_msg_button`, `text_set`, `stdr`, `cmd_regex_replace`, `get_chat_and_msgid` | `get_ofox`, `json_parser`, `is_url_ok`, `metadata`, `set_attributes`, `create_tl_btn`, `format_btn`, `saavn_search`, `webuploader`, `get_all_files`, `get_paste`, `get_google_images`, `get_chatbot_reply`, `check_filename`, `genss`, `duration_s`, `order_points`, `four_point_transform`, `telegraph_client`, `make_html_telegraph`, `Carbon`, `get_file_link`, `get_stored_file`, `translate`, `safe_load`, `LogoHelper`, `LottieException`, `TgConverter` | 789 | 789/789 | unchanged |
 
 ## Not ported yet
 
