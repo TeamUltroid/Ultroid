@@ -313,3 +313,23 @@ Consequences:
   (`(a?){100001}`) is declined. `re` accepts it and then uses memory for every round.
 - Not read: flags, look-around, conditions, atomic groups and possessive repeats, references
   by name, `\N{...}`, comments. None of the 329 registered patterns uses one.
+
+## ADR-018: The language lookup is ported; which reader reads the files is left open
+
+Status: accepted by default (2026-11-20, owner away)
+
+Context: `strings/__init__.py` reads a language file with PyYAML when PyYAML is installed and
+with `safe_load` of `pyUltroid/fns/tools.py` when it is not. PyYAML is in no requirements file;
+the workflow that checks the strings installs it. The two readers disagree on 138 of the 11,824
+keys in the 24 files, in 15 languages, and the second passes every value of a file to `eval`
+(`research/language-files.md`).
+
+Decision: The unit that is proven is what the module does with what a file holds: which file is
+loaded, the way through English and the translator, `get_help`, `get_languages`. The harness
+puts a reader in that hands over what the scenario says the file holds. `eval` is not ported:
+text that is run as code stays in Python, as with the plugins (ADR-006). A YAML reader is not
+chosen before the maintainers say which of the two results is the intended one.
+
+Consequences: `ultroid_core::strings` takes a `Host` that reads a file, asks the translator and
+writes the log; a Rust Ultroid puts its reader in there. Until it has one, the port answers
+`get_string` for what it is handed and cannot read a language file itself.

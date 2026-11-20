@@ -399,6 +399,73 @@ pub fn format_each(container: &PyValue, before: &str, after: &str) -> PyResult<P
     Ok(text(out))
 }
 
+/// A number as Python adds it: a whole number, a float, or a complex.
+enum Number {
+    Whole(BigInt),
+    Real(f64),
+    Complex(f64, f64),
+}
+
+fn number(value: &PyValue) -> Option<Number> {
+    Some(match value {
+        PyValue::Bool(flag) => Number::Whole(BigInt::from(u8::from(*flag))),
+        PyValue::Int(whole) => Number::Whole(whole.clone()),
+        PyValue::Float(x) => Number::Real(*x),
+        PyValue::Complex(re, im) => Number::Complex(*re, *im),
+        _ => return None,
+    })
+}
+
+/// The real and the imaginary part of a number, as floats.
+fn parts(number: &Number) -> PyResult<(f64, f64)> {
+    match number {
+        Number::Whole(whole) => {
+            let too_large = || PyError::new("OverflowError", "int too large to convert to float");
+            let real = whole.to_f64().filter(|x| x.is_finite());
+            Ok((real.ok_or_else(too_large)?, 0.0))
+        }
+        Number::Real(x) => Ok((*x, 0.0)),
+        Number::Complex(re, im) => Ok((*re, *im)),
+    }
+}
+
+/// `left + right`.
+pub fn add(left: &PyValue, right: &PyValue) -> PyResult<PyValue> {
+    let (kind, other) = (left.type_name(), right.type_name());
+    let only = || {
+        let message = format!("can only concatenate {kind} (not \"{other}\") to {kind}");
+        PyError::type_error(message)
+    };
+    if let (Some(a), Some(b)) = (number(left), number(right)) {
+        return Ok(match (&a, &b) {
+            (Number::Whole(a), Number::Whole(b)) => PyValue::Int(a + b),
+            (Number::Complex(..), _) | (_, Number::Complex(..)) => {
+                let ((re, im), (other_re, other_im)) = (parts(&a)?, parts(&b)?);
+                PyValue::Complex(re + other_re, im + other_im)
+            }
+            _ => PyValue::Float(parts(&a)?.0 + parts(&b)?.0),
+        });
+    }
+    match (left, right) {
+        (PyValue::Str(_) | PyValue::Surrogates(_), _) => {
+            let (Some(a), Some(b)) = (code_points(left), code_points(right)) else {
+                return Err(only());
+            };
+            Ok(text([a, b].concat()))
+        }
+        (PyValue::Bytes(a), PyValue::Bytes(b)) => Ok(PyValue::Bytes([&a[..], &b[..]].concat())),
+        (PyValue::Bytes(_), _) => Err(PyError::type_error(format!(
+            "can't concat {other} to bytes"
+        ))),
+        (PyValue::List(a), PyValue::List(b)) => Ok(PyValue::List([&a[..], &b[..]].concat())),
+        (PyValue::Tuple(a), PyValue::Tuple(b)) => Ok(PyValue::Tuple([&a[..], &b[..]].concat())),
+        (PyValue::List(_) | PyValue::Tuple(_), _) => Err(only()),
+        _ => Err(PyError::type_error(format!(
+            "unsupported operand type(s) for +: '{kind}' and '{other}'"
+        ))),
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -562,5 +629,71 @@ mod tests {
             format_each(&lone, "<", ">").unwrap(),
             PyValue::Surrogates(vec![0x3c, 0xd83d, 0x3e])
         );
+    }
+
+    #[test]
+    fn adding_as_python_does() {
+        // Expected values are CPython's.
+        let s = PyValue::str;
+        let float = PyValue::Float;
+        let tuple =
+            |items: &[i64]| PyValue::Tuple(items.iter().map(|&x| PyValue::int(x)).collect());
+        let bytes = |text: &str| PyValue::Bytes(text.as_bytes().to_vec());
+        assert_eq!(add(&s("a"), &s("b")).unwrap(), s("ab"));
+        assert_eq!(add(&s(""), &s("")).unwrap(), s(""));
+        assert_eq!(
+            add(&PyValue::int(1), &PyValue::int(2)).unwrap(),
+            PyValue::int(3)
+        );
+        assert_eq!(
+            add(&PyValue::Bool(true), &PyValue::Bool(true)).unwrap(),
+            PyValue::int(2)
+        );
+        assert_eq!(add(&PyValue::int(1), &float(1.5)).unwrap(), float(2.5));
+        assert_eq!(add(&PyValue::Bool(true), &float(0.5)).unwrap(), float(1.5));
+        assert_eq!(
+            add(&float(0.1), &float(0.2)).unwrap(),
+            float(0.30000000000000004)
+        );
+        assert_eq!(
+            add(&float(1e308), &float(1e308)).unwrap(),
+            float(f64::INFINITY)
+        );
+        let complex = PyValue::Complex(0.0, 2.0);
+        assert_eq!(
+            add(&PyValue::int(1), &complex).unwrap(),
+            PyValue::Complex(1.0, 2.0)
+        );
+        let big = PyValue::Int(BigInt::from(2).pow(53) + 1);
+        assert_eq!(add(&big, &float(0.0)).unwrap(), float(9007199254740992.0));
+        assert_eq!(add(&ints(&[1]), &ints(&[2])).unwrap(), ints(&[1, 2]));
+        assert_eq!(add(&tuple(&[1]), &tuple(&[2])).unwrap(), tuple(&[1, 2]));
+        assert_eq!(add(&bytes("a"), &bytes("b")).unwrap(), bytes("ab"));
+        let huge = PyValue::Int(BigInt::from(10).pow(400));
+        assert_eq!(kind(add(&huge, &float(1.0))), "OverflowError");
+        assert_eq!(kind(add(&float(1.0), &huge)), "OverflowError");
+        let dict = PyValue::Dict(PyDict::default());
+        for (left, right) in [
+            (s("a"), PyValue::int(1)),
+            (PyValue::int(1), s("a")),
+            (s("a"), PyValue::None),
+            (s("a"), ints(&[1])),
+            (s("a"), bytes("b")),
+            (bytes("a"), s("b")),
+            (bytes(""), PyValue::int(1)),
+            (ints(&[1]), tuple(&[2])),
+            (tuple(&[1]), ints(&[2])),
+            (ints(&[1]), s("a")),
+            (PyValue::None, PyValue::int(1)),
+            (PyValue::int(1), PyValue::None),
+            (dict.clone(), dict),
+            (PyValue::Ellipsis, PyValue::int(1)),
+        ] {
+            assert_eq!(
+                kind(add(&left, &right)),
+                "TypeError",
+                "{left:?} + {right:?}"
+            );
+        }
     }
 }

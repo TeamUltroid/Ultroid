@@ -1,6 +1,6 @@
 # Port map: Ultroid
 
-7 of 18 units have a Rust port; no original changed since it was recorded.
+8 of 19 units have a Rust port; no original changed since it was recorded.
 
 ## Ports
 
@@ -11,6 +11,7 @@
 | `rust/harness/command.py` | `rust/command-rs` | `command`, `assistant`, `inline` | - | 9301 | 9301/9301 | unchanged |
 | `rust/harness/dbaccess.py` | `rust/dbaccess-rs` | `run` | - | 949 | 949/949 | unchanged |
 | `rust/harness/dbvalue.py` | `rust/dbvalue-rs` | `read_stored`, `write_value` | - | 4394 | 4394/4394 | unchanged |
+| `rust/harness/language.py` | `rust/strings-rs` | `run` | - | 1716 | 1716/1716 | unchanged |
 | `rust/harness/launch.py` | `rust/launch-rs` | `plan` | - | 1714 | 1714/1714 | unchanged |
 | `rust/harness/session.py` | `rust/session-rs` | `check`, `parse` | - | 1382 | 1382/1382 | unchanged |
 

@@ -8,6 +8,7 @@ data and give data. A plain library: no Python, no Telegram, no network.
 | `session` | What a `SESSION` string is: Telethon's `StringSession`, and `validate_session` with its Pyrogram conversion | `rust/session-rs` |
 | `command` | How a command is recognised: `compile_pattern`, and Python's `re.match` on the result | `rust/command-rs` |
 | `launch` | Which clients `multi_client.py` starts for an environment | `rust/launch-rs` |
+| `strings` | The language strings: which file is loaded, and what `get_string`, `get_help` and `get_languages` give | `rust/strings-rs` |
 
 ## Session strings
 
@@ -156,12 +157,65 @@ What the original does that one would not guess, all of it kept (ADR-003):
 
 Proof: `rust/launch-rs`, 1,714 recorded runs of the script, gate passed.
 
+## Language strings
+
+```rust
+use ultroid_core::strings::Strings;
+use ultroid_db::PyValue;
+
+let variable = std::env::var("LANGUAGE").ok();
+let mut strings = Strings::start(&mut db, variable.as_deref(), host)?;
+let wrong = strings.get_string(&PyValue::str("py_c1"), true)?;
+```
+
+`Strings` is the module `strings` once it is imported: `start` picks the language and loads its
+file, `get_string` looks a key up, `get_help` gives a plugin's help under its heading,
+`get_languages` loads every file and lists the languages. `host` is what the module reaches
+outside itself, as a trait: the files, Google's translator, the log. What a file holds is taken
+as the reader gives it (ADR-018), so the values are Python's (`PyValue`).
+
+What the original does that one would not guess, all of it kept (ADR-003):
+
+- **English is only there when something loaded it.** The module loads one file when it is
+  imported: the language's. With `hi` as the language, a key `hi.yml` lacks gives
+  ``Warning: could not load any string with the key `...` `` although `en.yml` has it. Only
+  after `get_languages` has run, which the language menu does, is English there to fall back
+  on.
+- **A language with no file is read as English, but stays the language asked for.** The file
+  is kept as `en`, the lookups ask for the other name, find nothing, and take each string from
+  English through the translator, one request to Google for each string the first time it is
+  used.
+- **`LANGUAGE` is not Ultroid's alone.** With no language in the database the module takes the
+  environment variable `LANGUAGE`, which GNU gettext reads as the list of languages a user
+  prefers, in a form such as `en_US:en`. On a machine that sets it, that is the language, it
+  has no file, and the item above applies to every string.
+- **The stored language is what `get_key` reads it as.** `5` under `language` is the number 5:
+  `5.yml` is loaded, under the name `"5"`, and the lookups ask for the language `5`, which is
+  another key.
+- **What the translator answers is kept as the string**, for as long as the program runs. An
+  empty answer makes the string empty. An answer with another number of `{}` than the English
+  is dropped for the English, and that is kept instead.
+- **How a failure of the translator shows depends on its type.** A `TypeError` passes without
+  a trace. A `KeyError` reads as "no such string" and gives the warning. Anything else is
+  logged with its traceback, each time a string is asked for, and the English is returned.
+- **A string nobody has is a string all the same**: the warning above, which the caller then
+  sends or fills in. Only `get_string(key, False)`, as `get_help` uses it, gives `None`.
+- **`get_languages` fails on a file without `name`, `natively` or `authors`** (`KeyError`), or
+  one that holds no mapping (`TypeError`), and takes the language menu with it.
+- **A file that cannot be read is logged and left out**, and is not replaced by English.
+- **A file is known by its name up to `.yml`**, after the last `/` and the last `\`.
+  `get_languages` looks at every name in the folder that ends in `yml` and does not start with
+  a dot, and loads those that end in `.yml`.
+
+Proof: `rust/strings-rs`, 1,716 recorded scenarios, gate passed.
+
 ## Checks
 
 ```sh
 cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test
-for unit in session command launch; do rust-anything gate ../$unit-rs; done
+for unit in session command launch strings; do rust-anything gate ../$unit-rs; done
 python3 ../harness/fuzz_session.py 1 60
 python3 -W ignore ../harness/fuzz_command.py 1 60
 python3 ../harness/fuzz_launch.py 1 20
+python3 -W ignore ../harness/fuzz_strings.py 1 40
 ```

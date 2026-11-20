@@ -52,6 +52,7 @@ this port runs in. So the port is split in two (ADR-001):
 | 015 | The accessors are proven as scenarios: calls, restarts, edits of the stored text | default |
 | 016 | Start-up logic is a second library, `ultroid-core` | default |
 | 017 | Command patterns are matched by a matcher of our own that follows `re`; no regex crate | default |
+| 018 | The language lookup is ported; which reader reads the language files | **open** |
 
 "default" means taken without the owner, from the facts; see `DECISIONS.md`.
 
@@ -75,7 +76,8 @@ dynamic code).
 | database value format (`pyUltroid/startup/_database.py`) | what `set_key` stores and `get_key` reads back: `ast.literal_eval`, `str()` and `repr()` in `ultroid-db` | harness | done: `dbvalue-rs`, gate passed, 4394/4394 cases; 3.54x across the bridge |
 | `pyUltroid/dB/` and `_BaseDatabase` | the 93 accessor functions, `KeyManager`, and `udB`'s cache and value handling, over an in-memory store | harness, as scenarios (ADR-015) | done: `dbaccess-rs`, gate passed, 949/949 scenarios (7,968 steps); 3.45x across the bridge |
 | database backends (`pyUltroid/startup/_database.py`) | Redis, MongoDB, PostgreSQL, local file behind the `Store` trait | needs a server of each | blocked: nothing to record against here; traps in `research/dependencies-core.md` |
-| `strings/` | language file loading and `get_string` lookup with English fallback | harness | open |
+| `strings/` | which language file is loaded, `get_string` with its way through English and the translator, `get_help`, `get_languages`, in `ultroid-core` | harness, as scenarios, on what a file holds | done: `strings-rs`, gate passed, 1716/1716 scenarios (6,892 steps) |
+| reading a language file (`strings/`, `pyUltroid/fns/tools.py`) | PyYAML's `safe_load`, or the fallback that passes every value to `eval` | - | open: ADR-018. The two give different results for 138 keys (`research/language-files.md`) |
 | command patterns (`pyUltroid/_misc/_decorators.py`) | `compile_pattern` and what `re.match` makes of the result, in `ultroid-core`: a matcher that follows Python's `re` (ADR-017), checked on every pattern the code registers | harness | done: `command-rs`, gate passed, 9301/9301 cases; 4.68x across the bridge, nearly all of it compiling the pattern |
 | session strings (`pyUltroid/startup/connections.py`) | `validate_session` with its Pyrogram conversion, and Telethon's `StringSession`, in `ultroid-core` | harness | done: `session-rs`, gate passed, 1382/1382 cases; 1.57x across the bridge |
 | `multi_client.py` | which clients the script starts for an environment, in `ultroid-core` | harness, running the script itself | done: `launch-rs`, gate passed, 1714/1714 cases; starting and waiting is left to a launcher |
@@ -102,6 +104,7 @@ dynamic code).
 2. ADR-006: what happens to runtime-installed plugins and the addons repository.
 3. A Telegram test account whose behaviour may be recorded, so the blocked units can be proven.
 4. ADR-010: whether the Rust modules must build on Termux.
+5. ADR-018: which of the two readers of the language files gives the intended result.
 
 ## Out of scope on this branch
 
