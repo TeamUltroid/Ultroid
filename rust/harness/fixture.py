@@ -102,3 +102,11 @@ def has_set_order(value):
     if isinstance(value, (list, tuple, set, frozenset)):
         return isinstance(value, (set, frozenset)) and len(value) > 1 or any(map(has_set_order, value))
     return False
+
+
+def stub_strings():
+    """`strings` is a unit of its own. For code that only asks it for a message, this stands
+    in for it: asked for a message, it gives back the key."""
+    module = types.ModuleType("strings")
+    module.get_string = lambda key, *rest: key
+    sys.modules["strings"] = module

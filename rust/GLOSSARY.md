@@ -20,5 +20,5 @@ thing the same way. A Rust name is filled in when the first unit that needs the 
 | addon | A plugin from the UltroidAddons repository or installed from chat at runtime. | blocked (ADR-006) |
 | sudo user, full sudo | Users allowed to run the owner's commands; full sudo may run the dangerous ones. | not ported yet |
 | language | A file in `strings/strings/<code>.yml`. `get_string(key)` reads the current language and falls back to English. | not ported yet |
-| session string | The login credential for the user account: a Telethon string, or a Pyrogram string converted on start. | not ported yet |
+| session string | The login credential for the user account: a Telethon string, or a Pyrogram string converted on start. | `ultroid_core::session::StringSession`; `validate_session` decides what a `SESSION` value is |
 | client number | `1` to `5`: the suffix that selects one client's variables in `multi_client.py`. | not ported yet |

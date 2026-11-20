@@ -1,6 +1,6 @@
 # Port map: Ultroid
 
-4 of 15 units have a Rust port; no original changed since it was recorded.
+5 of 16 units have a Rust port; no original changed since it was recorded.
 
 ## Ports
 
@@ -10,6 +10,7 @@
 | `pyUltroid/fns/tools.py` | `rust/tools-rs` | `get_msg_button`, `text_set`, `stdr`, `cmd_regex_replace`, `get_chat_and_msgid` | `get_ofox`, `json_parser`, `is_url_ok`, `metadata`, `set_attributes`, `create_tl_btn`, `format_btn`, `saavn_search`, `webuploader`, `get_all_files`, `get_paste`, `get_google_images`, `get_chatbot_reply`, `check_filename`, `genss`, `duration_s`, `order_points`, `four_point_transform`, `telegraph_client`, `make_html_telegraph`, `Carbon`, `get_file_link`, `get_stored_file`, `translate`, `safe_load`, `LogoHelper`, `LottieException`, `TgConverter` | 809 | 809/809 | unchanged |
 | `rust/harness/dbaccess.py` | `rust/dbaccess-rs` | `run` | - | 949 | 949/949 | unchanged |
 | `rust/harness/dbvalue.py` | `rust/dbvalue-rs` | `read_stored`, `write_value` | - | 4394 | 4394/4394 | unchanged |
+| `rust/harness/session.py` | `rust/session-rs` | `check`, `parse` | - | 1382 | 1382/1382 | unchanged |
 
 ## Not ported yet
 
