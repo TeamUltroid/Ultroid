@@ -11,9 +11,10 @@ thing the same way. A Rust name is filled in when the first unit that needs the 
 | scenario | A list of steps (calls, restarts, edits of the stored text, a new time) run on an empty database; how the accessors are recorded (ADR-015). | `run` in `rust/dbaccess-rs` |
 | stored value | What `set_key` writes: `str(value)`. `get_key` reads it back with `ast.literal_eval` and keeps the raw string when that fails. | `ultroid_db::PyValue`; `read_stored` reads stored text, `normalize` is what `set_key` keeps, `to_str` is the text it stores |
 | literal | Text that `ast.literal_eval` accepts: a Python number, string, bytes, tuple, list, dict, set, `True`, `False`, `None` or `...`. | `ultroid_db::parse_literal` |
-| `HNDLR` | The command prefix for the owner's own commands. Default `.`. | not ported yet |
-| `SUDO_HNDLR`, `DUAL_HNDLR` | The prefixes for sudo users and for the assistant in dual mode. | not ported yet |
-| pattern | The regular expression a plugin registers for a command, without the prefix. | not ported yet |
+| `HNDLR` | The command prefix for the owner's own commands. Default `.`. `" "` or `NO_HNDLR` means none. | the `handler` argument of `ultroid_core::command::command_pattern`; reading it from the database is not ported yet |
+| `SUDO_HNDLR`, `DUAL_HNDLR` | The prefixes for sudo users and for the assistant in dual mode. | the same argument |
+| pattern | The regular expression a plugin registers for a command, without the prefix. Written for Python's `re`. | `ultroid_core::command::Pattern`, built from `command_pattern` (userbot), `assistant_pattern` (assistant bot) or the pattern as it is (inline query) |
+| match | What `re.match` gives for a pattern at the start of a message: `event.pattern_match`. | `ultroid_core::command::Found`: `end`, `groups`, `named` |
 | `ultroid_bot` | The user account client. | blocked (ADR-005) |
 | `asst` | The assistant: the bot account client. | blocked (ADR-005) |
 | plugin | A Python file in `plugins/` whose handlers are registered on import. | blocked (ADR-006) |

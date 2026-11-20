@@ -1,4 +1,4 @@
-"""Writes rust/ultroid-db/src/tables.rs from the interpreter it runs under.
+"""Writes the Unicode tables of rust/ultroid-db and rust/ultroid-core from the interpreter it runs under.
 
     python3 rust/harness/gen_tables.py path/to/NameAliases.txt
 
@@ -20,9 +20,12 @@ import unicodedata
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "ultroid-db", "src", "tables.rs")
 
 
-def ranges(test):
+CORE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "ultroid-core", "src", "tables.rs")
+
+
+def ranges(test, first=0x80):
     out, start = [], None
-    for code in range(0x80, 0x110000):
+    for code in range(first, 0x110000):
         hit = test(chr(code))
         if hit and start is None:
             start = code
@@ -102,5 +105,15 @@ body = [
 ]
 with open(OUT, "w", encoding="utf-8") as out:
     out.write(header + "\n" + "\n\n".join(body) + "\n")
-print(f"wrote {os.path.normpath(OUT)} for CPython {version}, Unicode {unicodedata.unidata_version}")
-print("now run `cargo fmt` in rust/ultroid-db: the tables are written unformatted")
+# What `\\w`, `\\d` and `\\s` match in a pattern of the `re` module, for the command patterns.
+core = [
+    table("WORD", "Inclusive ranges `\\w` matches: `str.isalnum()` and the underscore.",
+          ranges(lambda c: c.isalnum() or c == "_", 0)),
+    table("DIGIT", "Inclusive ranges `\\d` matches: `str.isdecimal()`.", ranges(str.isdecimal, 0)),
+    table("SPACE", "Inclusive ranges `\\s` matches: `str.isspace()`.", ranges(str.isspace, 0)),
+]
+with open(CORE, "w", encoding="utf-8") as out:
+    out.write(header.replace(", from U+0080 up", "") + "\n" + "\n\n".join(core) + "\n")
+for path in (OUT, CORE):
+    print(f"wrote {os.path.normpath(path)} for CPython {version}, Unicode {unicodedata.unidata_version}")
+print("now run `cargo fmt` in rust/ultroid-db and rust/ultroid-core: the tables are written unformatted")

@@ -3,6 +3,8 @@
 //!
 //! - [`session`]: what a `SESSION` string is: Telethon's string session, and the Pyrogram
 //!   strings Ultroid converts on the way in.
+//! - [`command`]: how a command is recognised: the pattern a plugin registers, the handler
+//!   prefix, and what Python's `re` makes of the two on a message.
 //!
 //! Each part is proven against the Python original case by case, in the bridge crate named in
 //! its module.
@@ -18,4 +20,6 @@
 
 #![forbid(unsafe_code)]
 
+pub mod command;
 pub mod session;
+mod tables;
