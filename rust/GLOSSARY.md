@@ -6,7 +6,8 @@ thing the same way. A Rust name is filled in when the first unit that needs the 
 | Term | Meaning | In Rust |
 | --- | --- | --- |
 | `udB` | The key-value database every part of Ultroid reads and writes. One of Redis, MongoDB, PostgreSQL or a local JSON file, behind `get_key`, `set_key`, `del_key`, `keys`. | not ported yet |
-| stored value | What `set_key` writes: `str(value)`. `get_key` reads it back with `ast.literal_eval` and keeps the raw string when that fails. | not ported yet |
+| stored value | What `set_key` writes: `str(value)`. `get_key` reads it back with `ast.literal_eval` and keeps the raw string when that fails. | `ultroid_db::PyValue`; `read_stored` reads stored text, `normalize` is what `set_key` keeps, `to_str` is the text it stores |
+| literal | Text that `ast.literal_eval` accepts: a Python number, string, bytes, tuple, list, dict, set, `True`, `False`, `None` or `...`. | `ultroid_db::parse_literal` |
 | `HNDLR` | The command prefix for the owner's own commands. Default `.`. | not ported yet |
 | `SUDO_HNDLR`, `DUAL_HNDLR` | The prefixes for sudo users and for the assistant in dual mode. | not ported yet |
 | pattern | The regular expression a plugin registers for a command, without the prefix. | not ported yet |
