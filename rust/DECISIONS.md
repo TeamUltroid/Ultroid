@@ -121,7 +121,7 @@ A crate recorded through the harness proves the logic, not the storage engine un
 
 ## ADR-008: Where Rust is wired into the running app
 
-Status: accepted by default (2026-11-20, owner away)
+Status: superseded by ADR-012
 
 Context: A shadow drop-in runs the original and the Rust port side by side. Units that hold state
 (database accessors, the language cache) would split that state if only one side wrote to it.
@@ -143,7 +143,8 @@ Context: The plan lists 47 imported dependencies. 39 have no entry in rust-anyth
 
 Decision: A crate is picked only when a unit that needs it is ported, and is then recorded
 against the original like any other code. The candidates and what is known about each are in
-`research/dependencies.md`. A missing crate is flagged, not quietly rewritten by hand.
+`research/dependencies-core.md` and `research/dependencies-plugins.md`. A missing crate is
+flagged, not quietly rewritten by hand.
 
 Consequences: Most of the 47 stay undecided, because the units that use them are blocked.
 
@@ -171,3 +172,21 @@ passes. There is no cutover on this branch: Ultroid keeps starting with `python3
 
 Consequences: The pull request is the review surface; `MAP.md` and `HANDOFF.md` say where the
 port stands at any commit.
+
+## ADR-012: The Python app is not modified on this branch
+
+Status: accepted by default (2026-11-20, owner away); supersedes ADR-008
+
+Context: The first ported unit (`helper-rs`) measured 1.04x against the original with the call
+into Rust included, so wiring it into the app buys nothing today. rust-anything's shadow drop-in
+for Python holds absolute paths to the checkout it was generated in, and nothing in the
+deployment builds the native modules. Wiring would mean editing `pyUltroid` for no gain, with
+only the owner able to try it against Telegram.
+
+Decision: Nothing outside `rust/` changes on this branch. Each unit's shadow drop-in is generated
+per checkout (`rust-anything shadow <crate>`, not committed) and checked in `old`, `shadow` and
+`new` mode by `rust/harness/check_shadow.py`. Importing a shadow in place of an original module
+is left as a one-line change for the owner to make when a unit is worth switching.
+
+Consequences: The pull request is purely additive and cannot change how Ultroid behaves. The
+ported units are proven but not in use.
