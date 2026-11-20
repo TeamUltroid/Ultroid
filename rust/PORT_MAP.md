@@ -1,6 +1,6 @@
 # Port map: Ultroid
 
-3 of 14 units have a Rust port; no original changed since it was recorded.
+4 of 15 units have a Rust port; no original changed since it was recorded.
 
 ## Ports
 
@@ -8,6 +8,7 @@
 | --- | --- | --- | --- | ---: | ---: | --- |
 | `pyUltroid/fns/helper.py` | `rust/helper-rs` | `time_formatter`, `humanbytes`, `numerize` | `run_async`, `make_mention`, `inline_mention`, `un_plug`, `bash`, `updater`, `uploader`, `downloader`, `async_searcher`, `download_file`, `fast_download`, `mediainfo`, `progress`, `restart`, `shutdown`, `KEEP_SAFE` | 213 | 213/213 | unchanged |
 | `pyUltroid/fns/tools.py` | `rust/tools-rs` | `get_msg_button`, `text_set`, `stdr`, `cmd_regex_replace`, `get_chat_and_msgid` | `get_ofox`, `json_parser`, `is_url_ok`, `metadata`, `set_attributes`, `create_tl_btn`, `format_btn`, `saavn_search`, `webuploader`, `get_all_files`, `get_paste`, `get_google_images`, `get_chatbot_reply`, `check_filename`, `genss`, `duration_s`, `order_points`, `four_point_transform`, `telegraph_client`, `make_html_telegraph`, `Carbon`, `get_file_link`, `get_stored_file`, `translate`, `safe_load`, `LogoHelper`, `LottieException`, `TgConverter` | 809 | 809/809 | unchanged |
+| `rust/harness/dbaccess.py` | `rust/dbaccess-rs` | `run` | - | 949 | 949/949 | unchanged |
 | `rust/harness/dbvalue.py` | `rust/dbvalue-rs` | `read_stored`, `write_value` | - | 4394 | 4394/4394 | unchanged |
 
 ## Not ported yet
@@ -19,7 +20,7 @@ In the order `analyze` suggests.
 | `strings/` | 68 | 4 | 77 |
 | `resources/startup/` | 331 | 13 | 87 |
 | `resources/session/` | 152 | 6 | 84 |
-| `pyUltroid/dB/` | 616 | 94 | 61 |
+| `pyUltroid/dB/` | 616 | 94 | 59 |
 | `multi_client.py` | 24 | 0 | 97 |
 | `pyUltroid/` | 309 | 7 | 57 |
 | `assistant/manager/` | 495 | 16 | 50 |

@@ -6,7 +6,7 @@
 #![forbid(unsafe_code)]
 
 use ultroid_db::bridge::from_bridge;
-use ultroid_db::{PyValue, canon, normalize, to_str};
+use ultroid_db::{PyValue, canon, has_set_order, normalize, to_str};
 
 /// The type name and `repr` of a value, the way `fixture.describe` reports them.
 fn describe(value: &PyValue) -> Result<Vec<String>, String> {
@@ -19,30 +19,22 @@ pub fn read_stored(text: String) -> Result<Vec<String>, String> {
     describe(&ultroid_db::read_stored(&text))
 }
 
-/// Whether printing a value depends on the order a set is iterated in. CPython follows its hash
-/// table, this port follows insertion; each reads what the other writes.
-fn has_set_order(value: &PyValue) -> bool {
-    match value {
-        PyValue::Set(set) => set.len() > 1 || set.iter().any(has_set_order),
-        PyValue::List(items) | PyValue::Tuple(items) => items.iter().any(has_set_order),
-        PyValue::Dict(dict) => dict
-            .iter()
-            .any(|(key, item)| has_set_order(key) || has_set_order(item)),
-        _ => false,
-    }
-}
-
-/// Port of `write_value` (`rust/harness/dbvalue.py:18`).
+/// Port of `write_value` (`rust/harness/dbvalue.py:18`): what is kept, and the text stored.
 pub fn write_value(value: serde_json::Value) -> Result<Vec<String>, String> {
     let kept = normalize(from_bridge(&value).map_err(|error| error.to_string())?);
+    let stored = match to_str(&kept) {
+        Ok(text) => text,
+        // Text with a lone surrogate: the cache keeps it, no backend takes it.
+        Err(error) if error.kind == "UnicodeEncodeError" => format!("refused: {}", error.kind),
+        Err(error) => return Err(error.to_string()),
+    };
     let mut described = describe(&kept)?;
     // As in the original's harness: where set order shows, both sides print sets sorted.
-    let stored = if has_set_order(&kept) {
-        canon(&kept)
+    described.push(if has_set_order(&kept) {
+        canon(&kept).map_err(|error| error.to_string())?
     } else {
-        to_str(&kept)
-    };
-    described.push(stored.map_err(|error| error.to_string())?);
+        stored
+    });
     Ok(described)
 }
 

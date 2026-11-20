@@ -184,6 +184,11 @@ impl PySet {
         Ok(())
     }
 
+    /// Takes a member out; `false` when it was not there.
+    pub fn remove(&mut self, member: &PyValue) -> PyResult<bool> {
+        Ok(self.members.shift_remove(&member.key()?).is_some())
+    }
+
     pub fn iter(&self) -> impl Iterator<Item = &PyValue> {
         self.members.values()
     }
