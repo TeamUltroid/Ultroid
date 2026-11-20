@@ -1,0 +1,537 @@
+{"fn": "cmd_regex_replace", "args": ["akinator"]}
+{"fn": "cmd_regex_replace", "args": ["d(kick|ban)"]}
+{"fn": "cmd_regex_replace", "args": ["help( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["repo$"]}
+{"fn": "cmd_regex_replace", "args": ["ultroid$"]}
+{"fn": "cmd_regex_replace", "args": ["wspr( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["promote( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["demote( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["ban( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["unban( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["kick( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["tban( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["pin$"]}
+{"fn": "cmd_regex_replace", "args": ["unpin($| (.*))"]}
+{"fn": "cmd_regex_replace", "args": ["tpin( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["purge( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["purgeme( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["purgeall$"]}
+{"fn": "cmd_regex_replace", "args": ["pinned"]}
+{"fn": "cmd_regex_replace", "args": ["listpinned$"]}
+{"fn": "cmd_regex_replace", "args": ["autodelete( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["kickall( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["afk( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["gemini( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["antr( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["gpt( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["deepseek( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["setflood ?(\\d+)"]}
+{"fn": "cmd_regex_replace", "args": ["remflood$"]}
+{"fn": "cmd_regex_replace", "args": ["getflood$"]}
+{"fn": "cmd_regex_replace", "args": ["addcmd( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["remcmd( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["listcmd$"]}
+{"fn": "cmd_regex_replace", "args": ["makevoice$"]}
+{"fn": "cmd_regex_replace", "args": ["atrim( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["extractaudio$"]}
+{"fn": "cmd_regex_replace", "args": ["autokick (on|off)$"]}
+{"fn": "cmd_regex_replace", "args": ["autopic( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["(rc|c)arbon"]}
+{"fn": "cmd_regex_replace", "args": ["ccarbon( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["rayso"]}
+{"fn": "cmd_regex_replace", "args": ["blacklist( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["remblacklist( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["listblacklist$"]}
+{"fn": "cmd_regex_replace", "args": ["alive( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["ping$"]}
+{"fn": "cmd_regex_replace", "args": ["cmds$"]}
+{"fn": "cmd_regex_replace", "args": ["restart$"]}
+{"fn": "cmd_regex_replace", "args": ["shutdown$"]}
+{"fn": "cmd_regex_replace", "args": ["logs( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["update( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["addblacklist( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["addch( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["remch( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["listchannels$"]}
+{"fn": "cmd_regex_replace", "args": ["forward$"]}
+{"fn": "cmd_regex_replace", "args": ["broadcast( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["button"]}
+{"fn": "cmd_regex_replace", "args": ["calc"]}
+{"fn": "cmd_regex_replace", "args": ["shift (.*)"]}
+{"fn": "cmd_regex_replace", "args": ["asource (.*)"]}
+{"fn": "cmd_regex_replace", "args": ["dsource( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["listsource"]}
+{"fn": "cmd_regex_replace", "args": ["adest (.*)"]}
+{"fn": "cmd_regex_replace", "args": ["ddest( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["listdest"]}
+{"fn": "cmd_regex_replace", "args": ["repai"]}
+{"fn": "cmd_regex_replace", "args": ["addai"]}
+{"fn": "cmd_regex_replace", "args": ["remai"]}
+{"fn": "cmd_regex_replace", "args": ["listai"]}
+{"fn": "cmd_regex_replace", "args": ["delchat"]}
+{"fn": "cmd_regex_replace", "args": ["getlink( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["create (b|g|c)(?: |$)(.*)"]}
+{"fn": "cmd_regex_replace", "args": ["setgpic( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["delgpic( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["unbanall$"]}
+{"fn": "cmd_regex_replace", "args": ["rmusers( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["addclean$"]}
+{"fn": "cmd_regex_replace", "args": ["remclean$"]}
+{"fn": "cmd_regex_replace", "args": ["listclean$"]}
+{"fn": "cmd_regex_replace", "args": ["compress( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["thumbnail$"]}
+{"fn": "cmd_regex_replace", "args": ["rename( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["convert( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["doc( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["open( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["install"]}
+{"fn": "cmd_regex_replace", "args": ["unload( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["uninstall( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["load( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["getaddons( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["setdb( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["deldb( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["rendb( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["delayspam( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["stopspam$"]}
+{"fn": "cmd_regex_replace", "args": ["sysinfo$"]}
+{"fn": "cmd_regex_replace", "args": ["bash"]}
+{"fn": "cmd_regex_replace", "args": ["eval"]}
+{"fn": "cmd_regex_replace", "args": ["cpp"]}
+{"fn": "cmd_regex_replace", "args": ["download( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["dl( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["ul( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["addecho( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["remecho( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["listecho$"]}
+{"fn": "cmd_regex_replace", "args": ["del$"]}
+{"fn": "cmd_regex_replace", "args": ["copy$"]}
+{"fn": "cmd_regex_replace", "args": ["edit"]}
+{"fn": "cmd_regex_replace", "args": ["reply$"]}
+{"fn": "cmd_regex_replace", "args": ["f(typing|audio|contact|document|game|location|sticker|photo|round|video)( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["store$"]}
+{"fn": "cmd_regex_replace", "args": ["delstored ?(.*)"]}
+{"fn": "cmd_regex_replace", "args": ["liststored$"]}
+{"fn": "cmd_regex_replace", "args": ["addfilter( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["remfilter( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["listfilter$"]}
+{"fn": "cmd_regex_replace", "args": ["font( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["fsub( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["remfsub$"]}
+{"fn": "cmd_regex_replace", "args": ["checkfsub$"]}
+{"fn": "cmd_regex_replace", "args": ["gdown( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["gdlist$"]}
+{"fn": "cmd_regex_replace", "args": ["gdul( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["gdsearch( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["gdfolder$"]}
+{"fn": "cmd_regex_replace", "args": ["(bw|invert)gif$"]}
+{"fn": "cmd_regex_replace", "args": ["rvgif$"]}
+{"fn": "cmd_regex_replace", "args": ["gif( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["vtog$"]}
+{"fn": "cmd_regex_replace", "args": ["glitch$"]}
+{"fn": "cmd_regex_replace", "args": ["gpromote( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["gdemote( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["ungban( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["gban( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["g(admin|)cast( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["gucast( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["gkick( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["gmute( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["ungmute( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["listgban$"]}
+{"fn": "cmd_regex_replace", "args": ["gstat( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["gblacklist$"]}
+{"fn": "cmd_regex_replace", "args": ["ungblacklist$"]}
+{"fn": "cmd_regex_replace", "args": ["setwelcome"]}
+{"fn": "cmd_regex_replace", "args": ["clearwelcome$"]}
+{"fn": "cmd_regex_replace", "args": ["getwelcome$"]}
+{"fn": "cmd_regex_replace", "args": ["setgoodbye"]}
+{"fn": "cmd_regex_replace", "args": ["cleargoodbye$"]}
+{"fn": "cmd_regex_replace", "args": ["getgoodbye$"]}
+{"fn": "cmd_regex_replace", "args": ["thankmembers (on|off)"]}
+{"fn": "cmd_regex_replace", "args": ["color$"]}
+{"fn": "cmd_regex_replace", "args": ["(grey|blur|negative|danger|mirror|quad|sketch|flip|toon)$"]}
+{"fn": "cmd_regex_replace", "args": ["csample (.*)"]}
+{"fn": "cmd_regex_replace", "args": ["blue$"]}
+{"fn": "cmd_regex_replace", "args": ["border( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["pixelator( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["(un|)lock( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["logo( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["mediainfo( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["rotate( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["eod$"]}
+{"fn": "cmd_regex_replace", "args": ["pntrst( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["gadget( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["randomuser"]}
+{"fn": "cmd_regex_replace", "args": ["ascii( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["dmute( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["undmute( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["tmute"]}
+{"fn": "cmd_regex_replace", "args": ["unmute( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["mute( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["nmtime( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["addnm( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["remnm( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["listnm$"]}
+{"fn": "cmd_regex_replace", "args": ["addnote( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["remnote( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["listnote$"]}
+{"fn": "cmd_regex_replace", "args": ["addnsfw( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["remnsfw"]}
+{"fn": "cmd_regex_replace", "args": ["(send|dm)( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["fwdreply( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["(f|)save$"]}
+{"fn": "cmd_regex_replace", "args": ["pdf( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["pdtext( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["pdscan( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["pdsave( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["pdsend( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["pmpermit( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["(start|stop|clear)archive$"]}
+{"fn": "cmd_regex_replace", "args": ["(a|approve)(?: |$)"]}
+{"fn": "cmd_regex_replace", "args": ["(da|disapprove)(?: |$)"]}
+{"fn": "cmd_regex_replace", "args": ["block( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["unblock( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["listapproved$"]}
+{"fn": "cmd_regex_replace", "args": ["logpm$"]}
+{"fn": "cmd_regex_replace", "args": ["nologpm$"]}
+{"fn": "cmd_regex_replace", "args": ["poll( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["(add|rem)profanity$"]}
+{"fn": "cmd_regex_replace", "args": ["setbio( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["setname ?((.|//)*)"]}
+{"fn": "cmd_regex_replace", "args": ["setpic$"]}
+{"fn": "cmd_regex_replace", "args": ["delpfp( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["poto( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["qrcode( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["addqr( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["qrdecode$"]}
+{"fn": "cmd_regex_replace", "args": ["size$"]}
+{"fn": "cmd_regex_replace", "args": ["resize( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["schedule( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["github (.*)"]}
+{"fn": "cmd_regex_replace", "args": ["google( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["img( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["reverse$"]}
+{"fn": "cmd_regex_replace", "args": ["saavn( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["addsnip( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["remsnip( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["listsnip"]}
+{"fn": "cmd_regex_replace", "args": ["getaudio$"]}
+{"fn": "cmd_regex_replace", "args": ["addaudio$"]}
+{"fn": "cmd_regex_replace", "args": ["dob( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["sticker( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["wall( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["q( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["packkang"]}
+{"fn": "cmd_regex_replace", "args": ["kang"]}
+{"fn": "cmd_regex_replace", "args": ["round$"]}
+{"fn": "cmd_regex_replace", "args": ["destroy$"]}
+{"fn": "cmd_regex_replace", "args": ["tiny$"]}
+{"fn": "cmd_regex_replace", "args": ["setstory"]}
+{"fn": "cmd_regex_replace", "args": ["storydl"]}
+{"fn": "cmd_regex_replace", "args": ["addsudo( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["delsudo( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["listsudo$"]}
+{"fn": "cmd_regex_replace", "args": ["tag(on|off|all|bots|rec|admins|owner)( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["tr( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["id( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["bots( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["hl( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["circle$"]}
+{"fn": "cmd_regex_replace", "args": ["ls( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["sg(|u)(?:\\s|$)([\\s\\S]*)"]}
+{"fn": "cmd_regex_replace", "args": ["webshot( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["tw( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["twdetail( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["twuser( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["twl( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["unsplash( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["usage"]}
+{"fn": "cmd_regex_replace", "args": ["kickme$"]}
+{"fn": "cmd_regex_replace", "args": ["date$"]}
+{"fn": "cmd_regex_replace", "args": ["listreserved$"]}
+{"fn": "cmd_regex_replace", "args": ["stats$"]}
+{"fn": "cmd_regex_replace", "args": ["paste( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["info( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["invite( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["rmbg($| (.*))"]}
+{"fn": "cmd_regex_replace", "args": ["telegraph( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["json( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["suggest( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["ipinfo( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["cpy$"]}
+{"fn": "cmd_regex_replace", "args": ["pst$"]}
+{"fn": "cmd_regex_replace", "args": ["thumb$"]}
+{"fn": "cmd_regex_replace", "args": ["getmsg( ?(.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["get($| (.*))"]}
+{"fn": "cmd_regex_replace", "args": ["stopvc$"]}
+{"fn": "cmd_regex_replace", "args": ["vcinvite$"]}
+{"fn": "cmd_regex_replace", "args": ["startvc$"]}
+{"fn": "cmd_regex_replace", "args": ["vctitle(?: |$)(.*)"]}
+{"fn": "cmd_regex_replace", "args": ["sample( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["vshots( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["vtrim( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["warn( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["resetwarn( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["warns( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["setwarn( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["weather ?(.*)"]}
+{"fn": "cmd_regex_replace", "args": ["air ?(.*)"]}
+{"fn": "cmd_regex_replace", "args": ["webupload( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["meaning( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["(syno|anto)nym"]}
+{"fn": "cmd_regex_replace", "args": ["ud (.*)"]}
+{"fn": "cmd_regex_replace", "args": ["gethtml( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["image( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["write( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["yt(a|v|sa|sv) ?(.*)"]}
+{"fn": "cmd_regex_replace", "args": ["zip( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["unzip( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": ["addzip$"]}
+{"fn": "cmd_regex_replace", "args": ["dozip( (.*)|$)"]}
+{"fn": "cmd_regex_replace", "args": [""]}
+{"fn": "cmd_regex_replace", "args": ["$"]}
+{"fn": "cmd_regex_replace", "args": ["ping$"]}
+{"fn": "cmd_regex_replace", "args": ["(.*)"]}
+{"fn": "cmd_regex_replace", "args": ["?(.*)"]}
+{"fn": "cmd_regex_replace", "args": ["a?(.*)b(.*)c"]}
+{"fn": "cmd_regex_replace", "args": ["x(?: |)y"]}
+{"fn": "cmd_regex_replace", "args": ["a| b"]}
+{"fn": "cmd_regex_replace", "args": ["( |)"]}
+{"fn": "cmd_regex_replace", "args": ["?((.|//)*)"]}
+{"fn": "cmd_regex_replace", "args": ["install ?P<shortname>\\w+"]}
+{"fn": "cmd_regex_replace", "args": ["(?P<shortname>\\w+)"]}
+{"fn": "cmd_regex_replace", "args": ["?(\\d+)"]}
+{"fn": "cmd_regex_replace", "args": ["purge ?(\\d+)"]}
+{"fn": "cmd_regex_replace", "args": ["(("]}
+{"fn": "cmd_regex_replace", "args": ["))"]}
+{"fn": "cmd_regex_replace", "args": ["$$$"]}
+{"fn": "cmd_regex_replace", "args": ["été ?(.*)"]}
+{"fn": "cmd_regex_replace", "args": ["| | |"]}
+{"fn": "cmd_regex_replace", "args": ["a(?: |)(?: |)b"]}
+{"fn": "cmd_regex_replace", "args": ["(.*)(.*)"]}
+{"fn": "cmd_regex_replace", "args": ["?(.*)?(.*)"]}
+{"fn": "cmd_regex_replace", "args": ["ＡＢ ?(.*)"]}
+{"fn": "cmd_regex_replace", "args": ["x\ny(.*)"]}
+{"fn": "get_chat_and_msgid", "args": ["https://t.me/c/1234567890/42"]}
+{"fn": "get_chat_and_msgid", "args": ["https://t.me/TeamUltroid/123"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/1234567890/42?single"]}
+{"fn": "get_chat_and_msgid", "args": ["https://t.me/c/1234567890/42/77"]}
+{"fn": "get_chat_and_msgid", "args": ["http://t.me/username/5?comment=9"]}
+{"fn": "get_chat_and_msgid", "args": ["https://t.me/UltroidSupportChat/100000"]}
+{"fn": "get_chat_and_msgid", "args": ["tg://openmessage?user_id=777000&message_id=456"]}
+{"fn": "get_chat_and_msgid", "args": ["tg://openmessage?user_id=1&message_id=2&x=3"]}
+{"fn": "get_chat_and_msgid", "args": ["see https://t.me/c/111/2 and https://t.me/c/333/4"]}
+{"fn": "get_chat_and_msgid", "args": ["https://t.me/c/abc/5"]}
+{"fn": "get_chat_and_msgid", "args": ["https://t.me/joinchat/AAAAAE"]}
+{"fn": "get_chat_and_msgid", "args": ["https://t.me/username"]}
+{"fn": "get_chat_and_msgid", "args": ["https://telegram.me/username/12"]}
+{"fn": "get_chat_and_msgid", "args": [""]}
+{"fn": "get_chat_and_msgid", "args": ["no link here"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me//5"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c//5"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/123"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/123/"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/123/x"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/007/08"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/+5/1"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/-5/1"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/12_3/4"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/1__2/4"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/_12/4"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/12_/4"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/ 123/4"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/123 /4"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/123\t/4"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/12 3/4"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/1.5/4"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/١٢٣/٤٥٦"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/１２３/４５"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/user/٤٥٦"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/१२३/7"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/1²/3"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/123/4²"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/99999999999999999999999999/1"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/x/99999999999999999999999999"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/9223372036854775807/9223372036854775808"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/1\n2/3"]}
+{"fn": "get_chat_and_msgid", "args": ["T.ME/c/1/2"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/C/1/2"]}
+{"fn": "get_chat_and_msgid", "args": ["xt.me/a/1"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/a/1/b/2"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/c/1/2"]}
+{"fn": "get_chat_and_msgid", "args": ["user_id=12&message_id=34"]}
+{"fn": "get_chat_and_msgid", "args": ["user_id=١٢&message_id=٣٤"]}
+{"fn": "get_chat_and_msgid", "args": ["user_id=&message_id=1"]}
+{"fn": "get_chat_and_msgid", "args": ["user_id=1&message_id="]}
+{"fn": "get_chat_and_msgid", "args": ["user_id=99999999999999999999&message_id=18446744073709551616"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/é/5"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/a b/5"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/12345/678 trailing text"]}
+{"fn": "get_chat_and_msgid", "args": ["https://t.me/c/1234567890/42\n"]}
+{"fn": "get_chat_and_msgid", "args": ["  https://t.me/c/1234567890/42  "]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/0/0"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/00/00"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/12 /5"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/12 /5"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/12\u001f/5"]}
+{"fn": "get_chat_and_msgid", "args": ["t.me/c/12\u000b/5"]}
+{"fn": "text_set", "args": [""]}
+{"fn": "text_set", "args": ["hello"]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]}
+{"fn": "text_set", "args": ["line one\nline two"]}
+{"fn": "text_set", "args": ["short\nbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\nend"]}
+{"fn": "text_set", "args": ["\n"]}
+{"fn": "text_set", "args": ["\n\n\n"]}
+{"fn": "text_set", "args": ["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n"]}
+{"fn": "text_set", "args": ["\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"]}
+{"fn": "text_set", "args": ["éééééééééééééééééééééééééééééééééééééééééééééééééééééééé"]}
+{"fn": "text_set", "args": ["😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀"]}
+{"fn": "text_set", "args": ["éééééééééééééééééééééééééééééé"]}
+{"fn": "text_set", "args": ["日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト日本語のテキスト"]}
+{"fn": "text_set", "args": ["a\r\nbcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"]}
+{"fn": "text_set", "args": ["0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n38\n39"]}
+{"fn": "text_set", "args": ["wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"]}
+{"fn": "text_set", "args": ["word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word "]}
+{"fn": "text_set", "args": ["                                                            "]}
+{"fn": "text_set", "args": ["tab\tseparated\ttab\tseparated\ttab\tseparated\ttab\tseparated\ttab\tseparated\ttab\tseparated\ttab\tseparated\ttab\tseparated\ttab\tseparated\ttab\tseparated\t"]}
+{"fn": "text_set", "args": ["The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. "]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]}
+{"fn": "text_set", "args": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]}
+{"fn": "text_set", "args": ["pppppppppppppppppppppppppppppp pppppppppppppppppppppppppppppp pppppppppppppppppppppppppppppp"]}
+{"fn": "text_set", "args": ["mixed 😀 emoji and ascii mixed 😀 emoji and ascii mixed 😀 emoji and ascii mixed 😀 emoji and ascii "]}
+{"fn": "text_set", "args": [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59]]}
+{"fn": "text_set", "args": [{"k0": 0, "k1": 1, "k2": 2, "k3": 3, "k4": 4, "k5": 5, "k6": 6, "k7": 7, "k8": 8, "k9": 9, "k10": 10, "k11": 11, "k12": 12, "k13": 13, "k14": 14, "k15": 15, "k16": 16, "k17": 17, "k18": 18, "k19": 19, "k20": 20, "k21": 21, "k22": 22, "k23": 23, "k24": 24, "k25": 25, "k26": 26, "k27": 27, "k28": 28, "k29": 29, "k30": 30, "k31": 31, "k32": 32, "k33": 33, "k34": 34, "k35": 35, "k36": 36, "k37": 37, "k38": 38, "k39": 39, "k40": 40, "k41": 41, "k42": 42, "k43": 43, "k44": 44, "k45": 45, "k46": 46, "k47": 47, "k48": 48, "k49": 49, "k50": 50, "k51": 51, "k52": 52, "k53": 53, "k54": 54, "k55": 55}]}
+{"fn": "stdr", "args": [0]}
+{"fn": "stdr", "args": [1]}
+{"fn": "stdr", "args": [5]}
+{"fn": "stdr", "args": [9]}
+{"fn": "stdr", "args": [10]}
+{"fn": "stdr", "args": [59]}
+{"fn": "stdr", "args": [60]}
+{"fn": "stdr", "args": [61]}
+{"fn": "stdr", "args": [599]}
+{"fn": "stdr", "args": [600]}
+{"fn": "stdr", "args": [601]}
+{"fn": "stdr", "args": [3599]}
+{"fn": "stdr", "args": [3600]}
+{"fn": "stdr", "args": [3601]}
+{"fn": "stdr", "args": [3661]}
+{"fn": "stdr", "args": [35999]}
+{"fn": "stdr", "args": [36000]}
+{"fn": "stdr", "args": [36001]}
+{"fn": "stdr", "args": [86399]}
+{"fn": "stdr", "args": [86400]}
+{"fn": "stdr", "args": [359999]}
+{"fn": "stdr", "args": [360000]}
+{"fn": "stdr", "args": [12345678]}
+{"fn": "stdr", "args": [-1]}
+{"fn": "stdr", "args": [-9]}
+{"fn": "stdr", "args": [-10]}
+{"fn": "stdr", "args": [-59]}
+{"fn": "stdr", "args": [-60]}
+{"fn": "stdr", "args": [-61]}
+{"fn": "stdr", "args": [-3600]}
+{"fn": "stdr", "args": [-3601]}
+{"fn": "stdr", "args": [9223372036854775807]}
+{"fn": "stdr", "args": [-9223372036854775808]}
+{"fn": "stdr", "args": [0.0]}
+{"fn": "stdr", "args": [0.5]}
+{"fn": "stdr", "args": [5.5]}
+{"fn": "stdr", "args": [9.99]}
+{"fn": "stdr", "args": [59.9]}
+{"fn": "stdr", "args": [60.0]}
+{"fn": "stdr", "args": [61.5]}
+{"fn": "stdr", "args": [600.0]}
+{"fn": "stdr", "args": [3600.0]}
+{"fn": "stdr", "args": [3661.5]}
+{"fn": "stdr", "args": [123456.789]}
+{"fn": "stdr", "args": [1e+16]}
+{"fn": "stdr", "args": [1e+17]}
+{"fn": "stdr", "args": [1.5e+22]}
+{"fn": "stdr", "args": [1e-05]}
+{"fn": "stdr", "args": [0.0001]}
+{"fn": "stdr", "args": [0.0001]}
+{"fn": "stdr", "args": [1.2345678901234568e+17]}
+{"fn": "stdr", "args": [-0.5]}
+{"fn": "stdr", "args": [-60.0]}
+{"fn": "stdr", "args": [-61.5]}
+{"fn": "stdr", "args": [7.0]}
+{"fn": "stdr", "args": [3725.25]}
+{"fn": "stdr", "args": [true]}
+{"fn": "stdr", "args": [false]}
+{"fn": "stdr", "args": [null]}
+{"fn": "stdr", "args": ["60"]}
+{"fn": "get_msg_button", "args": ["Hello [Google|https://google.com]"]}
+{"fn": "get_msg_button", "args": ["[A|a.com][B|b.com|same]"]}
+{"fn": "get_msg_button", "args": ["[A|a.com]\n[B|b.com]"]}
+{"fn": "get_msg_button", "args": ["[A|a.com|same]"]}
+{"fn": "get_msg_button", "args": ["text [A|a.com] middle [B|b.com|same] end"]}
+{"fn": "get_msg_button", "args": ["[A|a.com][B|b.com|same][C|c.com|same]"]}
+{"fn": "get_msg_button", "args": ["[a|b|c|same]"]}
+{"fn": "get_msg_button", "args": ["[|]"]}
+{"fn": "get_msg_button", "args": ["[x|]"]}
+{"fn": "get_msg_button", "args": ["[|y]"]}
+{"fn": "get_msg_button", "args": ["[[x|y]]"]}
+{"fn": "get_msg_button", "args": ["[x|y]]"]}
+{"fn": "get_msg_button", "args": ["no buttons here"]}
+{"fn": "get_msg_button", "args": [""]}
+{"fn": "get_msg_button", "args": ["   spaced   "]}
+{"fn": "get_msg_button", "args": ["[Join|t.me/TheUltroid] [Join|t.me/TheUltroid]"]}
+{"fn": "get_msg_button", "args": ["dup [a|b] text [a|b] more"]}
+{"fn": "get_msg_button", "args": ["[a|b] [a|b|same]"]}
+{"fn": "get_msg_button", "args": ["[multi\nline|x.com]"]}
+{"fn": "get_msg_button", "args": ["[x|multi\nline]"]}
+{"fn": "get_msg_button", "args": ["[ Spaces | https://x.com ]"]}
+{"fn": "get_msg_button", "args": ["[Ünï|https://é.com/ü]"]}
+{"fn": "get_msg_button", "args": ["[😀|https://emoji.com]"]}
+{"fn": "get_msg_button", "args": ["**bold** [Docs|ultroid.tech] `code`"]}
+{"fn": "get_msg_button", "args": ["[a|b][c|d]\n[e|f|same]\ntail"]}
+{"fn": "get_msg_button", "args": ["\u001ftext [a|b]\u001c"]}
+{"fn": "get_msg_button", "args": ["  nbsp [a|b] 　"]}
+{"fn": "get_msg_button", "args": ["[a|b]|c]"]}
+{"fn": "get_msg_button", "args": ["[a]|[b|c]"]}
+{"fn": "get_msg_button", "args": ["a|b"]}
+{"fn": "get_msg_button", "args": ["[a|b"]}
+{"fn": "get_msg_button", "args": ["a|b]"]}
+{"fn": "get_msg_button", "args": ["[one|1][two|2|same][three|3]\n[four|4|same]"]}
+{"fn": "get_msg_button", "args": ["[a|b|same|same]"]}
+{"fn": "get_msg_button", "args": ["x[y|z]x[y|z]x"]}
+{"fn": "get_msg_button", "args": ["[.+?|.+?]"]}
+{"fn": "get_msg_button", "args": ["[a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b][a|b]"]}
+{"fn": "get_msg_button", "args": ["[Help|https://t.me/UltroidSupportChat]\n[Channel|https://t.me/TheUltroid|same]"]}
+{"fn": "text_set", "args": [{"$tuple": ["a", "b"]}]}
+{"fn": "text_set", "args": [{"$tuple": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}]}
+{"fn": "text_set", "args": [{"$set": [1, 2]}]}
+{"fn": "text_set", "args": [{"$bytes": [104, 105]}]}
+{"fn": "text_set", "args": [{"$bytes": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}]}
+{"fn": "text_set", "args": [{"$dict": [[1, "a"]]}]}
+{"fn": "text_set", "args": [{"$num": "NaN"}]}
+{"fn": "text_set", "args": [{"$int": "99999999999999999999"}]}
+{"fn": "text_set", "args": [3.5]}
+{"fn": "stdr", "args": [16.000015258789062]}
+{"fn": "stdr", "args": [8.000015258789062]}
+{"fn": "stdr", "args": [76.00001525878906]}
+{"fn": "stdr", "args": [18436.00001525879]}
+{"fn": "stdr", "args": [17.301712036132812]}
+{"fn": "stdr", "args": [23.096572875976562]}
+{"fn": "stdr", "args": [9.188247680664062]}
+{"fn": "stdr", "args": [68.42939758300781]}
+{"fn": "stdr", "args": [8.171890258789062]}
+{"fn": "stdr", "args": [9.481338500976562]}
+{"fn": "stdr", "args": [15.123733520507812]}
+{"fn": "stdr", "args": [3679.7933502197266]}
+{"fn": "stdr", "args": [8.442153930664062]}
+{"fn": "stdr", "args": [16.838272094726562]}
+{"fn": "stdr", "args": [16.000045776367188]}
+{"fn": "stdr", "args": [-16.000015258789062]}
+{"fn": "stdr", "args": [31.999984741210938]}
+{"fn": "stdr", "args": [17.116012573242188]}
+{"fn": "stdr", "args": [23.836349487304688]}
+{"fn": "stdr", "args": [9.849044799804688]}

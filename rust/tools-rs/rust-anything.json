@@ -1,0 +1,271 @@
+{
+  "schema": "rust-anything/bridge@1",
+  "root": "../..",
+  "unit": "pyUltroid/fns/tools.py",
+  "language": "python",
+  "kind": "pyo3",
+  "crate_name": "tools-rs",
+  "exports": [
+    {
+      "name": "get_msg_button",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 176,
+      "params": [
+        {
+          "name": "texts",
+          "ts_type": "string",
+          "optional": false,
+          "rest": false
+        }
+      ],
+      "returns": "unknown",
+      "is_async": false,
+      "is_generator": false,
+      "type_params": [],
+      "uses_instanceof": false
+    },
+    {
+      "name": "text_set",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 319,
+      "params": [
+        {
+          "name": "text",
+          "ts_type": "unknown",
+          "optional": false,
+          "rest": false
+        }
+      ],
+      "returns": "unknown",
+      "is_async": false,
+      "is_generator": false,
+      "type_params": [],
+      "uses_instanceof": false
+    },
+    {
+      "name": "stdr",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 543,
+      "params": [
+        {
+          "name": "seconds",
+          "ts_type": "number",
+          "optional": false,
+          "rest": false
+        }
+      ],
+      "returns": "unknown",
+      "is_async": false,
+      "is_generator": false,
+      "type_params": [],
+      "uses_instanceof": false
+    },
+    {
+      "name": "cmd_regex_replace",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 730,
+      "params": [
+        {
+          "name": "cmd",
+          "ts_type": "unknown",
+          "optional": false,
+          "rest": false
+        }
+      ],
+      "returns": "unknown",
+      "is_async": false,
+      "is_generator": false,
+      "type_params": [],
+      "uses_instanceof": false
+    },
+    {
+      "name": "get_chat_and_msgid",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 1085,
+      "params": [
+        {
+          "name": "link",
+          "ts_type": "unknown",
+          "optional": false,
+          "rest": false
+        }
+      ],
+      "returns": "unknown",
+      "is_async": false,
+      "is_generator": false,
+      "type_params": [],
+      "uses_instanceof": false
+    }
+  ],
+  "classes": [],
+  "js_only": [
+    {
+      "name": "get_ofox",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 65,
+      "reason": "calls the OrangeFox API"
+    },
+    {
+      "name": "json_parser",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 84,
+      "reason": "its contract is Python's json and ast.literal_eval; follows the database value format"
+    },
+    {
+      "name": "is_url_ok",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 106,
+      "reason": "makes an HTTP request"
+    },
+    {
+      "name": "metadata",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 117,
+      "reason": "runs mediainfo"
+    },
+    {
+      "name": "set_attributes",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 150,
+      "reason": "runs mediainfo and builds Telethon attributes"
+    },
+    {
+      "name": "create_tl_btn",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 194,
+      "reason": "returns Telethon buttons"
+    },
+    {
+      "name": "format_btn",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 205,
+      "reason": "takes Telethon buttons"
+    },
+    {
+      "name": "saavn_search",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 224,
+      "reason": "calls the Saavn API"
+    },
+    {
+      "name": "webuploader",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 241,
+      "reason": "uploads a file over HTTP"
+    },
+    {
+      "name": "get_all_files",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 310,
+      "reason": "walks the filesystem"
+    },
+    {
+      "name": "get_paste",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 393,
+      "reason": "calls a paste service"
+    },
+    {
+      "name": "get_google_images",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 426,
+      "reason": "scrapes Google"
+    },
+    {
+      "name": "get_chatbot_reply",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 502,
+      "reason": "calls a chatbot API"
+    },
+    {
+      "name": "check_filename",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 512,
+      "reason": "checks the filesystem"
+    },
+    {
+      "name": "genss",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 530,
+      "reason": "runs mediainfo"
+    },
+    {
+      "name": "duration_s",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 534,
+      "reason": "runs mediainfo"
+    },
+    {
+      "name": "order_points",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 564,
+      "reason": "takes a numpy array"
+    },
+    {
+      "name": "four_point_transform",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 576,
+      "reason": "takes an OpenCV image"
+    },
+    {
+      "name": "telegraph_client",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 601,
+      "reason": "creates a Telegraph account"
+    },
+    {
+      "name": "make_html_telegraph",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 641,
+      "reason": "decorated with `@run_async`"
+    },
+    {
+      "name": "Carbon",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 650,
+      "reason": "takes `**kwargs`"
+    },
+    {
+      "name": "get_file_link",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 681,
+      "reason": "sends a Telegram message"
+    },
+    {
+      "name": "get_stored_file",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 694,
+      "reason": "reads a Telegram message"
+    },
+    {
+      "name": "translate",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 712,
+      "reason": "calls Google Translate"
+    },
+    {
+      "name": "safe_load",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 1063,
+      "reason": "takes `**kwargs`"
+    },
+    {
+      "name": "LogoHelper",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 339,
+      "reason": "class: `@staticmethod` method `find_font_size`, `@staticmethod` method `get_text_size`, `@staticmethod` method `make_logo`"
+    },
+    {
+      "name": "LottieException",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 749,
+      "reason": "class: inherits from Exception"
+    },
+    {
+      "name": "TgConverter",
+      "file": "pyUltroid/fns/tools.py",
+      "line": 753,
+      "reason": "class: `@staticmethod` method `animated_sticker`, `@staticmethod` method `animated_to_gif`, `@staticmethod` method `convert`, `@staticmethod` method `create_webm`, `@staticmethod` method `ffmpeg_convert`, `@staticmethod` method `resize_photo_sticker`, `@staticmethod` method `to_image`"
+    }
+  ]
+}

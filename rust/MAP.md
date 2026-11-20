@@ -62,7 +62,8 @@ dynamic code).
 | Unit | What is ported | Recorded | State |
 | --- | --- | --- | --- |
 | `pyUltroid/fns/helper.py` | `time_formatter`, `humanbytes`, `numerize` | directly | done: `helper-rs`, gate passed, 213/213 cases |
-| `pyUltroid/fns/tools.py` | `get_msg_button`, `text_set`, `stdr`, `cmd_regex_replace`, `get_chat_and_msgid` | directly | open |
+| `pyUltroid/fns/tools.py` | `get_msg_button`, `text_set`, `stdr`, `cmd_regex_replace`, `get_chat_and_msgid` | directly | done: `tools-rs`, gate passed, 809/809 cases; 0.71x across the bridge, so not for use from Python |
+| `pyUltroid/fns/tools.py` | `json_parser` | directly | open: needs the Python literal parser from the database value format |
 | database value format (`pyUltroid/startup/_database.py`) | what `set_key` stores and `get_key` reads back | harness | open |
 | `pyUltroid/dB/` | the 93 accessor functions, over an in-memory store | harness | open |
 | `strings/` | language file loading and `get_string` lookup with English fallback | harness | open |
