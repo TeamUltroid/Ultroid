@@ -57,6 +57,11 @@ and values; it found one difference the recorded cases had missed (below) and no
   store. It is kept as code points (`PyValue::Surrogates`) and printed with the escape.
 - **Int size.** CPython refuses to print or read an int of more than 4,300 digits unless told
   otherwise (`sys.set_int_max_str_digits`). The limit here is fixed at 4,300.
+- **Python version.** The rules are those of CPython 3.11, the recording interpreter. Python 3.9,
+  which ADR-010 still allows, does not strip leading spaces and tabs before reading a literal
+  (`ast.literal_eval` does since 3.10), so text stored as ` 5` is the int `5` here and on 3.10 and
+  later, and stays text on 3.9. The digit limit above came with 3.11 and with the security
+  releases of the older versions.
 
 The difference the fuzzer found and that is now fixed: a float exactly halfway between two
 shortest decimal forms, such as `900719925474099.25`. CPython prints the one ending in an even
