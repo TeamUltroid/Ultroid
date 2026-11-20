@@ -333,3 +333,29 @@ chosen before the maintainers say which of the two results is the intended one.
 Consequences: `ultroid_core::strings` takes a `Host` that reads a file, asks the translator and
 writes the log; a Rust Ultroid puts its reader in there. Until it has one, the port answers
 `get_string` for what it is handed and cannot read a language file itself.
+
+## ADR-019: `multi_client.py` gets a Rust front door, opt-in and not lifted
+
+Status: accepted by default (2026-11-20, owner away)
+
+Context: ADR-002 treats Ultroid as a command-line program only for its launch path, and
+`multi_client.py` is that path in full: it reads the environment, starts the clients and waits.
+Its logic is proven as a unit (`launch-rs`). rust-anything can also record a whole program from
+the outside and hold a Rust binary to the recording.
+
+Decision: `rust/app-cases` holds 13 runs of `python3 multi_client.py` recorded from the
+outside: the environment in; the output and the exit status out. Where a run starts clients, a
+stand-in for the bot is what gets started (a `pyUltroid/__main__.py` that prints its
+arguments), so that a case shows what the launcher did and not what the bot made of it.
+`rust/app` is a Rust binary, `multi_client`, that answers every case without the script.
+
+It is not lifted. The way back to the script stays in (`RUST_ANYTHING_UNIT_LAUNCH=original`),
+and `launch-rs` stays a bridge crate: lifting would remove the bindings through which its 1,714
+cases are checked against the script. And nothing starts the binary: `startup`, the
+`Dockerfile` and the other deployment files are unchanged (ADR-012).
+
+Consequences: the port has one small, complete example of its last step, a program of
+Ultroid's replaced by a Rust binary and held to the original from the outside. The binary
+starts the clients with `python3` from `PATH`, or with what `PYTHON` names, where the script
+uses the interpreter it runs under itself; that is the one thing it cannot take from the
+original. What the clients are is still the Python bot.

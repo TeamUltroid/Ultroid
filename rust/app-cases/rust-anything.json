@@ -1,0 +1,9 @@
+{
+  "schema": "rust-anything/app-cases@1",
+  "name": "multi_client",
+  "run": [
+    "python3",
+    "multi_client.py"
+  ],
+  "timeout_secs": 60
+}

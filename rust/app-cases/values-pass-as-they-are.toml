@@ -1,0 +1,11 @@
+bin.name = "multi_client"
+args = []
+env.add.API_HASH = "-m"
+env.add.API_ID = "12 34"
+env.add.PYTHONDONTWRITEBYTECODE = "1"
+env.add.REDIS_PASSWORD = "$HOME *"
+env.add.REDIS_URI = "ünï 😀"
+env.add.SESSION = """a b'c"d"""
+status.code = 0
+fs.sandbox = true
+fs.base = "values-pass-as-they-are.in"

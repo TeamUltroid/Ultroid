@@ -1,0 +1,5 @@
+client started with ['api_id', 'api_hash', 'session', 'redis_uri', 'redis_password', '1']
+client started with ['api_id1', 'api_hash1', 'session1', 'redis_uri1', 'redis_password1', '2']
+client started with ['api_id2', 'api_hash2', 'session2', 'redis_uri2', 'redis_password2', '3']
+client started with ['api_id3', 'api_hash3', 'session3', 'redis_uri3', 'redis_password3', '4']
+client started with ['api_id4', 'api_hash4', 'session4', 'redis_uri4', 'redis_password4', '5']
