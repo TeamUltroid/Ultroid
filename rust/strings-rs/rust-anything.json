@@ -1,0 +1,36 @@
+{
+  "schema": "rust-anything/bridge@1",
+  "root": "../..",
+  "unit": "rust/harness/language.py",
+  "language": "python",
+  "kind": "pyo3",
+  "crate_name": "strings-rs",
+  "exports": [
+    {
+      "name": "run",
+      "file": "rust/harness/language.py",
+      "line": 80,
+      "params": [
+        {
+          "name": "setup",
+          "ts_type": "dict",
+          "optional": false,
+          "rest": false
+        },
+        {
+          "name": "steps",
+          "ts_type": "unknown[]",
+          "optional": false,
+          "rest": false
+        }
+      ],
+      "returns": "unknown[]",
+      "is_async": false,
+      "is_generator": false,
+      "type_params": [],
+      "uses_instanceof": false
+    }
+  ],
+  "classes": [],
+  "js_only": []
+}
