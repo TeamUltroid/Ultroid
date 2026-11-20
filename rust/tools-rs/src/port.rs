@@ -110,7 +110,19 @@ fn repr_float(x: f64) -> String {
     if x.is_infinite() {
         return if x > 0.0 { "inf" } else { "-inf" }.into();
     }
-    let scientific = format!("{:e}", x.abs());
+    let size = x.abs();
+    let mut scientific = format!("{size:e}");
+    // 16.0000152587890625 reads back from both ...062 and ...063. Rust prints the upper one;
+    // CPython rounds the exact value half to even, which is what a fixed precision does.
+    let count = scientific
+        .bytes()
+        .take_while(|&b| b != b'e')
+        .filter(u8::is_ascii_digit)
+        .count();
+    let rounded = format!("{:.*e}", count.saturating_sub(1), size);
+    if rounded.parse() == Ok(size) {
+        scientific = rounded;
+    }
     let (mantissa, exponent) = scientific.split_once('e').unwrap_or((&scientific, "0"));
     let exponent: i32 = exponent.parse().unwrap_or(0);
     let digits: String = mantissa.chars().filter(char::is_ascii_digit).collect();
@@ -318,6 +330,11 @@ mod tests {
             (2.777_777_777_777_777_6e17, "2.7777777777777776e+17"),
             (5e-324, "5e-324"),
             (-61.5, "-61.5"),
+            // Exactly halfway between two shortest forms: CPython takes the even digit.
+            (16.0 + 1.0 / 65536.0, "16.000015258789062"),
+            (16.0 + 3.0 / 65536.0, "16.000045776367188"),
+            (7_205_759_403_792_794.0 / 8.0, "900719925474099.2"),
+            (-(8.0 + 1.0 / 65536.0), "-8.000015258789062"),
         ] {
             assert_eq!(repr_float(x), text);
         }

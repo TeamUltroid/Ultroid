@@ -17,13 +17,13 @@ which the database value format needs first.
 
 ## Proof
 
-`cases.jsonl` holds 789 calls recorded from the Python original: rust-anything's generated cases
-(for `get_msg_button`, 211 strings with non-ASCII text and regex traps) plus the 517 in
+`cases.jsonl` holds 809 calls recorded from the Python original: rust-anything's generated cases
+(for `get_msg_button`, 211 strings with non-ASCII text and regex traps) plus the 537 in
 `inputs.jsonl`. Those include all 291 distinct command patterns the plugins register with
 `ultroid_cmd`, which is what `help` passes to `cmd_regex_replace`, and message links with the
 shapes users paste.
 
-- `rust-anything diff`: 789/789 match.
+- `rust-anything diff`: 809/809 match.
 - `rust-anything gate`: passed.
 - `rust/harness/check_shadow.py`: the recorded result comes back in `old`, `shadow` and `new`
   mode, with no mismatch reported.
@@ -33,13 +33,13 @@ CPython 3.11, 2026-11-20):
 
 | Function | Python ns/call | Rust ns/call | Speedup |
 | --- | ---: | ---: | ---: |
-| `get_msg_button` | 920 | 910 | 1.01x |
-| `text_set` | 1057 | 2246 | 0.47x |
-| `stdr` | 815 | 699 | 1.17x |
-| `cmd_regex_replace` | 546 | 1255 | 0.44x |
-| `get_chat_and_msgid` | 1685 | 1047 | 1.61x |
+| `get_msg_button` | 930 | 874 | 1.06x |
+| `text_set` | 834 | 1827 | 0.46x |
+| `stdr` | 902 | 1086 | 0.83x |
+| `cmd_regex_replace` | 348 | 1004 | 0.35x |
+| `get_chat_and_msgid` | 1157 | 919 | 1.26x |
 
-Overall 0.83x. rust-anything's verdict: do not ship this unit for speed, because crossing into
+Overall 0.71x. rust-anything's verdict: do not ship this unit for speed, because crossing into
 Rust costs more than the work these functions do. Nothing here is wired into the app (ADR-012);
 the port is the proven text handling a Rust Ultroid will need, where there is no crossing.
 
@@ -61,6 +61,18 @@ the port is the proven text handling a Rust Ultroid will need, where there is no
   chat `c`, message `123`. A `/c/` id goes through Python's `int("-100" + id)`, so `12_3`,
   trailing whitespace and digits of any script are accepted, and anything else raises
   `ValueError`.
+
+## A difference the first recording missed
+
+The first version of this port passed its gate with 789 cases and was still wrong. `stdr` prints
+a float with Python's `repr`, the shortest digits that read back as the same number. For a float
+exactly halfway between two such forms, CPython takes the one ending in an even digit and Rust's
+formatter takes the upper one: `stdr(16.0000152587890625)` is `00:00:16.000015258789062` in
+Python and was `...063` here. The fuzzer of the database value format found the rule
+(`rust/ultroid-db`); this port had the same code. It is fixed, and 20 such floats are now in
+`inputs.jsonl`, 14 of which the first version got wrong.
+
+A passing gate proves the recorded cases, not the function.
 
 ## Where the port differs outside the recorded cases
 
