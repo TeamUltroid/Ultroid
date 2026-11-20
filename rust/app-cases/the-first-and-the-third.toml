@@ -1,0 +1,16 @@
+bin.name = "multi_client"
+args = []
+env.add.API_HASH = "api_hash"
+env.add.API_HASH2 = "api_hash2"
+env.add.API_ID = "api_id"
+env.add.API_ID2 = "api_id2"
+env.add.PYTHONDONTWRITEBYTECODE = "1"
+env.add.REDIS_PASSWORD = "redis_password"
+env.add.REDIS_PASSWORD2 = "redis_password2"
+env.add.REDIS_URI = "redis_uri"
+env.add.REDIS_URI2 = "redis_uri2"
+env.add.SESSION = "session"
+env.add.SESSION2 = "session2"
+status.code = 0
+fs.sandbox = true
+fs.base = "the-first-and-the-third.in"

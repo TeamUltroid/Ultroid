@@ -1,0 +1,4 @@
+bin.name = "multi_client"
+args = ["--help", "x"]
+status.code = 1
+fs.sandbox = true

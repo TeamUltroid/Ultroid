@@ -15,6 +15,12 @@
 | `rust/harness/launch.py` | `rust/launch-rs` | `plan` | - | 1714 | 1714/1714 | unchanged |
 | `rust/harness/session.py` | `rust/session-rs` | `check`, `parse` | - | 1382 | 1382/1382 | unchanged |
 
+## Whole app
+
+| Glue | Runs |
+| --- | --- |
+| `rust/app/src/units/launch.rs` | Rust only |
+
 ## Not ported yet
 
 In the order `analyze` suggests.

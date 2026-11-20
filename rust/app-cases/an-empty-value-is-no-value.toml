@@ -1,0 +1,9 @@
+bin.name = "multi_client"
+args = []
+env.add.API_HASH = "api_hash"
+env.add.API_ID = "api_id"
+env.add.REDIS_PASSWORD = "redis_password"
+env.add.REDIS_URI = "redis_uri"
+env.add.SESSION = ""
+status.code = 1
+fs.sandbox = true
