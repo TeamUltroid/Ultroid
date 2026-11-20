@@ -51,6 +51,10 @@ class MemoryDB(_database._BaseDatabase):
         return self.raw.get(key)
 
     def set(self, key, value):
+        # A backend holds bytes. Text that cannot be encoded is refused by every driver, with
+        # the error this raises.
+        for text in (key, value):
+            text.encode("utf-8")
         self.raw[key] = value
         return True
 

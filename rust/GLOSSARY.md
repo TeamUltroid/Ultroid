@@ -5,7 +5,10 @@ thing the same way. A Rust name is filled in when the first unit that needs the 
 
 | Term | Meaning | In Rust |
 | --- | --- | --- |
-| `udB` | The key-value database every part of Ultroid reads and writes. One of Redis, MongoDB, PostgreSQL or a local JSON file, behind `get_key`, `set_key`, `del_key`, `keys`. | not ported yet |
+| `udB` | The key-value database every part of Ultroid reads and writes. One of Redis, MongoDB, PostgreSQL or a local JSON file, behind `get_key`, `set_key`, `del_key`, `keys`. | `ultroid_db::Database<S>`; the backend is `S: Store` (only `MemoryStore` so far) |
+| accessor | A function of `pyUltroid/dB/<module>.py` that reads or changes one key, such as `notes_db.add_note`. | `ultroid_db::access::<module>::<function>`, same names; by name through `ultroid_db::call` |
+| `KeyManager` | A key holding a list of items, with `add`, `remove`, `contains`, `count`. Used for PM permits, broadcast lists and the like. | `ultroid_db::access::KeyManager` |
+| scenario | A list of steps (calls, restarts, edits of the stored text, a new time) run on an empty database; how the accessors are recorded (ADR-015). | `run` in `rust/dbaccess-rs` |
 | stored value | What `set_key` writes: `str(value)`. `get_key` reads it back with `ast.literal_eval` and keeps the raw string when that fails. | `ultroid_db::PyValue`; `read_stored` reads stored text, `normalize` is what `set_key` keeps, `to_str` is the text it stores |
 | literal | Text that `ast.literal_eval` accepts: a Python number, string, bytes, tuple, list, dict, set, `True`, `False`, `None` or `...`. | `ultroid_db::parse_literal` |
 | `HNDLR` | The command prefix for the owner's own commands. Default `.`. | not ported yet |

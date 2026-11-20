@@ -16,13 +16,18 @@ def read_stored(text: str) -> list:
 
 
 def write_value(value) -> list:
-    """What `set_key` keeps for `value` (type and `repr`) and the text it stores."""
+    """What `set_key` keeps for `value` (type and `repr`) and the text it stores. Text holding a
+    lone surrogate is kept in the cache and refused by every backend: for it the third item
+    says so."""
     udB.wipe()
-    udB.set_key("KEY", value)
-    kept, stored = udB.get_key("KEY"), udB.raw["KEY"]
+    try:
+        udB.set_key("KEY", value)
+        stored = udB.raw["KEY"]
+    except UnicodeEncodeError:
+        stored = "refused: UnicodeEncodeError"
+    kept = udB.get_key("KEY")
     if has_set_order(kept):
         # CPython prints a set in the order of its hash table, which for text changes from one
         # run to the next. That order is not part of the format, so it is taken out here.
         stored = canon(kept)
-    # A lone surrogate cannot be written out as UTF-8, so it is shown as its escape.
-    return describe(kept) + [stored.encode("utf-8", "backslashreplace").decode("utf-8")]
+    return describe(kept) + [stored]

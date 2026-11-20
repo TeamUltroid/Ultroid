@@ -11,7 +11,7 @@ exposes the two directions:
 | Function | What it returns |
 | --- | --- |
 | `read_stored(text)` | the type and `repr` of what `get_key` returns for a key stored as `text` |
-| `write_value(value)` | the type and `repr` of what `set_key` keeps, and the text it stores |
+| `write_value(value)` | the type and `repr` of what `set_key` keeps, and the text it stores, or that the store refused it |
 
 ## Proof
 
@@ -31,7 +31,7 @@ exposes the two directions:
 - `rust-anything gate`: passed.
 - `rust/harness/check_shadow.py`: the recorded result comes back in `old`, `shadow` and `new`
   mode.
-- `rust/harness/fuzz_dbvalue.py`: six seeded runs after the last fix, 11.4 million generated
+- `rust/harness/fuzz_dbvalue.py`: seven seeded runs after the last fix, 13.3 million generated
   inputs, no difference.
 
 `rust-anything bench`, original against Rust with the call into Rust included (Linux x86_64,
@@ -52,7 +52,11 @@ sorted before comparing (`has_set_order` in the harness and in `src/port.rs`). C
 order follows its hash table and changes between runs for text, so it cannot be recorded
 (ADR-013).
 
-The gate's size check compares `src/port.rs` (71 lines) with the harness (19 lines). The work is
+Text that holds a lone surrogate (three of the cases) is kept in the cache and refused by the
+store, as every backend's driver refuses it: for those the third item is
+`refused: UnicodeEncodeError`.
+
+The gate's size check compares `src/port.rs` (65 lines) with the harness (25 lines). The work is
 in `ultroid-db`, which replaces `ast.literal_eval` and `repr`: C code in CPython, with no Python
 lines to hold it against.
 

@@ -2,9 +2,10 @@
 
     python3 rust/harness/gen_tables.py path/to/NameAliases.txt
 
-`repr()` escapes the characters `str.isprintable()` rejects, and `\\N{...}` only knows the
-characters and aliases this interpreter's Unicode database has. All of it follows the Unicode
-version CPython was built with, so the port carries the same tables instead of a newer crate's.
+`repr()` escapes the characters `str.isprintable()` rejects, `\\N{...}` only knows the
+characters and aliases this interpreter's Unicode database has, and `int()` and `split()` go by
+its digits and spaces. All of it follows the Unicode version CPython was built with, so the port
+carries the same tables instead of a newer crate's.
 
 Python cannot list its aliases, so the candidates come from Unicode's `NameAliases.txt` (any
 version at least as new as the interpreter's; the `unicode_names2` crate ships one in `data/`).
@@ -67,6 +68,24 @@ def alias_table(rows):
     return "\n".join(lines)
 
 
+def decimal_zeros():
+    """The zero of every run of ten decimal digits. `int()` reads a digit of any script by its
+    distance from the zero of its run."""
+    zeros = [code for code in range(0x80, 0x110000) if unicodedata.decimal(chr(code), None) == 0]
+    in_runs = {zero + value for zero in zeros for value in range(10)}
+    for code in range(0x80, 0x110000):
+        value = unicodedata.decimal(chr(code), None)
+        # Every decimal digit sits in a run of ten, at the place of its value.
+        assert (value is not None) == (code in in_runs), hex(code)
+        assert value is None or any(code - value == zero for zero in zeros), hex(code)
+    lines = ["/// The digit zero of every script: the nine code points after each are its digits 1 to 9.",
+             f"pub const DECIMAL_ZEROS: [u32; {len(zeros)}] = ["]
+    for at in range(0, len(zeros), 8):
+        lines.append("    " + " ".join(f"0x{code:x}," for code in zeros[at : at + 8]))
+    lines.append("];")
+    return "\n".join(lines)
+
+
 if len(sys.argv) != 2:
     sys.exit(__doc__)
 version = sys.version.split()[0]
@@ -78,7 +97,10 @@ body = [
     table("NONPRINTABLE", "Inclusive ranges `str.isprintable()` rejects: `repr()` escapes them.", ranges(lambda c: not c.isprintable())),
     table("UNASSIGNED", "Inclusive ranges with no assigned character (category Cn).", ranges(lambda c: unicodedata.category(c) == "Cn")),
     alias_table(aliases(sys.argv[1])),
+    table("SPACES", "Inclusive ranges `str.isspace()` accepts: `split()`, `strip()` and `int()` skip them.", ranges(str.isspace)),
+    decimal_zeros(),
 ]
 with open(OUT, "w", encoding="utf-8") as out:
     out.write(header + "\n" + "\n\n".join(body) + "\n")
 print(f"wrote {os.path.normpath(OUT)} for CPython {version}, Unicode {unicodedata.unidata_version}")
+print("now run `cargo fmt` in rust/ultroid-db: the tables are written unformatted")

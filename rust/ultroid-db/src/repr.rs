@@ -206,17 +206,28 @@ pub fn canon(value: &PyValue) -> PyResult<String> {
     render(value, true)
 }
 
-/// `str(value)`: text is itself, everything else is its `repr`. A lone surrogate cannot be
-/// written as text, so it comes out as a `\udXXX` escape.
+/// Whether printing `value` depends on the order a set happens to be in: it holds a set of more
+/// than one member. CPython's order follows its hash table and cannot be reproduced (ADR-013).
+pub fn has_set_order(value: &PyValue) -> bool {
+    match value {
+        PyValue::Set(set) => set.len() > 1 || set.iter().any(has_set_order),
+        PyValue::List(items) | PyValue::Tuple(items) => items.iter().any(has_set_order),
+        PyValue::Dict(dict) => dict
+            .iter()
+            .any(|(key, item)| has_set_order(key) || has_set_order(item)),
+        _ => false,
+    }
+}
+
+/// `str(value)` as a backend stores it: text is itself, everything else is its `repr`. Text
+/// that holds a lone surrogate cannot be encoded, so no backend takes it.
 pub fn to_str(value: &PyValue) -> PyResult<String> {
     match value {
         PyValue::Str(text) => Ok(text.clone()),
-        PyValue::Surrogates(points) => Ok(points
-            .iter()
-            .map(|&code| {
-                char::from_u32(code).map_or_else(|| format!("\\u{code:04x}"), String::from)
-            })
-            .collect()),
+        PyValue::Surrogates(_) => Err(PyError::new(
+            "UnicodeEncodeError",
+            "'utf-8' codec can't encode character: surrogates not allowed",
+        )),
         other => repr(other),
     }
 }

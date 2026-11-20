@@ -227,3 +227,32 @@ Consequences: The gate's size check measures only the thin layer, so it says not
 library. The library's README carries the real line counts, and says where the Rust has no
 Python lines to be compared with. `ultroid-db` is the first crate a Rust app can depend on
 directly.
+
+## ADR-015: The accessors are proven as scenarios
+
+Status: accepted by default (2026-11-20, owner away)
+
+Context: The 93 functions of `pyUltroid/dB` and `KeyManager` keep their state in the database.
+One call says little about them: what matters is what a later call sees, and what a restart
+leaves, since the cache holds live objects and the store holds their text. Two of the functions
+read the clock. rust-anything records one call of one function at a time.
+
+Decision: The recorded unit is `rust/harness/dbaccess.py`, whose one function runs a scenario: a
+list of steps on an empty database in memory, each step a call by name, a restart, a change of
+the stored text behind the cache, or a new time. It reports the type and `repr` of every
+result, the exception type of every failure, and the stored text at the end. The Rust side runs
+the same steps through `ultroid_db::call`. The clock is handed to the AFK functions, in the
+harness by replacing `datetime` in `afk_db`. `rust/harness/scenarios.py` generates the scenarios,
+`fuzz_dbaccess.py` keeps generating new ones, and `coverage_dbaccess.py` checks that the recorded
+ones run every reachable line of the original.
+
+Left out, because CPython itself gives no fixed answer: a set of several members (ADR-013), NaN
+(found by identity) and text with a lone surrogate as an argument (it cannot cross the bridge).
+Narrowed, because nothing in Ultroid uses more: database keys are text, `KeyManager` casts are
+`None` and `list`, and `set_key(cache_only=True)` is not ported.
+
+Consequences: Only the in-memory store is exercised. Redis, MongoDB, PostgreSQL and the local
+file are behind the `Store` trait and not ported; what each returns for a write, and how each
+fails, is not recorded (`research/dependencies-core.md` lists what is known). A function is
+proven together with the functions around it, so a recorded scenario that fails names a step,
+not a function.
