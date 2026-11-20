@@ -110,3 +110,13 @@ def stub_strings():
     module = types.ModuleType("strings")
     module.get_string = lambda key, *rest: key
     sys.modules["strings"] = module
+
+
+def decorators():
+    """`pyUltroid._misc._decorators`, which builds the command patterns. It imports the whole
+    package and asks `strings` for messages; nothing in it touches Telegram on import."""
+    stub_strings()
+    pyUltroid._ignore_eval = []
+    from pyUltroid._misc import _decorators
+
+    return _decorators

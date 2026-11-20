@@ -272,3 +272,44 @@ the outcome as data, because the bridge can only raise built-in exceptions.
 
 Consequences: `ultroid-core` and `ultroid-db` are what a Rust application would be built from.
 Neither has Telegram, a network or Python in it.
+
+## ADR-017: Command patterns are matched by a matcher of our own that follows `re`
+
+Status: accepted by default (2026-11-20, owner away)
+
+Context: A command pattern is a regular expression written for Python's `re`. The first port
+translated it for a Rust engine (`fancy-regex` 0.20.2, which hands plain patterns to `regex`).
+All 8,895 recorded cases matched. A differential fuzz then found ten wrong answers, from three
+causes:
+
+- `fancy-regex` rewrites patterns before it runs them. It turns `(X+)*` into `(X+)?` without
+  looking whether the inner repeat is lazy, and puts a lazy repeat between two greedy ones into
+  a greedy group (`optimize.rs`: `optimize_nested_repeats`, `build_concat_repeat_triplet`). So
+  `(a+?)*` on `aaaa` matched one `a`, where Python and `regex` match four.
+- A loop whose body can match nothing. `re` ends a loop after a round that took no character;
+  `regex` goes on to the body's other alternatives. `(?:|a)*` on `aa` is the empty match in
+  Python and `aa` in `regex`.
+- `\b` and `\B` both fail in an empty text in Python 3.11. The translation said `\B` holds
+  there.
+
+The first can be avoided only by knowing every rewrite of one version of one crate, the second
+is how the two engines are defined.
+
+Decision: `ultroid-core` reads the pattern and matches it itself. The matcher follows
+`SRE(match)` in CPython 3.11.18 (`Modules/_sre/sre_lib.h`): it tries one way after the other,
+and its loops have `re`'s rules. No regular expression crate is used.
+
+Consequences:
+
+- The answer is Python's by construction, and by proof: recorded cases, and a fuzz that now
+  compares lazy loops, loops over nothing, counts and references to groups as well.
+- Fewer patterns are declined: 100 of 8,600 generated inputs. With the translation it was 490
+  of 8,584, from a generator that did not yet write counts or references.
+- Like `re`, the matcher can take time that doubles with every character on a pattern with
+  loops inside loops. The Rust engines cannot. A caller that must not wait will need a limit
+  on steps; nothing needs one yet. What `re` does to avoid the work is done here too: a text
+  shorter than the pattern needs is not tried.
+- A loop that would go round more than 100,000 times without taking a character
+  (`(a?){100001}`) is declined. `re` accepts it and then uses memory for every round.
+- Not read: flags, look-around, conditions, atomic groups and possessive repeats, references
+  by name, `\N{...}`, comments. None of the 329 registered patterns uses one.
