@@ -1,0 +1,30 @@
+{
+  "schema": "rust-anything/bridge@1",
+  "root": "../..",
+  "unit": "rust/harness/dbaccess.py",
+  "language": "python",
+  "kind": "pyo3",
+  "crate_name": "dbaccess-rs",
+  "exports": [
+    {
+      "name": "run",
+      "file": "rust/harness/dbaccess.py",
+      "line": 122,
+      "params": [
+        {
+          "name": "steps",
+          "ts_type": "unknown[]",
+          "optional": false,
+          "rest": false
+        }
+      ],
+      "returns": "unknown[]",
+      "is_async": false,
+      "is_generator": false,
+      "type_params": [],
+      "uses_instanceof": false
+    }
+  ],
+  "classes": [],
+  "js_only": []
+}

@@ -1,0 +1,9 @@
+# Generated per checkout by `rust-anything shadow <crate>`: they hold absolute paths.
+*/shadow/
+# Build output.
+target/
+__pycache__/
+# Written by every `rust-anything app replay`.
+app-cases/replay-report.md
+# The repository ignores `test*`. The tests of the launcher are meant to be kept.
+!app/tests/

@@ -1,0 +1,25 @@
+# Glossary
+
+Ultroid's terms, what they mean, and the name each one takes in Rust, so every unit names the same
+thing the same way. A Rust name is filled in when the first unit that needs the term is ported.
+
+| Term | Meaning | In Rust |
+| --- | --- | --- |
+| `udB` | The key-value database every part of Ultroid reads and writes. One of Redis, MongoDB, PostgreSQL or a local JSON file, behind `get_key`, `set_key`, `del_key`, `keys`. | `ultroid_db::Database<S>`; the backend is `S: Store` (only `MemoryStore` so far) |
+| accessor | A function of `pyUltroid/dB/<module>.py` that reads or changes one key, such as `notes_db.add_note`. | `ultroid_db::access::<module>::<function>`, same names; by name through `ultroid_db::call` |
+| `KeyManager` | A key holding a list of items, with `add`, `remove`, `contains`, `count`. Used for PM permits, broadcast lists and the like. | `ultroid_db::access::KeyManager` |
+| scenario | A list of steps (calls, restarts, edits of the stored text, a new time) run on an empty database; how the accessors are recorded (ADR-015). | `run` in `rust/dbaccess-rs` |
+| stored value | What `set_key` writes: `str(value)`. `get_key` reads it back with `ast.literal_eval` and keeps the raw string when that fails. | `ultroid_db::PyValue`; `read_stored` reads stored text, `normalize` is what `set_key` keeps, `to_str` is the text it stores |
+| literal | Text that `ast.literal_eval` accepts: a Python number, string, bytes, tuple, list, dict, set, `True`, `False`, `None` or `...`. | `ultroid_db::parse_literal` |
+| `HNDLR` | The command prefix for the owner's own commands. Default `.`. `" "` or `NO_HNDLR` means none. | the `handler` argument of `ultroid_core::command::command_pattern`; reading it from the database is not ported yet |
+| `SUDO_HNDLR`, `DUAL_HNDLR` | The prefixes for sudo users and for the assistant in dual mode. | the same argument |
+| pattern | The regular expression a plugin registers for a command, without the prefix. Written for Python's `re`. | `ultroid_core::command::Pattern`, built from `command_pattern` (userbot), `assistant_pattern` (assistant bot) or the pattern as it is (inline query) |
+| match | What `re.match` gives for a pattern at the start of a message: `event.pattern_match`. | `ultroid_core::command::Found`: `end`, `groups`, `named` |
+| `ultroid_bot` | The user account client. | blocked (ADR-005) |
+| `asst` | The assistant: the bot account client. | blocked (ADR-005) |
+| plugin | A Python file in `plugins/` whose handlers are registered on import. | blocked (ADR-006) |
+| addon | A plugin from the UltroidAddons repository or installed from chat at runtime. | blocked (ADR-006) |
+| sudo user, full sudo | Users allowed to run the owner's commands; full sudo may run the dangerous ones. | not ported yet |
+| language | A file in `strings/strings/<code>.yml`. `get_string(key)` reads the language asked for; a key it lacks is taken from English, if English is loaded, and translated. | `ultroid_core::strings::Strings`: `get_string`, `get_help`, `get_languages`; reading the file is the `Host`'s (ADR-018) |
+| session string | The login credential for the user account: a Telethon string, or a Pyrogram string converted on start. | `ultroid_core::session::StringSession`; `validate_session` decides what a `SESSION` value is |
+| client number | `1` to `5`: which of the clients `multi_client.py` starts. Its variables carry the suffix one less (none, `1` to `4`); the client gets the number as its last argument and names its log file after it. | `ultroid_core::launch::Client::number`; `clients` finds the configured ones |

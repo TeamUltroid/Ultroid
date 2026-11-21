@@ -1,0 +1,27 @@
+[package]
+name = "multi_client"
+version = "0.1.0"
+edition = "2024"
+publish = false
+rust-version = "1.97"
+description = "Ultroid's launcher in Rust: what `python3 multi_client.py` does, held to the script by the cases in rust/app-cases"
+
+[[bin]]
+name = "multi_client"
+path = "src/main.rs"
+
+[dependencies]
+clap = "4"
+ultroid-core = { path = "../ultroid-core" }
+
+[workspace]
+
+[dev-dependencies]
+trycmd = "1.2.1"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
+
+[lints.rust]
+unused_lifetimes = "warn"
+trivial_numeric_casts = "warn"

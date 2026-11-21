@@ -1,0 +1,16 @@
+{
+  "schema": "rust-anything/front-door@1",
+  "name": "multi_client",
+  "commands": [],
+  "units": [
+    {
+      "name": "launch",
+      "crate": "launch-rs",
+      "path": "../launch-rs",
+      "commands": [
+        "multi_client"
+      ],
+      "switch": "RUST_ANYTHING_UNIT_LAUNCH"
+    }
+  ]
+}

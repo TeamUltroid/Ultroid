@@ -1,0 +1,7 @@
+target/
+*.node
+pkg/
+.rust-anything/
+*.so
+*.pyd
+__pycache__/
