@@ -26,6 +26,8 @@
 
 • `{i}rmbg <reply to pic>`
     Remove background from that picture.
+    Uses remove.bg by default; set `RMBG_API_URL` to use another
+    remove.bg-compatible API (full /v1.0/removebg URL).
 
 • `{i}telegraph <reply to media/text>`
     Upload media/text to telegraph.

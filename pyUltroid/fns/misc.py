@@ -167,12 +167,13 @@ async def ReTrieveFile(input_file_name):
     if not aiohttp:
         raise DependencyMissingError("This function needs 'aiohttp' to be installed.")
     RMBG_API = udB.get_key("RMBG_API")
+    # remove.bg's self-serve API closes on 1 December 2026; RMBG_API_URL lets
+    # users point rmbg at any API that accepts the same /v1.0/removebg requests.
+    RMBG_URL = udB.get_key("RMBG_API_URL") or "https://api.remove.bg/v1.0/removebg"
     headers = {"X-API-Key": RMBG_API}
     files = {"image_file": open(input_file_name, "rb").read()}
     async with aiohttp.ClientSession() as ses:
-        async with ses.post(
-            "https://api.remove.bg/v1.0/removebg", headers=headers, data=files
-        ) as out:
+        async with ses.post(RMBG_URL, headers=headers, data=files) as out:
             contentType = out.headers.get("content-type")
             if "image" not in contentType:
                 return False, (await out.json())
