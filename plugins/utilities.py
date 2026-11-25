@@ -433,54 +433,66 @@ async def abs_rmbg(event):
     if not udB.get_key("LEONARDO_API_KEY"):
         return await event.eor(
             "Get your Leonardo.Ai API key from [here](https://app.leonardo.ai/api-access) "
-            "and set it as `LEONARDO_API_KEY` for this plugin to work. "
-            "remove.bg keys no longer work since its API moved to Leonardo.Ai.",
+            f"and save it with `{HNDLR}setdb LEONARDO_API_KEY <key>`. "
+            "This command now uses Leonardo.Ai; remove.bg API keys cannot be reused.",
         )
     match = event.pattern_match.group(1).strip()
     reply = await event.get_reply_message()
-    if match and os.path.exists(match):
+    temporary_files = []
+    if match and os.path.isfile(match):
         dl = match
     elif reply and reply.media:
         if reply.document and reply.document.thumbs:
             dl = await reply.download_media(thumb=-1)
         else:
             dl = await reply.download_media()
+        if dl:
+            temporary_files.append(dl)
     else:
         return await eod(
             event, f"Use `{HNDLR}rmbg` as reply to a pic to remove its background."
         )
-    if not (dl and dl.endswith(("webp", "jpg", "png", "jpeg"))):
-        os.remove(dl)
-        return await event.eor(get_string("com_4"))
-    if dl.endswith("webp"):
-        file = f"{dl}.png"
-        Image.open(dl).save(file)
-        os.remove(dl)
-        dl = file
-    xx = await event.eor("`Sending to Leonardo.Ai`")
-    dn, out = await ReTrieveFile(dl)
-    os.remove(dl)
-    if not dn:
-        dr = out["errors"][0]
-        de = dr.get("detail", "")
-        return await xx.edit(
-            f"**ERROR ~** `{dr['title']}`,\n`{de}`",
+    xx = None
+    try:
+        if not (dl and dl.lower().endswith((".webp", ".jpg", ".png", ".jpeg"))):
+            return await event.eor(get_string("com_4"))
+        if dl.lower().endswith(".webp"):
+            file = check_filename(f"{dl}.png")
+            temporary_files.append(file)
+            with Image.open(dl) as image:
+                image.save(file)
+            dl = file
+        xx = await event.eor("`Sending to Leonardo.Ai`")
+        dn, out = await ReTrieveFile(dl)
+        if not dn:
+            dr = out["errors"][0]
+            de = dr.get("detail", "")
+            return await xx.edit(
+                f"**ERROR ~** `{dr['title']}`,\n`{de}`",
+            )
+        temporary_files.append(out)
+        wbn = check_filename("ult-rmbg.webp")
+        temporary_files.append(wbn)
+        with Image.open(out) as image:
+            image.save(wbn, "webp")
+        await event.client.send_file(
+            event.chat_id,
+            out,
+            force_document=True,
+            reply_to=reply,
         )
-    zz = Image.open(out)
-    if zz.mode != "RGB":
-        zz.convert("RGB")
-    wbn = check_filename("ult-rmbg.webp")
-    zz.save(wbn, "webp")
-    await event.client.send_file(
-        event.chat_id,
-        out,
-        force_document=True,
-        reply_to=reply,
-    )
-    await event.client.send_file(event.chat_id, wbn, reply_to=reply)
-    os.remove(out)
-    os.remove(wbn)
-    await xx.delete()
+        await event.client.send_file(event.chat_id, wbn, reply_to=reply)
+        await xx.delete()
+    except OSError:
+        if xx:
+            return await xx.edit(
+                "Could not process the image. Please try another picture."
+            )
+        return await event.eor(get_string("com_4"))
+    finally:
+        for file in temporary_files:
+            if os.path.isfile(file):
+                os.remove(file)
 
 
 @ultroid_cmd(

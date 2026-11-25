@@ -5,6 +5,7 @@
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
+import asyncio
 import base64
 import os
 import random
@@ -163,29 +164,42 @@ async def allcmds(event, telegraph):
     await eor(event, f"All Ultroid Cmds : [Click Here]({t['url']})", link_preview=False)
 
 
-# remove.bg's API moved to Leonardo.Ai on December 1, 2026.
+# remove.bg's self-service API stops accepting requests on December 1, 2026.
 # https://docs.leonardo.ai/docs/migrate-from-the-removebg-api-to-leonardoai
 
 
 def _leonardo_error(data, status):
     # Keep the remove.bg error shape ({"errors": [{"title", "detail"}]}) for callers.
-    errors = data.get("errors") if isinstance(data, dict) else None
-    if isinstance(errors, list) and errors and isinstance(errors[0], dict):
-        error = errors[0]
-        code = (error.get("extensions") or {}).get("code", "")
-        title = error.get("message", "Unknown error")
-        return {"errors": [{"title": title, "detail": code}]}
-    if isinstance(data, dict) and data.get("results") == []:
-        title, detail = "No image returned", "blocked by moderation"
-        return {"errors": [{"title": title, "detail": detail}]}
-    title = (data.get("error") if isinstance(data, dict) else None) or f"HTTP {status}"
-    return {"errors": [{"title": str(title), "detail": ""}]}
+    title = (
+        f"HTTP {status}" if not 200 <= status < 300 else "Invalid Leonardo.Ai response"
+    )
+    detail = ""
+    if isinstance(data, dict):
+        errors = data.get("errors")
+        if isinstance(errors, list) and errors and isinstance(errors[0], dict):
+            error = errors[0]
+            title = error.get("message") or title
+            extensions = error.get("extensions")
+            if isinstance(extensions, dict):
+                detail = extensions.get("code") or extensions.get("statusCode") or ""
+        elif data.get("error") or data.get("message"):
+            title = data.get("error") or data["message"]
+        elif 200 <= status < 300 and data.get("results") == []:
+            title = "No image returned"
+            blocked = data.get("blockedCount")
+            if isinstance(blocked, (int, float)) and blocked > 0:
+                detail = "Blocked by moderation"
+    return {"errors": [{"title": str(title), "detail": str(detail)}]}
 
 
 async def ReTrieveFile(input_file_name):
     if not aiohttp:
         raise DependencyMissingError("This function needs 'aiohttp' to be installed.")
     LEONARDO_API_KEY = udB.get_key("LEONARDO_API_KEY")
+    if not LEONARDO_API_KEY:
+        return False, _leonardo_error(
+            {"error": "Set LEONARDO_API_KEY to a Leonardo.Ai API key."}, 401
+        )
     headers = {"Authorization": f"Bearer {LEONARDO_API_KEY}"}
     with open(input_file_name, "rb") as file:
         image_b64 = base64.b64encode(file.read()).decode()
@@ -199,27 +213,61 @@ async def ReTrieveFile(input_file_name):
             },
         },
     }
-    async with aiohttp.ClientSession() as ses:
-        async with ses.post(
-            "https://cloud.leonardo.ai/api/rest/v2/generationssync",
-            headers=headers,
-            json=payload,
-        ) as out:
-            try:
-                data = await out.json(content_type=None)
-            except ValueError:
-                data = None
-            status = out.status
-        results = data.get("results") if isinstance(data, dict) else None
-        if not results or not results[0].get("url"):
-            return False, _leonardo_error(data, status)
-        async with ses.get(results[0]["url"]) as image:
-            if image.status != 200:
-                return False, _leonardo_error(None, image.status)
-            name = check_filename("ult-rmbg.png")
-            with open(name, "wb") as file:
-                file.write(await image.read())
-            return True, name
+    try:
+        # Sync processing can take 27 seconds, followed by an image download.
+        async with aiohttp.ClientSession(
+            timeout=aiohttp.ClientTimeout(total=60)
+        ) as ses:
+            async with ses.post(
+                "https://cloud.leonardo.ai/api/rest/v2/generationssync",
+                headers=headers,
+                json=payload,
+            ) as out:
+                try:
+                    data = await out.json(content_type=None)
+                except ValueError:
+                    data = None
+                status = out.status
+            if (
+                not 200 <= status < 300
+                or not isinstance(data, dict)
+                or data.get("errors")
+            ):
+                return False, _leonardo_error(data, status)
+            results = data.get("results")
+            if (
+                not isinstance(results, list)
+                or not results
+                or not isinstance(results[0], dict)
+            ):
+                return False, _leonardo_error(data, status)
+            url = results[0].get("url")
+            if not isinstance(url, str) or not url:
+                return False, _leonardo_error(data, status)
+            # The signed result URL does not need the account's Bearer token.
+            async with ses.get(url) as image:
+                if image.status != 200:
+                    return False, _leonardo_error(None, image.status)
+                content = await image.read()
+    except asyncio.TimeoutError:
+        return False, _leonardo_error({"error": "Leonardo.Ai request timed out."}, 504)
+    except aiohttp.ClientError:
+        return False, _leonardo_error(
+            {"error": "Could not retrieve the Leonardo.Ai image."}, 502
+        )
+    if not content.startswith(b"\x89PNG\r\n\x1a\n"):
+        return False, _leonardo_error(
+            {"error": "Leonardo.Ai returned an invalid PNG image."}, 502
+        )
+    name = check_filename("ult-rmbg.png")
+    try:
+        with open(name, "wb") as file:
+            file.write(content)
+    except OSError:
+        if os.path.isfile(name):
+            os.remove(name)
+        raise
+    return True, name
 
 
 # ---------------- Unsplash Search ----------------
