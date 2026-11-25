@@ -3,6 +3,8 @@
 *.session
 build
 test*
+!tests/
+!tests/**
 *.mp3
 *.webm
 *.webp

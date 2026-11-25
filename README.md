@@ -102,6 +102,18 @@ One of the following database:
 - For **SQLDB**
   - `DATABASE_URL`- Get it from [elephantsql](https://elephantsql.com).
 
+## Background removal
+
+The `rmbg` command uses [Leonardo.Ai's background removal API](https://docs.leonardo.ai/docs/remove-bg).
+Create a key in [API Access](https://app.leonardo.ai/api-access), then save it from
+the API settings menu or with `.setdb LEONARDO_API_KEY <key>` (replace `.` with
+your command prefix). API access and credits are separate from a web subscription.
+
+Existing remove.bg keys stored as `RMBG_API` cannot be reused. Set a new Leonardo
+key before using `rmbg`; remove.bg's self-service API stops accepting requests on
+[December 1, 2026](https://www.remove.bg/faq). Requests use ephemeral storage so
+the input and output are not saved to your Leonardo library.
+
 ## Session String
 Different ways to get your `SESSION`:
 * [![Run on Repl.it](https://replit.com/badge/github/TeamUltroid/Ultroid)](https://replit.com/@TeamUltroid/UltroidStringSession)
